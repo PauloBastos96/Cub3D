@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS	= src/main.c \
 		  src/parsing/parser.c \
 		  src/parsing/parsing_utils.c \
@@ -27,6 +27,7 @@ $(MLX):
 clean:
 	make -C $(LIBFT_PATH) clean
 	make -C $(MLX_PATH) clean
+	$(RM) $(OBJ)
 fclean: clean
 	rm -f $(NAME)
 	make -C $(LIBFT_PATH) fclean

@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/17 15:52:00 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/17 20:04:42 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,43 @@ void read_map(t_cub *cub, char *file)
 		else
 			free(line);
 	}
-    cub->map = ft_split(acc, '\n');
+    cub->file = ft_split(acc, '\n');
+    check_valid(cub);
 }
+
+void check_valid(t_cub *cub)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 5;
+    while(cub->file[++j])
+        i++;
+    cub->map = (char **)malloc(sizeof(char *) * (i + 1));
+    i = 0;
+    j = 5;
+    while(cub->file[++j])
+    {
+        cub->map[i] = cub->file[j];
+        i++;
+    }
+    cub->map[i] = NULL;
+    i = 0;
+    while(cub->map[i])
+    {
+        j = 1;
+        while(cub->map[i][j])
+        {
+            if(ft_strchr("0NSWE", cub->map[i][j]))
+            {
+                if(cub->map[i - 1][j] == ' ' || cub->map[i + 1][j] == ' ' || cub->map[i][j - 1] == ' ' || cub->map[i][j + 1] == ' ')
+                    throw_err(cub, "Invalid map");
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+
