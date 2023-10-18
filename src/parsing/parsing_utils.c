@@ -6,16 +6,15 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/18 15:47:43 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/18 22:23:47 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-void throw_err(t_cub *cub, char *err)
+void throw_err(char *err)
 {
     printf("Error\n%s\n", err);
-    cub = NULL;
     exit(0);
 }
 
