@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/17 19:16:20 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:47:43 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void throw_err(t_cub *cub, char *err)
 {
     printf("Error\n%s\n", err);
-    cub = cub;
+    cub = NULL;
     exit(0);
 }
 
@@ -47,9 +47,17 @@ int check_file_ext(char *file)
     return(0);
 }
 
-int ft_isspace(char c)
+int ft_isvalid(t_cub *cub, int y, int x)
 {
-    if(c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+    if(ft_strchr("NWES01", cub->map[y][x]) == NULL)
+        return(1);
+    if(ft_strchr("NWES01", cub->map[y + 1][x]) == NULL)
+        return(1);
+    if(ft_strchr("NWES01", cub->map[y - 1][x]) == NULL)
+        return(1);
+    if(ft_strchr("NWES01", cub->map[y][x + 1]) == NULL)
+        return(1);
+    if(ft_strchr("NWES01", cub->map[y][x - 1]) == NULL)
         return(1);
     return(0);
-}
+}    

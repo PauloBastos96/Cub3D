@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/17 19:51:56 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/18 16:09:46 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include "../minilibx-linux/mlx.h"
 #include "string.h"
 #include <fcntl.h>
+
+typedef struct s_rgb
+{
+	int r;
+	int g;
+	int b;
+}		t_rgb;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+}			t_mlx;
 
 typedef struct s_cub
 {
@@ -25,19 +38,14 @@ typedef struct s_cub
 	char	*east_texture;
 	char	*sprite;
 	int		height;
-	int		floor_color[3];
-	int		ceiling_color[3];
+	int		width;
+	t_rgb	floor_color;
+	t_rgb	ceiling_color;
 }			t_cub;
-
-typedef struct s_mlx
-{
-	void	*mlx;
-	void	*win;
-}			t_mlx;
 
 int			check_file_ext(char *file);
 void		read_map(t_cub *cub, char *file);
 void		throw_err(t_cub *cub, char *err);
 int			save_map(char **acc, char *line);
-int			ft_isspace(char c);
+int 		ft_isvalid(t_cub *cub, int y, int x);
 void		check_valid(t_cub *cub);
