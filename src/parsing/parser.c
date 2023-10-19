@@ -3,21 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/18 22:39:03 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:17:23 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
+///Store map info in the cub struct
+///@param cub The cub struct
+///@param acc The map file content
 void	store_info(t_cub *cub, char *acc)
 {
 	char	**colors;
 
 	cub->file = ft_split(acc, '\n');
-	cub->north_texture = ft_strchr(cub->file[0], '.');
+	cub->north_texture = ft_strchr(cub->file[0], '.');//! This can't be hard coded according to the suject
 	cub->south_texture = ft_strchr(cub->file[1], '.');
 	cub->west_texture = ft_strchr(cub->file[2], '.');
 	cub->east_texture = ft_strchr(cub->file[3], '.');
@@ -25,14 +28,17 @@ void	store_info(t_cub *cub, char *acc)
 	cub->floor_color.r = ft_atoi(colors[0]);
 	cub->floor_color.g = ft_atoi(colors[1]);
 	cub->floor_color.b = ft_atoi(colors[2]);
-	colors = ft_split(cub->file[5], ',');
+	colors = ft_split(cub->file[5], ',');//! Leak here, it's being assigned a new value without freeing the old one
 	cub->ceiling_color.r = ft_atoi(colors[0]);
 	cub->ceiling_color.g = ft_atoi(colors[1]);
 	cub->ceiling_color.b = ft_atoi(colors[2]);
-	free(colors);
+	free(colors);//! Leak here, it's freeing the pointer but not the content
 	check_valid(cub);
 }
 
+///Read the map file
+///@param cub The cub struct
+///@param file The map file
 void	read_map(t_cub *cub, char *file)
 {
 	int		fd;
@@ -50,7 +56,7 @@ void	read_map(t_cub *cub, char *file)
 			break ;
 	}
 	close(fd);
-	while (1)
+	while (1) //?is this supposed to be repeated?
 	{
 		line = get_next_line(fd);
 		if (!line)
@@ -61,6 +67,11 @@ void	read_map(t_cub *cub, char *file)
 	store_info(cub, acc);
 }
 
+/// Check if the line is valid
+/// @param cub The cub struct
+/// @param y The y coordinate
+/// @param x The x coordinate
+/// @param c The character to check
 void	check_valid_line(t_cub *cub, int y, int x, char c)
 {
 	if (cub->map[y][x] == c)
@@ -80,6 +91,8 @@ void	check_valid_line(t_cub *cub, int y, int x, char c)
 		throw_err("Invalid map");
 }
 
+///Fill the map **char with the map content, filling empty spaces with spaces
+///@param cub The cub struct
 char	**set_map_even(t_cub *cub)
 {
 	int	i;
@@ -91,7 +104,7 @@ char	**set_map_even(t_cub *cub)
 		i++;
 	cub->map = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
-	j = 5;
+	j = 5; //!Issue here, it assumes the map starts at line 5
 	cub->width = 0;
 	while (cub->file[++j])
 	{
@@ -106,9 +119,11 @@ char	**set_map_even(t_cub *cub)
 		ft_memcpy(cub->map[i], cub->file[j], ft_strlen(cub->file[j]));
 		i++;
 	}
-	return(cub->map);
+	return (cub->map);
 }
 
+///Check if the map is valid
+///@param cub The cub struct
 void	check_valid(t_cub *cub)
 {
 	int	i;
@@ -126,7 +141,7 @@ void	check_valid(t_cub *cub)
 			{
 				if (i == 0)
 					check_valid_line(cub, i, j, '1');
-				if(i == cub->height - 1)
+				else if (i == cub->height - 1)
 					check_valid_line(cub, i, j, '1');
 				else
 				{

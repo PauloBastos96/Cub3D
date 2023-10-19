@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/17 18:39:34 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:47:02 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
-    t_cub cub;
+	t_cub	cub;
 
-    if (ac != 2)
-        return (printf("Too many arguments\n"), 0);
-    if (check_file_ext(av[1]))
-        return (0);
-    read_map(&cub, av[1]);
+	if (ac != 2)
+		return (printf("Too many arguments\n"), 0);
+	if (check_file_ext(av[1]))
+		return (0);
+	read_map(&cub, av[1]);
 }

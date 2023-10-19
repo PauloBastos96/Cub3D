@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/18 22:23:59 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/19 12:47:24 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 typedef struct s_rgb
 {
-	int r;
-	int g;
-	int b;
+	int	r;
+	int	g;
+	int	b;
 }		t_rgb;
 
 typedef struct s_mlx
@@ -47,5 +47,5 @@ int			check_file_ext(char *file);
 void		read_map(t_cub *cub, char *file);
 void		throw_err(char *err);
 int			save_map(char **acc, char *line);
-int 		ft_isvalid(t_cub *cub, int y, int x);
+int			ft_isvalid(t_cub *cub, int y, int x);
 void		check_valid(t_cub *cub);

@@ -3,29 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/18 22:23:47 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:13:44 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-void throw_err(char *err)
+///Print error message and exit game
+///@param err The error message
+void	throw_err(char *err)
 {
-    printf("Error\n%s\n", err);
-    exit(0);
+	printf("Error\n%s\n", err);
+	exit(0);
 }
 
+///Save the map file content in a string
+///@param acc The string to store the map file content
+///@param line The line read from the map file
+///@return 1 if the line is not empty, 0 otherwise
 int	save_map(char **acc, char *line)
 {
 	char	*new;
 
 	if (!line || *line == '\0')
 	{
-        if(line)
-		    free(line);
+		if (line)
+			free(line);
 		return (0);
 	}
 	new = ft_strjoin(*acc, line);
@@ -34,29 +40,37 @@ int	save_map(char **acc, char *line)
 	return (1);
 }
 
-int check_file_ext(char *file)
+///Check if the file extension is .cub
+///@param file The file name
+///@return 0 if the file extension is .cub, 1 otherwise
+int	check_file_ext(char *file)
 {
-    char *dot;
+	char	*dot;
 
-    dot = ft_strrchr(file, '.');
-    if(!dot)
-        return(printf("Error\nNo file extension\n"),1);
-    if(ft_strcmp(dot, ".cub") != 0)
-        return(printf("Error\nInvalid file extension\n"),1);
-    return(0);
+	dot = ft_strrchr(file, '.');
+	if (!dot)
+		return (printf("Error\nNo file extension\n"), 1);
+	if (ft_strcmp(dot, ".cub") != 0)
+		return (printf("Error\nInvalid file extension\n"), 1);
+	return (0);
 }
 
-int ft_isvalid(t_cub *cub, int y, int x)
+///Check if the map is valid
+///@param cub The cub struct
+///@param y The y coordinate
+///@param x The x coordinate
+///@return 0 if the map is valid, 1 otherwise
+int	ft_isvalid(t_cub *cub, int y, int x)
 {
-    if(ft_strchr("NWES01", cub->map[y][x]) == NULL)
-        return(1);
-    if(ft_strchr("NWES01", cub->map[y + 1][x]) == NULL)
-        return(1);
-    if(ft_strchr("NWES01", cub->map[y - 1][x]) == NULL)
-        return(1);
-    if(ft_strchr("NWES01", cub->map[y][x + 1]) == NULL)
-        return(1);
-    if(ft_strchr("NWES01", cub->map[y][x - 1]) == NULL)
-        return(1);
-    return(0);
-}    
+	if (ft_strchr("NWES01", cub->map[y][x]) == NULL)
+		return (1);
+	if (ft_strchr("NWES01", cub->map[y + 1][x]) == NULL)
+		return (1);
+	if (ft_strchr("NWES01", cub->map[y - 1][x]) == NULL)
+		return (1);
+	if (ft_strchr("NWES01", cub->map[y][x + 1]) == NULL)
+		return (1);
+	if (ft_strchr("NWES01", cub->map[y][x - 1]) == NULL)
+		return (1);
+	return (0);
+}
