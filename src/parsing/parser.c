@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/19 13:17:23 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:52:18 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	store_info(t_cub *cub, char *acc)
 	char	**colors;
 
 	cub->file = ft_split(acc, '\n');
-	cub->north_texture = ft_strchr(cub->file[0], '.');//! This can't be hard coded according to the suject
+	cub->north_texture = ft_strchr(cub->file[0], '.');
 	cub->south_texture = ft_strchr(cub->file[1], '.');
 	cub->west_texture = ft_strchr(cub->file[2], '.');
 	cub->east_texture = ft_strchr(cub->file[3], '.');
@@ -104,7 +104,7 @@ char	**set_map_even(t_cub *cub)
 		i++;
 	cub->map = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
-	j = 5; //!Issue here, it assumes the map starts at line 5
+	j = 5;
 	cub->width = 0;
 	while (cub->file[++j])
 	{
