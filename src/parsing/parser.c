@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/20 15:52:18 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:03:15 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	store_info(t_cub *cub, char *acc)
 	char	**colors;
 
 	cub->file = ft_split(acc, '\n');
-	cub->north_texture = ft_strchr(cub->file[0], '.');
-	cub->south_texture = ft_strchr(cub->file[1], '.');
-	cub->west_texture = ft_strchr(cub->file[2], '.');
-	cub->east_texture = ft_strchr(cub->file[3], '.');
+	cub->north_texture = ft_strchr(cub->file[0], '/');
+	cub->south_texture = ft_strchr(cub->file[1], '/');
+	cub->west_texture = ft_strchr(cub->file[2], '/');
+	cub->east_texture = ft_strchr(cub->file[3], '/');
 	colors = ft_split(cub->file[4], ',');
 	cub->floor_color.r = ft_atoi(colors[0]);
 	cub->floor_color.g = ft_atoi(colors[1]);
@@ -76,8 +76,6 @@ void	check_valid_line(t_cub *cub, int y, int x, char c)
 {
 	if (cub->map[y][x] == c)
 		return ;
-	else
-		throw_err("Invalid map");
 	while (cub->map[y][x])
 	{
 		if (cub->map[y][x] == ' ')
@@ -103,6 +101,7 @@ char	**set_map_even(t_cub *cub)
 	while (cub->file[++j])
 		i++;
 	cub->map = ft_calloc(i + 1, sizeof(char *));
+	cub->height = i;
 	i = 0;
 	j = 5;
 	cub->width = 0;
@@ -114,12 +113,24 @@ char	**set_map_even(t_cub *cub)
 	j = 5;
 	while (cub->file[++j])
 	{
-		cub->map[i] = malloc(cub->width + 1);
+		cub->map[i] = ft_calloc(cub->width + 1, sizeof(char*));
 		ft_memset(cub->map[i], ' ', cub->width);
 		ft_memcpy(cub->map[i], cub->file[j], ft_strlen(cub->file[j]));
 		i++;
 	}
 	return (cub->map);
+}
+
+int	line_lenght(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+		i++;
+	while (line[i] != '1' && i > 0)
+		i--;
+	return (i);
 }
 
 ///Check if the map is valid
@@ -145,7 +156,8 @@ void	check_valid(t_cub *cub)
 					check_valid_line(cub, i, j, '1');
 				else
 				{
-					//printf("y: %d, x: %d, c : %c\n", i, j, cub->map[i][j + 1]);
+					check_valid_line(cub, i, 0, '1');
+					check_valid_line(cub, i, line_lenght(cub->map[i]), '1');
 					if (cub->map[i - 1][j] == ' ' || cub->map[i + 1][j] == ' '
 						|| cub->map[i][j - 1] == ' ' || cub->map[i][j
 						+ 1] == ' ' || ft_isvalid(cub, i, j) == 1)
