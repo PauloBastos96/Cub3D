@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/20 16:03:15 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:11:42 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ void	store_info(t_cub *cub, char *acc)
 	cub->floor_color.r = ft_atoi(colors[0]);
 	cub->floor_color.g = ft_atoi(colors[1]);
 	cub->floor_color.b = ft_atoi(colors[2]);
-	colors = ft_split(cub->file[5], ',');//! Leak here, it's being assigned a new value without freeing the old one
+	free_split(colors);
+	colors = ft_split(cub->file[5], ',');
 	cub->ceiling_color.r = ft_atoi(colors[0]);
 	cub->ceiling_color.g = ft_atoi(colors[1]);
 	cub->ceiling_color.b = ft_atoi(colors[2]);
-	free(colors);//! Leak here, it's freeing the pointer but not the content
+	free_split(colors);
 	check_valid(cub);
 }
 
@@ -65,6 +66,7 @@ void	read_map(t_cub *cub, char *file)
 			free(line);
 	}
 	store_info(cub, acc);
+	free(acc);
 }
 
 /// Check if the line is valid
@@ -119,18 +121,6 @@ char	**set_map_even(t_cub *cub)
 		i++;
 	}
 	return (cub->map);
-}
-
-int	line_lenght(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-		i++;
-	while (line[i] != '1' && i > 0)
-		i--;
-	return (i);
 }
 
 ///Check if the map is valid

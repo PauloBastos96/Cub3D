@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/20 15:52:15 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:13:33 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,23 @@ int	ft_isvalid(t_cub *cub, int y, int x)
 	return (0);
 }
 
+/// Get the line lenght, not counting spaces
+/// @param line The line to check
+/// @return The line lenght
+int	line_lenght(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+		i++;
+	while (line[i] != '1' && i > 0)
+		i--;
+	return (i);
+}
+
+/// Free the split array
+/// @param split Split array
 void	free_split(char **split)
 {
 	int	i;
