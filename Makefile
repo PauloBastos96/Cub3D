@@ -4,6 +4,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRCS	= src/main.c \
 		  src/parsing/parser.c \
 		  src/parsing/parsing_utils.c \
+		  src/parsing/map_parse_utils.c \
 
 MLX_PATH = ./minilibx-linux
 MLX = $(MLX_PATH)/libmlx_Linux.a

@@ -6,33 +6,75 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:10:53 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:46:46 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-void define_line_limiter(t_cub *cub)
+void check_textures(t_cub *cub)
 {
-	int j;
-	
-	cub->width = 0;
-	j = 5;
-	while (cub->file[++j])
-	{
-		if ((int)ft_strlen(cub->file[j]) > cub->width)
-			cub->width = ft_strlen(cub->file[j]);
-	}
+	if(!cub->north_texture || !cub->south_texture || !cub->west_texture
+		|| !cub->east_texture || !cub->floor_color
+		|| !cub->ceiling_color)
+		throw_err("Invalid file");
+	if(open(cub->north_texture, O_RDONLY) == -1
+		|| open(cub->south_texture, O_RDONLY) == -1
+		|| open(cub->west_texture, O_RDONLY) == -1
+		|| open(cub->east_texture, O_RDONLY) == -1)
+		throw_err("Invalid texture");
 }
 
-void	store_info(t_cub *cub, char *acc)
+t_rgb *get_color(char *line)
+{
+	t_rgb *color;
+	char **rgb;
+
+	color = ft_calloc(1, sizeof(t_rgb));
+	line = ft_strchr(line, ' ');
+	rgb = ft_split(line, ',');
+	color->r = ft_atoi(rgb[0]);
+	color->g = ft_atoi(rgb[1]);
+	color->b = ft_atoi(rgb[2]);
+	free(rgb[0]);
+	free(rgb[1]);
+	free(rgb[2]);
+	free(rgb);
+	return (color);
+}
+
+void store_info(t_cub *cub, char *acc)
+{
+	int i;
+
+	i = 0;
+	cub->file = ft_split(acc, '\n');
+	while(cub->file[i])
+	{
+		if(ft_strncmp(cub->file[i], "NO", 2) == 0)
+			cub->north_texture = ft_strchr(cub->file[i], '.');
+		if(ft_strncmp(cub->file[i], "SO", 2) == 0)
+			cub->south_texture = ft_strchr(cub->file[i], '.');
+		if(ft_strncmp(cub->file[i], "WE", 2) == 0)
+			cub->west_texture = ft_strchr(cub->file[i], '.');
+		if(ft_strncmp(cub->file[i], "EA", 2) == 0)
+			cub->east_texture = ft_strchr(cub->file[i], '.');
+		if(ft_strncmp(cub->file[i], "F ", 2) == 0)
+			cub->floor_color = get_color(cub->file[i]);
+		if(ft_strncmp(cub->file[i], "C ", 2) == 0)
+			cub->ceiling_color = get_color(cub->file[i]);
+		i++;
+	}
+	check_textures(cub);
+}
+
+void	store_map(t_cub *cub)
 {
 	int i;
 	int j;
 
 	j = 5;
 	i = 0;
-	cub->file = ft_split(acc, '\n');
 	define_line_limiter(cub);
 	while (cub->file[++j])
 		i++;
@@ -66,67 +108,8 @@ void	read_map(t_cub *cub, char *file)
 			break ;
 	}
 	close(fd);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		else
-			free(line);
-	}
 	store_info(cub, acc);
-}
-
-void	check_valid_line(char **map, int y, int x, char c)
-{
-	if (map[y][x] == c)
-		return ;
-	while (map[y][x])
-	{
-		if (map[y][x] == ' ')
-			x++;
-		else
-			break ;
-	}
-	if (map[y][x] == c)
-		return ;
-	else
-		throw_err("Invalid map");
-}
-
-char	**set_map_even(t_cub *cub)
-{
-	int	i;
-	int	j;
-	char **map;
-	
-	i = 0;
-	j = 5;
-	map = ft_calloc(cub->height + 1, sizeof(char *));
-	i = 0;
-	j = 5;
-	cub->width = 0;
-	define_line_limiter(cub);
-	while (cub->file[++j])
-	{
-		map[i] = ft_calloc(cub->width + 1, sizeof(char*));
-		ft_memset(map[i], ' ', cub->width);
-		ft_memcpy(map[i], cub->file[j], ft_strlen(cub->file[j]));
-		i++;
-	}
-	return(map);
-}
-
-int line_lenght(char *line)
-{
-    int i;
-    
-	i = 0;
-	while (line[i])
-		i++;
-	while (line[i] != '1' && i > 0)
-		i--;
-	return(i);
+	store_map(cub);
 }
 
 void	check_valid(t_cub *cub)
