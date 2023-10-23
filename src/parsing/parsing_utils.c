@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:40:26 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:52:52 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ int	check_file_ext(char *file)
 ///@param y The y coordinate
 ///@param x The x coordinate
 ///@return 0 if the map is valid, 1 otherwise
-int	ft_isvalid(t_cub *cub, int y, int x)
+int	ft_isvalid(char **map, int y, int x)
 {
-	if (ft_strchr("NWES01", cub->map[y][x]) == NULL)
+	if (ft_strchr("NWES01", map[y][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", cub->map[y + 1][x]) == NULL)
+	if (ft_strchr("NWES01", map[y + 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", cub->map[y - 1][x]) == NULL)
+	if (ft_strchr("NWES01", map[y - 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", cub->map[y][x + 1]) == NULL)
+	if (ft_strchr("NWES01", map[y][x + 1]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", cub->map[y][x - 1]) == NULL)
+	if (ft_strchr("NWES01", map[y][x - 1]) == NULL)
 		return (1);
 	return (0);
 }

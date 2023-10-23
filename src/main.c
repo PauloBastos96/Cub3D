@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:35:57 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 15:07:38 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ int	main(int ac, char **av)
 		return (0);
 	read_map(&cub, av[1]);
 	free_split(cub.file);
-	free_map(cub);
+	free_map(&cub);
 	return (0);
 }
