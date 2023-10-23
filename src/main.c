@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/17 18:39:34 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/23 11:56:19 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main(int ac, char **av)
 {
     t_cub cub;
-
+    
     if (ac != 2)
         return (printf("Too many arguments\n"), 0);
     if (check_file_ext(av[1]))

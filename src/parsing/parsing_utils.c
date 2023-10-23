@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/18 22:23:47 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/23 10:46:56 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ int check_file_ext(char *file)
     return(0);
 }
 
-int ft_isvalid(t_cub *cub, int y, int x)
+int ft_isvalid(char **map, int y, int x)
 {
-    if(ft_strchr("NWES01", cub->map[y][x]) == NULL)
+    if(ft_strchr("NWES01", map[y][x]) == NULL)
         return(1);
-    if(ft_strchr("NWES01", cub->map[y + 1][x]) == NULL)
+    if(ft_strchr("NWES01", map[y + 1][x]) == NULL)
         return(1);
-    if(ft_strchr("NWES01", cub->map[y - 1][x]) == NULL)
+    if(ft_strchr("NWES01", map[y - 1][x]) == NULL)
         return(1);
-    if(ft_strchr("NWES01", cub->map[y][x + 1]) == NULL)
+    if(ft_strchr("NWES01", map[y][x + 1]) == NULL)
         return(1);
-    if(ft_strchr("NWES01", cub->map[y][x - 1]) == NULL)
+    if(ft_strchr("NWES01", map[y][x - 1]) == NULL)
         return(1);
     return(0);
 }    
