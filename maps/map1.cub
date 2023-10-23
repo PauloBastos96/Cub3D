@@ -1,7 +1,7 @@
-NO /text/qwe
-SO /text
-WE /text
-EA /text
+NO ./src/textures/qwe
+SO ./src/textures/qwe
+WE ./src/textures/qwe
+EA ./src/textures/qwe
 
 F 220,100,0
 C 225,30,0

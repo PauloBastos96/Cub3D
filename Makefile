@@ -1,10 +1,23 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
+#    Updated: 2023/10/23 20:50:21 by paulorod         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRCS =	src/main.c \
 		src/cleaners.c \
 		src/parsing/parser.c \
-		src/parsing/parsing_utils.c
+		src/parsing/parsing_utils.c \
+		src/parsing/map_parse_utils.c \
 
 MLX_PATH = ./minilibx-linux
 MLX = $(MLX_PATH)/libmlx_Linux.a

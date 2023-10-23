@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:52:52 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 21:45:58 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 ///Print error message and exit game
 ///@param err The error message
-void	throw_err(char *err)
+void	throw_err(char *err, t_cub *cub)
 {
 	printf("Error\n%s\n", err);
-	exit(0);
+	exit_game(cub);
+	exit(1);
 }
 
 ///Save the map file content in a string
@@ -74,19 +75,4 @@ int	ft_isvalid(char **map, int y, int x)
 	if (ft_strchr("NWES01", map[y][x - 1]) == NULL)
 		return (1);
 	return (0);
-}
-
-/// Get the line lenght, not counting spaces
-/// @param line The line to check
-/// @return The line lenght
-int	line_lenght(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-		i++;
-	while (line[i] != '1' && i > 0)
-		i--;
-	return (i);
 }

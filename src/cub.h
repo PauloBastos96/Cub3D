@@ -6,14 +6,17 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 15:07:45 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 22:02:47 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Libft/libft.h"
-#include "../minilibx-linux/mlx.h"
-#include "string.h"
-#include <fcntl.h>
+#ifndef CUB_H
+# define CUB_H
+
+# include "../Libft/libft.h"
+# include "../minilibx-linux/mlx.h"
+# include "string.h"
+# include <fcntl.h>
 
 typedef struct s_rgb
 {
@@ -30,8 +33,8 @@ typedef struct s_mlx
 
 typedef struct s_player
 {
-	float	x;
-	float	y;
+	float	pos_x;
+	float	pos_y;
 	float	dir_x;
 	float	dir_y;
 }			t_player;
@@ -47,16 +50,23 @@ typedef struct s_cub
 	char	*sprite;
 	int		height;
 	int		width;
-	t_rgb	floor_color;
-	t_rgb	ceiling_color;
+	t_rgb	*floor_color;
+	t_rgb	*ceiling_color;
 }			t_cub;
 
 int			check_file_ext(char *file);
-void		read_map(t_cub *cub, char *file);
-void		throw_err(char *err);
 int			save_map(char **acc, char *line);
 int			ft_isvalid(char **map, int y, int x);
 int			line_lenght(char *line);
-void		check_valid(t_cub *cub);
+void		read_map(t_cub *cub, char *file);
+void		throw_err(char *err, t_cub *cub);
+int			check_valid(t_cub *cub);
 void		free_split(char **split);
 void		free_map(t_cub *cub);
+void		define_line_limiter(t_cub *cub);
+void		check_valid_line(char **map, int y, int x, t_cub *cub);
+void		free_colors(t_cub *cub);
+void		exit_game(t_cub *cub);
+char		**set_map_even(t_cub *cub);
+
+#endif
