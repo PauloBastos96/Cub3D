@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/20 16:13:33 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:40:26 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	save_map(char **acc, char *line)
 		return (0);
 	}
 	new = ft_strjoin(*acc, line);
+	free(*acc);
 	*acc = new;
 	free(line);
 	return (1);
@@ -88,16 +89,4 @@ int	line_lenght(char *line)
 	while (line[i] != '1' && i > 0)
 		i--;
 	return (i);
-}
-
-/// Free the split array
-/// @param split Split array
-void	free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
 }

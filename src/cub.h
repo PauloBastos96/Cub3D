@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/20 16:06:48 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:43:29 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@ typedef struct s_mlx
 	void	*mlx;
 	void	*win;
 }			t_mlx;
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+	float	dir_x;
+	float	dir_y;
+}			t_player;
 
 typedef struct s_cub
 {
@@ -51,3 +59,4 @@ int			ft_isvalid(t_cub *cub, int y, int x);
 int			line_lenght(char *line);
 void		check_valid(t_cub *cub);
 void		free_split(char **split);
+void		free_map(t_cub cub);

@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleaners.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 12:35:57 by paulorod         ###   ########.fr       */
+/*   Created: 2023/10/23 12:27:19 by paulorod          #+#    #+#             */
+/*   Updated: 2023/10/23 12:36:39 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	main(int ac, char **av)
+/// Free a split array
+/// @param split Split array
+void	free_split(char **split)
 {
-	t_cub	cub;
+	int	i;
 
-	if (ac != 2)
-		return (printf("Too many arguments\n"), 0);
-	if (check_file_ext(av[1]))
-		return (0);
-	read_map(&cub, av[1]);
-	free_split(cub.file);
-	free_map(cub);
-	return (0);
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+}
+
+/// Free the map
+/// @param cub Cub struct
+void	free_map(t_cub cub)
+{
+	int	i;
+
+	i = 0;
+	while (cub.map[i])
+	{
+		free(cub.map[i]);
+		i++;
+	}
+	free(cub.map);
 }
