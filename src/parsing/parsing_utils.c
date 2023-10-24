@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 12:33:52 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:26:59 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ///@param err The error message
 void	throw_err(char *err, t_cub *cub)
 {
-	printf("Error\n%s\n", err);
+	printf("%s[ERROR]\n%s%s\n", RED, err, RESET);
 	exit_game(cub);
 	exit(1);
 }

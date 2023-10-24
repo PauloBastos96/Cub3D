@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 11:22:24 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/24 12:29:57 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:24:59 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@
 # include <stdbool.h>
 # include <stdarg.h>
 # include <stdint.h>
+
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32m"
+# define YELLOW "\033[0;33m"
+# define BLUE "\033[0;34m"
+# define PURPLE "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define MAGENTA "\033[0;37m"
+# define RESET "\033[0m"
 
 typedef struct s_list
 {

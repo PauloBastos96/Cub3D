@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 12:40:10 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:21:55 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 
 	cub = ft_calloc(1, sizeof(t_cub));
 	if (ac != 2)
-		return (printf("Invalid arguments\n"), 0);
+		throw_err("Invalid arguments", cub);
 	if (check_file_ext(av[1]))
 		return (0);
 	read_map(cub, av[1]);
