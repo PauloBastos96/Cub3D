@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 22:02:47 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:50:20 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ int			check_file_ext(char *file);
 int			save_map(char **acc, char *line);
 int			ft_isvalid(char **map, int y, int x);
 int			line_lenght(char *line);
+int			check_map_walls(char **map, int i, int j, t_cub *cub);
+int			check_valid(t_cub *cub);
 void		read_map(t_cub *cub, char *file);
 void		throw_err(char *err, t_cub *cub);
-int			check_valid(t_cub *cub);
 void		free_split(char **split);
 void		free_map(t_cub *cub);
 void		define_line_limiter(t_cub *cub);
@@ -68,5 +69,6 @@ void		check_valid_line(char **map, int y, int x, t_cub *cub);
 void		free_colors(t_cub *cub);
 void		exit_game(t_cub *cub);
 char		**set_map_even(t_cub *cub);
+t_rgb		*get_color(char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 13:26:59 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:49:19 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,22 @@ int	ft_isvalid(char **map, int y, int x)
 	if (ft_strchr("NWES01", map[y][x + 1]) == NULL)
 		return (1);
 	if (ft_strchr("NWES01", map[y][x - 1]) == NULL)
+		return (1);
+	return (0);
+}
+
+/// Check if map is closed by walls
+/// @param map The map as a double array
+/// @param i The line index
+/// @param j The column index
+/// @param cub The cub struct
+/// @return 1 if the map is not closed, 0 otherwise
+int	check_map_walls(char **map, int i, int j, t_cub *cub)
+{
+	check_valid_line(map, i, 0, cub);
+	check_valid_line(map, i, line_lenght(map[i]), cub);
+	if (map[i - 1][j] == ' ' || map[i + 1][j] == ' ' || map[i][j - 1] == ' ' 
+		|| map[i][j + 1] == ' ' || ft_isvalid(map, i, j) == 1)
 		return (1);
 	return (0);
 }

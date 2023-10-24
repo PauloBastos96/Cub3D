@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 13:09:48 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:50:32 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,6 @@ void	check_textures(t_cub *cub)
 		|| open(cub->west_texture, O_RDONLY) == -1
 		|| open(cub->east_texture, O_RDONLY) == -1)
 		throw_err("Invalid texture", cub);
-}
-
-/// Set colors from the map file
-/// @param line The color line
-/// @return The color in a t_rgb struct
-t_rgb	*get_color(char *line)
-{
-	t_rgb	*color;
-	char	**rgb;
-
-	color = ft_calloc(1, sizeof(t_rgb));
-	line = ft_strchr(line, ' ');
-	rgb = ft_split(line, ',');
-	if (!rgb[0] || !rgb[1] || !rgb[2])
-		return (free_split(rgb), free(color), NULL);
-	color->r = ft_atoi(rgb[0]);
-	color->g = ft_atoi(rgb[1]);
-	color->b = ft_atoi(rgb[2]);
-	free_split(rgb);
-	return (color);
 }
 
 /// Store textures and colors in the cub struct
@@ -140,37 +120,23 @@ int	check_valid(t_cub *cub)
 	int		j;
 	char	**map;
 
-	i = 0;
+	i = -1;
 	j = 5;
 	map = set_map_even(cub);
-	while (map[i])
+	while (map[++i])
 	{
 		j = 0;
 		while (map[i][j])
 		{
 			if (ft_strchr("0NSWE", map[i][j]))
 			{
-				if (i == 0)
+				if (i == 0 || i == cub->height - 1)
 					check_valid_line(map, i, j, cub);
-				else if (i == cub->height - 1)
-					check_valid_line(map, i, j, cub);
-				else
-				{
-					check_valid_line(map, i, 0, cub);
-					check_valid_line(map, i, line_lenght(map[i]), cub);
-					if (map[i - 1][j] == ' ' || map[i + 1][j] == ' '
-						|| map[i][j - 1] == ' ' || map[i][j
-						+ 1] == ' ' || ft_isvalid(map, i, j) == 1)
-					{
-						free_split(map);
-						return (1);
-					}
-				}
+				else if (check_map_walls(map, i, j, cub))
+					return (free_split(map), 1);
 			}
 			j++;
 		}
-		i++;
 	}
-	free_split(map);
-	return (0);
+	return (free_split(map), 0);
 }

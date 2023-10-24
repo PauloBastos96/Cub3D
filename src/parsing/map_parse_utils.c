@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 21:57:24 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 13:50:06 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,24 @@ int	line_lenght(char *line)
 	while (line[i] != '1' && i > 0)
 		i--;
 	return (i);
+}
+
+/// Set colors from the map file
+/// @param line The color line
+/// @return The color in a t_rgb struct
+t_rgb	*get_color(char *line)
+{
+	t_rgb	*color;
+	char	**rgb;
+
+	color = ft_calloc(1, sizeof(t_rgb));
+	line = ft_strchr(line, ' ');
+	rgb = ft_split(line, ',');
+	if (!rgb[0] || !rgb[1] || !rgb[2])
+		return (free_split(rgb), free(color), NULL);
+	color->r = ft_atoi(rgb[0]);
+	color->g = ft_atoi(rgb[1]);
+	color->b = ft_atoi(rgb[2]);
+	free_split(rgb);
+	return (color);
 }
