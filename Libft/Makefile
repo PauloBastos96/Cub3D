@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/17 11:33:18 by paulorod          #+#    #+#              #
-#    Updated: 2023/09/26 13:57:58 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/24 12:28:32 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS = ft_atoi.c \
 	ft_strncmp.c \
 	ft_strnstr.c \
 	ft_strrchr.c \
+	ft_strrep.c \
 	ft_strtrim.c \
 	ft_substr.c \
 	ft_tolower.c \
