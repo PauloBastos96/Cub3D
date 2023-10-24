@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/23 21:45:58 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/24 12:33:52 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@ void	throw_err(char *err, t_cub *cub)
 ///@return 1 if the line is not empty, 0 otherwise
 int	save_map(char **acc, char *line)
 {
-	char	*new;
-
 	if (!line || *line == '\0')
 	{
 		if (line)
 			free(line);
 		return (0);
 	}
-	new = ft_strjoin(*acc, line);
-	free(*acc);
-	*acc = new;
+	*acc = ft_strrep(*acc, line);
 	free(line);
 	return (1);
 }

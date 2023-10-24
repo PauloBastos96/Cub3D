@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrep.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 12:40:10 by paulorod         ###   ########.fr       */
+/*   Created: 2023/10/24 12:24:27 by paulorod          #+#    #+#             */
+/*   Updated: 2023/10/24 12:54:39 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+/*Join s1 and s2, replacing s1*/
+char	*ft_strrep(char *s1, char *s2)
 {
-	t_cub	*cub;
+	char	*new;
 
-	cub = ft_calloc(1, sizeof(t_cub));
-	if (ac != 2)
-		return (printf("Invalid arguments\n"), 0);
-	if (check_file_ext(av[1]))
-		return (0);
-	read_map(cub, av[1]);
-	exit_game(cub);
-	return (0);
+	if (!s1 && s2)
+		return (ft_strdup(s2));
+	if (!s2 && s1)
+		return (s1);
+	if (!s1 && !s2)
+		return (NULL);
+	new = ft_strjoin(s1, s2);
+	free(s1);
+	return (new);
 }
