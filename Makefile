@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
+#    By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/10/23 20:50:21 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/25 13:32:41 by ffilipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS =	src/main.c \
 		src/parsing/parser.c \
 		src/parsing/parsing_utils.c \
 		src/parsing/map_parse_utils.c \
+		src/utils.c
 
 MLX_PATH = ./minilibx-linux
 MLX = $(MLX_PATH)/libmlx_Linux.a
