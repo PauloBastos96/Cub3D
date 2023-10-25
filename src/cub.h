@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 13:50:20 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:56:45 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ typedef struct s_player
 
 typedef struct s_cub
 {
-	char	**file;
-	char	**map;
-	char	*north_texture;
-	char	*south_texture;
-	char	*west_texture;
-	char	*east_texture;
-	char	*sprite;
-	int		height;
-	int		width;
-	t_rgb	*floor_color;
-	t_rgb	*ceiling_color;
+	char		**file;
+	char		**map;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	char		*sprite;
+	int			height;
+	int			width;
+	t_rgb		*floor_color;
+	t_rgb		*ceiling_color;
+	t_player	*player;
 }			t_cub;
 
 int			check_file_ext(char *file);
@@ -68,6 +69,8 @@ void		define_line_limiter(t_cub *cub);
 void		check_valid_line(char **map, int y, int x, t_cub *cub);
 void		free_colors(t_cub *cub);
 void		exit_game(t_cub *cub);
+void		set_player_direction(t_player *player, char dir);
+void		check_player(char *line, int *counter);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
 

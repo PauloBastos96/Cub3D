@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 13:43:13 by ffilipe-         ###   ########.fr       */
+/*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
+/*   Updated: 2023/10/25 14:51:12 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int	main(int ac, char **av)
+///Print error message and exit game
+///@param err The error message
+void	throw_err(char *err, t_cub *cub)
 {
-	t_cub	*cub;
-
-	cub = ft_calloc(1, sizeof(t_cub));
-	cub->player = ft_calloc(sizeof(t_player), 1);
-	if (ac != 2)
-		throw_err("Invalid arguments", cub);
-	if (check_file_ext(av[1]))
-		return (0);
-	read_map(cub, av[1]);
+	printf("%s[ERROR]\n%s%s\n", RED, err, RESET);
 	exit_game(cub);
-	return (0);
+	exit(1);
 }

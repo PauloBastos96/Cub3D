@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/24 13:50:06 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:57:06 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,25 @@ char	**set_map_even(t_cub *cub)
 {
 	int		i;
 	int		j;
+	int		counter;
 	char	**map;
 
 	i = 0;
 	j = 5;
-	map = ft_calloc(cub->height + 1, sizeof(char *));
-	i = 0;
-	j = 5;
+	counter = 0;
 	cub->width = 0;
+	map = ft_calloc(cub->height + 1, sizeof(char *));
 	define_line_limiter(cub);
 	while (cub->file[++j])
 	{
+		check_player(cub->file[j], &counter);
 		map[i] = ft_calloc(cub->width + 1, sizeof(char *));
 		ft_memset(map[i], ' ', cub->width);
 		ft_memcpy(map[i], cub->file[j], ft_strlen(cub->file[j]));
 		i++;
 	}
+	if (counter != 1)
+		throw_err("Invalid amount of players", cub);
 	return (map);
 }
 
