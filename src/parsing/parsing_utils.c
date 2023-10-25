@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 13:38:03 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:56:05 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-void get_direction(t_player *player, char dir)
-{
-	if(dir == 'N')
-	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-	}
-	else if(dir == 'S')
-	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-	}
-	else if(dir == 'W')
-	{
-		player->dir_x = -1;
-		player->dir_y = 0;
-	}
-	else if(dir == 'E')
-	{
-		player->dir_x = 1;
-		player->dir_y = 0;
-	}
-}
 
 ///Save the map file content in a string
 ///@param acc The string to store the map file content
@@ -96,11 +72,11 @@ int	ft_isvalid(char **map, int y, int x)
 /// @return 1 if the map is not closed, 0 otherwise
 int	check_map_walls(char **map, int y, int x, t_cub *cub)
 {
-	if(ft_strchr("NSWE", map[y][x]))
+	if (ft_strchr("NSWE", map[y][x]))
 	{
 		cub->player->pos_x = x;
 		cub->player->pos_y = y;
-		get_direction(cub->player, map[y][x]);
+		set_player_direction(cub->player, map[y][x]);
 	}
 	check_valid_line(map, y, 0, cub);
 	check_valid_line(map, y, line_lenght(map[y]), cub);

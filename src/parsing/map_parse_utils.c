@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 13:59:23 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:57:06 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,6 @@ void	check_valid_line(char **map, int y, int x, t_cub *cub)
 	}
 }
 
-void check_player(char *line, int *counter)
-{
-	int i;
-
-	i = 0;
-	while(line[i])
-	{
-		if(ft_strchr("NSWE", line[i]))
-			(*counter)++;
-		i++;
-	}
-}
-
 /// Fill map with data and spaces on empty spaces
 /// @param cub The cub struct
 /// @return The map in a double array
@@ -72,7 +59,7 @@ char	**set_map_even(t_cub *cub)
 {
 	int		i;
 	int		j;
-	int 	counter;
+	int		counter;
 	char	**map;
 
 	i = 0;
@@ -89,8 +76,8 @@ char	**set_map_even(t_cub *cub)
 		ft_memcpy(map[i], cub->file[j], ft_strlen(cub->file[j]));
 		i++;
 	}
-	if(counter != 1)
-		throw_err("Invalid amount of players",cub);
+	if (counter != 1)
+		throw_err("Invalid amount of players", cub);
 	return (map);
 }
 
