@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaners.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:27:19 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/24 12:46:46 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/25 14:00:23 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	exit_game(t_cub *cub)
 	free_split(cub->file);
 	free_map(cub);
 	free_colors(cub);
+	free(cub->player);
 	free(cub);
 	exit(0);
 }
