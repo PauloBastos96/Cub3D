@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/10/25 16:24:55 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/26 13:43:13 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRCS =	src/main.c \
 		src/parsing/map_parse_utils.c \
 		src/parsing/player_parse_utils.c \
 		src/rendering/mlx_initialization.c \
+		src/rendering/render_utils.c \
+		src/rendering/rendering.c \
 		src/utils.c
 
 MLX_PATH = ./minilibx-linux

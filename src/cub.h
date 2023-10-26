@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 16:26:26 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:50:19 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
 # define KEY_ESC 65307
+# define MAX_FPS 60
 
 typedef struct s_rgb
 {
@@ -69,9 +70,9 @@ typedef struct s_cub
 	char		*sprite;
 	int			height;
 	int			width;
-	int			last_frame;
 	void		*mlx;
 	void		*win;
+	bool		show_fps;
 	t_rgb		*floor_color;
 	t_rgb		*ceiling_color;
 	t_player	*player;
@@ -86,6 +87,7 @@ int			check_map_walls(char **map, int i, int j, t_cub *cub);
 int			check_valid(t_cub *cub);
 int			close_window_event(t_cub *cub);
 int			key_hook(int keycode, t_cub *cub);
+int			render_frame(t_cub *cub);
 void		register_hooks(t_cub *cub);
 void		mlx_setup(t_cub *cub);
 void		read_map(t_cub *cub, char *file);
@@ -100,5 +102,7 @@ void		set_player_direction(t_player *player, char dir);
 void		check_player(char *line, int *counter);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
+uint64_t	gettimeofday_ms(void);
+uint64_t	delta_time(void);
 
 #endif

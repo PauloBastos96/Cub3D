@@ -6,27 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/25 16:30:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/26 13:40:53 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-int	render_frame(t_cub *cub)
-{
-	int		fps;
-	char	*fps_s;
-
-	if (clock() - cub->last_frame < 16)
-		return (0);
-	fps = 1000 / (clock() - cub->last_frame);
-	fps_s = ft_itoa(fps);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
-	mlx_string_put(cub->mlx, cub->win, 10, 10, 0xffffff, fps_s);
-	cub->last_frame = clock();
-	free(fps_s);
-	return (0);
-}
 
 ///Process window close event
 /// @param cub The cub struct
@@ -43,6 +27,8 @@ int	key_hook(int keycode, t_cub *cub)
 {
 	if (keycode == KEY_ESC)
 		exit_game(cub);
+	if (keycode == XK_F3)
+		cub->show_fps = !cub->show_fps;
 	//movement_handler(keycode, cub);
 	return (0);
 }
@@ -57,6 +43,8 @@ void	register_hooks(t_cub *cub)
 	mlx_loop_hook(cub->mlx, render_frame, cub);
 }
 
+/// Initialize the mlx window
+/// @param cub The cub struct
 void	mlx_setup(t_cub *cub)
 {
 	cub->mlx = mlx_init();
