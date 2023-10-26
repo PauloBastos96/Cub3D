@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/26 13:50:19 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:00:19 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define WINDOW_HEIGHT 720
 # define KEY_ESC 65307
 # define MAX_FPS 60
+# define PLAYER_SPEED 0.1f
 
 typedef struct s_rgb
 {
@@ -70,6 +71,7 @@ typedef struct s_cub
 	char		*sprite;
 	int			height;
 	int			width;
+	int			turning;
 	void		*mlx;
 	void		*win;
 	bool		show_fps;
@@ -100,6 +102,8 @@ void		free_colors(t_cub *cub);
 void		exit_game(t_cub *cub);
 void		set_player_direction(t_player *player, char dir);
 void		check_player(char *line, int *counter);
+void		movement_handler(int keycode, t_cub *cub);
+void		rotation_handler(int direction, t_cub *cub);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
 uint64_t	gettimeofday_ms(void);

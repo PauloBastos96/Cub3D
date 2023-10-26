@@ -10,6 +10,7 @@
                 "-Wextra",
                 "-Werror",
                 "-g",
+                "${fileDirname}/gameplay/player_controller.c",
                 "${fileDirname}/parsing/map_parse_utils.c",
                 "${fileDirname}/parsing/parser.c",
                 "${fileDirname}/parsing/parsing_utils.c",
@@ -24,6 +25,7 @@
                 "${fileDirname}/../minilibx-linux/libmlx_Linux.a",
                 "-lX11",
                 "-lXext",
+                "-lm",
                 "-o",
                 "${workspaceFolder}/cub3D"
             ],
