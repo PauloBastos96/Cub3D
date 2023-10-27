@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_initialization.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/26 13:40:53 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:53:01 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ int	key_hook(int keycode, t_cub *cub)
 		exit_game(cub);
 	if (keycode == XK_F3)
 		cub->show_fps = !cub->show_fps;
+	if(keycode == KEY_W && cub->map[(int)cub->player->pos_y][(int)cub->player->pos_x] != '1')
+		cub->player->pos_y -= 0.1;
+	if(keycode == KEY_S && cub->map[(int)cub->player->pos_y][(int)cub->player->pos_x] != '1')
+		cub->player->pos_y += 0.1;
+	if(keycode == KEY_A && cub->map[(int)cub->player->pos_y][(int)cub->player->pos_x] != '1')
+		cub->player->pos_x -= 0.1;
+	if(keycode == KEY_D && cub->map[(int)cub->player->pos_y][(int)cub->player->pos_x] != '1')
+		cub->player->pos_x += 0.1;
 	//movement_handler(keycode, cub);
 	return (0);
 }
@@ -38,6 +46,7 @@ int	key_hook(int keycode, t_cub *cub)
 void	register_hooks(t_cub *cub)
 {
 	mlx_key_hook(cub->win, key_hook, cub);
+	mlx_hook(cub->win, 02, 1L<<0, key_hook, cub);
 	mlx_hook(cub->win, DestroyNotify, StructureNotifyMask,
 		close_window_event, cub);
 	mlx_loop_hook(cub->mlx, render_frame, cub);

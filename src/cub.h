@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/27 14:05:12 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:04:44 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define WINDOW_HEIGHT 720
 # define KEY_ESC 65307
 # define MAX_FPS 60
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
 
 typedef struct s_rgb
 {
@@ -106,5 +110,6 @@ uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);
 void		cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y);
 void		set_pixel_color(t_image *img, int x, int y, int color);
+void		display_map(t_cub *cub);
 
 #endif
