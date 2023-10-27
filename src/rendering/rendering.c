@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/26 13:54:52 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:50:21 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	display_fps(t_cub *cub, uint64_t delta)
 	fps_s[0] = (fps / 10) + '0';
 	fps_s[1] = (fps % 10) + '0';
 	fps_s[2] = '\0';
-	mlx_string_put(cub->mlx, cub->win, 10, 10, 0xffffff, fps_s);
+	mlx_string_put(cub->mlx, cub->win, WINDOW_WIDTH - 20, 20, 0xffffff, fps_s);
 }
 
 ///Render a frame to the screen
@@ -40,6 +40,7 @@ int	render_frame(t_cub *cub)
 	last_update += delta_time();
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
+	display_map(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)
 		display_fps(cub, last_update);

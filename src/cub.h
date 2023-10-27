@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/26 16:00:19 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:21:25 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 # define KEY_ESC 65307
 # define MAX_FPS 60
 # define PLAYER_SPEED 0.1f
+# define ROTATION_SPEED 0.01f
+# define WALL_DISTANCE 0.1f
+
+enum	e_direction
+{
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT
+};
 
 typedef struct s_rgb
 {
@@ -104,9 +114,16 @@ void		set_player_direction(t_player *player, char dir);
 void		check_player(char *line, int *counter);
 void		movement_handler(int keycode, t_cub *cub);
 void		rotation_handler(int direction, t_cub *cub);
+void		cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y);
+void		set_pixel_color(t_image *img, int x, int y, int color);
+void		display_map(t_cub *cub);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
+t_image		*create_new_image(void *mlx, int width, int height);
 uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);
+float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
+float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
+bool		is_wall(t_cub *cub, enum e_direction direction);
 
 #endif

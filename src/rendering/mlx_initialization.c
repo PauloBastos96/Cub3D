@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/26 16:14:39 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:14:09 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	mouse_hook(int x, int y, t_cub *cub)
 /// @param cub The cub struct
 void	register_hooks(t_cub *cub)
 {
-	mlx_key_hook(cub->win, key_hook, cub);
+	mlx_hook(cub->win, KeyPress, KeyPressMask, key_hook, cub);
 	mlx_hook(cub->win, MotionNotify, PointerMotionMask,
 		mouse_hook, cub);
 	mlx_hook(cub->win, DestroyNotify, StructureNotifyMask,
@@ -67,7 +67,7 @@ void	mlx_setup(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D");
 	cub->frame_buffer = ft_calloc(sizeof(t_image), 1);
-	cub->frame_buffer->img = mlx_new_image(cub->mlx, 
+	cub->frame_buffer->img = mlx_new_image(cub->mlx,
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	cub->frame_buffer->addr = mlx_get_data_addr(cub->frame_buffer->img,
 			&(cub->frame_buffer->bpp),

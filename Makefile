@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/10/26 16:02:08 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/27 18:24:37 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 SRCS =	src/main.c \
 		src/cleaners.c \
 		src/gameplay/player_controller.c \
+		src/gameplay/player_movement_utils.c \
 		src/parsing/parser.c \
 		src/parsing/parsing_utils.c \
 		src/parsing/map_parse_utils.c \
@@ -23,6 +24,7 @@ SRCS =	src/main.c \
 		src/rendering/mlx_initialization.c \
 		src/rendering/render_utils.c \
 		src/rendering/rendering.c \
+		src/rendering/render_minimap.c \
 		src/utils.c
 
 MLX_PATH = ./minilibx-linux

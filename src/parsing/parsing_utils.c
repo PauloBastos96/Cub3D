@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 14:56:05 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 16:13:43 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	check_map_walls(char **map, int y, int x, t_cub *cub)
 	}
 	check_valid_line(map, y, 0, cub);
 	check_valid_line(map, y, line_lenght(map[y]), cub);
-	if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x - 1] == ' ' 
+	if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x - 1] == ' '
 		|| map[y][x + 1] == ' ' || ft_isvalid(map, y, x) == 1)
 		return (1);
 	return (0);
