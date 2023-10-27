@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/26 13:50:19 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/27 14:05:12 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
 uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);
+void		cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y);
+void		set_pixel_color(t_image *img, int x, int y, int color);
 
 #endif
