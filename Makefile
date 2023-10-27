@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/10/26 13:43:13 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/27 18:24:37 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRCS =	src/main.c \
 		src/cleaners.c \
+		src/gameplay/player_controller.c \
+		src/gameplay/player_movement_utils.c \
 		src/parsing/parser.c \
 		src/parsing/parsing_utils.c \
 		src/parsing/map_parse_utils.c \
@@ -22,6 +24,7 @@ SRCS =	src/main.c \
 		src/rendering/mlx_initialization.c \
 		src/rendering/render_utils.c \
 		src/rendering/rendering.c \
+		src/rendering/render_minimap.c \
 		src/utils.c
 
 MLX_PATH = ./minilibx-linux
@@ -35,7 +38,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT) $(MLX)
 	echo "\033[0;36m[COMPILING CUB3D]\033[0m"
-	$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIBFT) $(MLX) -lX11 -lXext
+	$(CC) $(CFLAGS) -o $(NAME) $(SRCS) $(LIBFT) $(MLX) -lX11 -lXext -lm
 $(LIBFT):
 	echo "\033[0;36m[COMPILING LIBFT]\033[0m"
 	make -C $(LIBFT_PATH) bonus
