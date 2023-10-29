@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/26 13:42:19 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/29 21:01:36 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	game_init(t_cub *cub)
 {
 	cub->show_fps = false;
 	cub->player = ft_calloc(sizeof(t_player), 1);
+	cub->player->dir_x = cos(cub->player->p_angle) * 5;
+	cub->player->dir_y = sin(cub->player->p_angle) * 5;
 	if (!cub->player)
 		throw_err("Couldn't create player struct", cub);
 	mlx_setup(cub);

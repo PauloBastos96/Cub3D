@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/27 18:21:25 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/29 20:25:47 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define PLAYER_SPEED 0.1f
 # define ROTATION_SPEED 0.01f
 # define WALL_DISTANCE 0.1f
+# define PI 3.14159265359
 
 enum	e_direction
 {
@@ -57,6 +58,7 @@ typedef struct s_player
 	float	pos_y;
 	float	dir_x;
 	float	dir_y;
+	float	p_angle;
 }			t_player;
 
 typedef struct s_image

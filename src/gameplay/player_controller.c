@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_controller.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/27 18:38:15 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/29 21:08:12 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,13 @@
 void	movement_handler(int keycode, t_cub *cub)
 {
 	if (keycode == XK_w && !is_wall(cub, UP))
-	{
-		cub->player->pos_x -= cub->player->dir_x * PLAYER_SPEED;
 		cub->player->pos_y -= cub->player->dir_y * PLAYER_SPEED;
-	}
 	if (keycode == XK_d && !is_wall(cub, RIGHT))
-	{
-		cub->player->pos_x += cub->player->dir_y * PLAYER_SPEED;
-		cub->player->pos_y -= cub->player->dir_x * PLAYER_SPEED;
-	}
-	if ((keycode == XK_s) && !is_wall(cub, DOWN))
-	{
 		cub->player->pos_x += cub->player->dir_x * PLAYER_SPEED;
+	if ((keycode == XK_s) && !is_wall(cub, DOWN))
 		cub->player->pos_y += cub->player->dir_y * PLAYER_SPEED;
-	}
 	if (keycode == XK_a && !is_wall(cub, LEFT))
-	{
-		cub->player->pos_x -= cub->player->dir_y * PLAYER_SPEED;
-		cub->player->pos_y += cub->player->dir_x * PLAYER_SPEED;
-	}
+		cub->player->pos_x -= cub->player->dir_x * PLAYER_SPEED;
 	if (keycode == XK_Left)
 		rotation_handler(-1, cub);
 	if (keycode == XK_Right)
@@ -49,11 +37,20 @@ void	movement_handler(int keycode, t_cub *cub)
 /// @param cub The cub struct
 void	rotation_handler(int direction, t_cub *cub)
 {
-	float	old_dir_x;
-
-	old_dir_x = cub->player->dir_x;
-	cub->player->dir_x = cub->player->dir_x * cos(direction * ROTATION_SPEED)
-		- cub->player->dir_y * sin(direction * ROTATION_SPEED);
-	cub->player->dir_y = old_dir_x * sin(direction * ROTATION_SPEED)
-		+ cub->player->dir_y * cos(direction * ROTATION_SPEED);
+	if(direction == -1)
+	{
+		cub->player->p_angle -= PLAYER_SPEED;
+		if(cub->player->p_angle < 0)
+			cub->player->p_angle += 2 * PI;
+		cub->player->dir_x = cos(cub->player->p_angle) * 5;
+		cub->player->dir_y = sin(cub->player->p_angle) * 5;
+	}	
+	else if(direction == 1)
+	{
+		cub->player->p_angle += PLAYER_SPEED;
+		if(cub->player->p_angle > 2 * PI)
+			cub->player->p_angle -= 2 * PI;
+		cub->player->dir_x = cos(cub->player->p_angle) * 5;
+		cub->player->dir_y = sin(cub->player->p_angle) * 5;
+	}
 }
