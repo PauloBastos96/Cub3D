@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_parse_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:54:42 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/25 14:55:55 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:05:55 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,25 @@ void	set_player_direction(t_player *player, char dir)
 	{
 		player->dir_x = 0;
 		player->dir_y = 1;
+		player->p_angle = PI / 2;
 	}
 	else if (dir == 'S')
 	{
 		player->dir_x = 0;
 		player->dir_y = -1;
+		player->p_angle = 3 * PI / 2;
 	}
 	else if (dir == 'W')
 	{
 		player->dir_x = -1;
 		player->dir_y = 0;
+		player->p_angle = PI;
 	}
 	else if (dir == 'E')
 	{
 		player->dir_x = 1;
 		player->dir_y = 0;
+		player->p_angle = 0;
 	}
 }
 

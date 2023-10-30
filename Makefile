@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
+#    By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/10/27 18:24:37 by paulorod         ###   ########.fr        #
+#    Updated: 2023/10/30 14:34:09 by ffilipe-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS =	src/main.c \
 		src/rendering/render_utils.c \
 		src/rendering/rendering.c \
 		src/rendering/render_minimap.c \
+		src/raycasting/raycaster.c \
 		src/utils.c
 
 MLX_PATH = ./minilibx-linux

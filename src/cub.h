@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 12:47:29 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:24:12 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define ROTATION_SPEED 0.01f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
+# define FOV 60
 
 enum	e_direction
 {
@@ -128,5 +129,6 @@ uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 bool		is_wall(t_cub *cub, enum e_direction direction);
+void		raycasting(t_cub *cub);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 13:22:26 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:39:25 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	display_map(t_cub *cub)
 	int		y;
 	int		x;
 
-	cub->minimap = create_new_image(cub->mlx, cub->width * 10, cub->height * 10);
 	y = 0;
 	x = 0;
 	while (cub->map[y])
@@ -77,16 +76,12 @@ void	display_map(t_cub *cub)
 		{
 			if (cub->map[y][x] == '1')
 				display_prop(cub->minimap, x, y, 0xffffff);
-			if (cub->map[y][x] == '0')
-				display_prop(cub->minimap, x, y, 0x008000);
-			if (ft_strchr("NSWE", cub->map[y][x]))
-				display_prop(cub->minimap, x, y, 0x008000);
+			else
+				display_prop(cub->minimap, x, y, 0x000000);
 			x++;
 		}
 		y++;
 	}
-	display_player(cub->minimap, 0xffff00);
+	display_player(cub, 0xffff00);
 	cpy_img_to_frame_buffer(cub->frame_buffer, *cub->minimap, 0, 0);
-	mlx_destroy_image(cub->mlx, cub->minimap->img);
-	free(cub->minimap);
 }
