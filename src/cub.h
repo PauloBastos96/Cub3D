@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/29 20:25:47 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/30 12:47:29 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_cub
 	t_rgb		*ceiling_color;
 	t_player	*player;
 	t_image		*frame_buffer;
+	t_image		*minimap;
 }			t_cub;
 
 int			check_file_ext(char *file);
