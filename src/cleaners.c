@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:27:19 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/25 16:06:09 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/28 15:42:29 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void	exit_game(t_cub *cub)
 	free_split(cub->map);
 	free(cub->player);
 	free_colors(cub);
+	mlx_destroy_image(cub->mlx, cub->minimap->img);
 	mlx_destroy_image(cub->mlx, cub->frame_buffer->img);
+	free(cub->minimap);
 	free(cub->frame_buffer);
 	mlx_destroy_window(cub->mlx, cub->win);
 	mlx_destroy_display(cub->mlx);

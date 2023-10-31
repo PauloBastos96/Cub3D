@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/27 16:13:43 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:15:11 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,6 @@ int	ft_isvalid(char **map, int y, int x)
 /// @return 1 if the map is not closed, 0 otherwise
 int	check_map_walls(char **map, int y, int x, t_cub *cub)
 {
-	if (ft_strchr("NSWE", map[y][x]))
-	{
-		cub->player->pos_x = x;
-		cub->player->pos_y = y;
-		set_player_direction(cub->player, map[y][x]);
-	}
 	check_valid_line(map, y, 0, cub);
 	check_valid_line(map, y, line_lenght(map[y]), cub);
 	if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x - 1] == ' '

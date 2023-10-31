@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/27 18:21:25 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/30 16:24:12 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define PLAYER_SPEED 0.1f
 # define ROTATION_SPEED 0.01f
 # define WALL_DISTANCE 0.1f
+# define PI 3.14159265359
+# define FOV 60
 
 enum	e_direction
 {
@@ -57,6 +59,7 @@ typedef struct s_player
 	float	pos_y;
 	float	dir_x;
 	float	dir_y;
+	float	p_angle;
 }			t_player;
 
 typedef struct s_image
@@ -89,6 +92,7 @@ typedef struct s_cub
 	t_rgb		*ceiling_color;
 	t_player	*player;
 	t_image		*frame_buffer;
+	t_image		*minimap;
 }			t_cub;
 
 int			check_file_ext(char *file);
@@ -125,5 +129,6 @@ uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 bool		is_wall(t_cub *cub, enum e_direction direction);
+void		raycasting(t_cub *cub);
 
 #endif
