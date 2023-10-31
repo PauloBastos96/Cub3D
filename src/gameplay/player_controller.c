@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/30 20:17:33 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:17:12 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	movement_handler(int keycode, t_cub *cub)
 		rotation_handler(-1, cub);
 	if (keycode == XK_Right)
 		rotation_handler(1, cub);
-	raycasting(cub);
+	//raycasting(cub);
 }
 
 /// Handle player rotation
@@ -51,13 +51,13 @@ void	rotation_handler(int direction, t_cub *cub)
 {
 	if (direction == -1)
 	{
-		cub->player->p_angle += PLAYER_SPEED;
+		cub->player->p_angle += ROTATION_SPEED;
 		if (cub->player->p_angle > 2 * PI)
 			cub->player->p_angle -= 2 * PI;
 	}
 	else if (direction == 1)
 	{
-		cub->player->p_angle -= PLAYER_SPEED;
+		cub->player->p_angle -= ROTATION_SPEED;
 		if (cub->player->p_angle < 0)
 			cub->player->p_angle += 2 * PI;
 	}

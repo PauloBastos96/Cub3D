@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 16:24:12 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/10/31 14:59:39 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define KEY_ESC 65307
 # define MAX_FPS 60
 # define PLAYER_SPEED 0.1f
-# define ROTATION_SPEED 0.01f
+# define ROTATION_SPEED 0.05f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
@@ -61,6 +61,12 @@ typedef struct s_player
 	float	dir_y;
 	float	p_angle;
 }			t_player;
+
+typedef struct s_ray
+{
+	float	x;
+	float	y;
+}			t_ray;
 
 typedef struct s_image
 {
