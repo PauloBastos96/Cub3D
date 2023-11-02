@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 18:11:53 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/27 18:13:40 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:53:55 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ float	get_next_player_x_pos(t_cub *cub, enum e_direction direction)
 
 	pos_x = cub->player->pos_x;
 	if (direction == UP)
-		pos_x -= cub->player->dir_x * PLAYER_SPEED;
+		pos_x -= cub->player->dir_x * PLAYER_SPEED + 0.2f;
 	if (direction == DOWN)
-		pos_x += cub->player->dir_x * PLAYER_SPEED;
+		pos_x += cub->player->dir_x * PLAYER_SPEED + 0.2f;
 	if (direction == RIGHT)
-		pos_x += cub->player->dir_x * PLAYER_SPEED;
+		pos_x += cub->player->dir_x * PLAYER_SPEED + 0.2f;
 	if (direction == LEFT)
-		pos_x -= cub->player->dir_x * PLAYER_SPEED;
+		pos_x -= cub->player->dir_x * PLAYER_SPEED + 0.2f;
 	return (roundf(pos_x));
 }
 
@@ -42,13 +42,13 @@ float	get_next_player_y_pos(t_cub *cub, enum e_direction direction)
 
 	pos_y = cub->player->pos_y;
 	if (direction == UP)
-		pos_y -= cub->player->dir_y * PLAYER_SPEED;
+		pos_y -= cub->player->dir_y * PLAYER_SPEED + 0.2f;
 	if (direction == DOWN)
-		pos_y += cub->player->dir_y * PLAYER_SPEED;
+		pos_y += cub->player->dir_y * PLAYER_SPEED + 0.2f;
 	if (direction == RIGHT)
-		pos_y -= cub->player->dir_y * PLAYER_SPEED;
+		pos_y -= cub->player->dir_y * PLAYER_SPEED + 0.2f;
 	if (direction == LEFT)
-		pos_y += cub->player->dir_y * PLAYER_SPEED;
+		pos_y += cub->player->dir_y * PLAYER_SPEED + 0.2f;
 	return (roundf(pos_y));
 }
 

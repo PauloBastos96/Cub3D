@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/31 14:59:39 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:38:42 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
+# define MAP_SCALE 20
 
 enum	e_direction
 {

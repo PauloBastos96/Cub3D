@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_minimap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 16:39:25 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/02 12:49:52 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ void	display_prop(t_image *minimap, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while (i < 10)
+	while (i < MAP_SCALE)
 	{
 		j = 0;
-		while (j < 10)
+		while (j < MAP_SCALE)
 		{
-			set_pixel_color(minimap, 10 * x + j, 10 * y + i, color);
+			set_pixel_color(minimap, MAP_SCALE * x + j,
+				MAP_SCALE * y + i, color);
 			j++;
 		}
 		i++;
@@ -46,14 +47,14 @@ void	display_player(t_cub *cub, int color)
 	float	i;
 	float	j;
 
-	i = 0;
-	j = 0;
-	while (i < 10)
+	i = -0.5 * MAP_SCALE;
+	while (i < MAP_SCALE / 2)
 	{
-		j = 0;
-		while (j < 10)
+		j = -0.5 * MAP_SCALE;
+		while (j < MAP_SCALE / 2)
 		{
-			set_pixel_color(cub->minimap, 10 * cub->player->pos_x + j , 10 * cub->player->pos_y + i, color);
+			set_pixel_color(cub->minimap, MAP_SCALE * cub->player->pos_x + j,
+				MAP_SCALE * cub->player->pos_y + i, color);
 			j++;
 		}
 		i++;
