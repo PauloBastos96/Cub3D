@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 12:38:42 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:56:36 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void		rotation_handler(int direction, t_cub *cub);
 void		cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y);
 void		set_pixel_color(t_image *img, int x, int y, int color);
 void		display_map(t_cub *cub);
+void		raycast_in_fov(t_cub *cub);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
 t_image		*create_new_image(void *mlx, int width, int height);
@@ -135,7 +136,7 @@ uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
+float		deg_to_rad(float deg);
 bool		is_wall(t_cub *cub, enum e_direction direction);
-void		raycasting(t_cub *cub);
 
 #endif
