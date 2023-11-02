@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 14:26:43 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:17:03 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y)
 		else
 		{
 			*x += x_offset;
-			if (cub->player->dir_y >= 0)
+			if (cub->player->dir_x > 0)
 				*y -= y_offset;
 			else
 				*y += y_offset;
@@ -102,7 +102,7 @@ void	draw_ray_from_player(t_cub *cub, float x, float y)
 
 	ray_x = cub->player->pos_x * MAP_SCALE;
 	ray_y = cub->player->pos_y * MAP_SCALE;
-	dist = get_distance(ray_x, ray_y, x, y) * MAP_SCALE;
+	dist = get_distance(ray_x, ray_y, x, y);
 	while (dist > 0)
 	{
 		set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0x00ff00);
@@ -129,8 +129,8 @@ void	raycasting(t_cub *cub)
 	vertical_hits(cub, &v_x, &v_y);
 	horizontal_hits(cub, &h_x, &h_y);
 
-	v_dist = get_distance(cub->player->pos_x, cub->player->pos_y, v_x, v_y);
-	h_dist = get_distance(cub->player->pos_x, cub->player->pos_y, h_x, h_y);
+	v_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, v_x, v_y);
+	h_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, h_x, h_y);
 
 	v_x = clamp(v_x, 0, cub->width * MAP_SCALE - 1);
 	v_y = clamp(v_y, 0, cub->height * MAP_SCALE - 1);
