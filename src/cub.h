@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 15:56:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/03 17:05:49 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define ROTATION_SPEED 0.05f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
-# define FOV 60
-# define MAP_SCALE 20
+# define FOV 90
+# define MAP_SCALE 15
 
 enum	e_direction
 {
