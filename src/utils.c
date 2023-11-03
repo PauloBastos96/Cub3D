@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/27 18:21:11 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:51:37 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,12 @@ t_image	*create_new_image(void *mlx, int width, int height)
 	new_image->w = width;
 	new_image->h = height;
 	return (new_image);
+}
+
+/// Convert degrees to radians
+/// @param deg Angle in degrees
+/// @return Angle in radians
+float	deg_to_rad(float deg)
+{
+	return (deg * (PI / 180));
 }

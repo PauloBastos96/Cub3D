@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/27 16:50:21 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:57:29 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	render_frame(t_cub *cub)
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
 	display_map(cub);
+	raycast_in_fov(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)
 		display_fps(cub, last_update);
