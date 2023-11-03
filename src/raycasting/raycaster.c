@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 16:08:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/03 13:42:54 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 	bool	hit;
 
 	y_offset = 0;
-	if (cub->player->dir_y > 0)
+	if (sinf(angle) > 0)
 	{
 		*y = (int)cub->player->pos_y * MAP_SCALE - 1;
 		y_offset = -MAP_SCALE;
 	}
-	if (cub->player->dir_y < 0)
+	if (sinf(angle) < 0)
 	{
 		*y = (int)cub->player->pos_y * MAP_SCALE + MAP_SCALE;
 		y_offset = MAP_SCALE;
@@ -38,7 +38,10 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 			hit = true;
 		else
 		{
-			*x += x_offset;
+			if (sinf(angle) > 0)
+				*x += x_offset;
+			else
+				*x -= x_offset;
 			*y += y_offset;
 		}
 	}
@@ -51,12 +54,12 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 	bool	hit;
 
 	x_offset = 0;
-	if (cub->player->dir_x > 0)
+	if (cosf(angle) > 0)
 	{
 		*x = (int)cub->player->pos_x * MAP_SCALE + MAP_SCALE;
 		x_offset = MAP_SCALE;
 	}
-	if (cub->player->dir_x < 0)
+	if (cosf(angle) < 0)
 	{
 		*x = (int)cub->player->pos_x * MAP_SCALE - 1;
 		x_offset = -MAP_SCALE;
@@ -71,7 +74,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 		else
 		{
 			*x += x_offset;
-			if (cub->player->dir_x > 0)
+			if (cosf(angle) > 0)
 				*y -= y_offset;
 			else
 				*y += y_offset;
@@ -166,11 +169,12 @@ void	raycast_in_fov(t_cub *cub)
 	float	step;
 
 	fov = deg_to_rad(FOV);
-	step = fov / cub->width;
+	step = fov / 100;
 	angle = cub->player->p_angle - (fov / 2);
 	while (angle < cub->player->p_angle + (fov / 2))
 	{
 		raycasting(cub, angle);
 		angle += step;
 	}
+	// raycasting(cub, cub->player->p_angle);
 }
