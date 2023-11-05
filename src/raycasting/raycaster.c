@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/03 17:32:25 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/05 23:34:09 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,31 +115,30 @@ void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 	}
 }
 
-void draw_walls(t_cub *cub, float dist, float angle, int i, int color)
+void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
 {
-	int p_height;
-	float p_plane;
-	float correct_dist;
-	int d_start;
-	int d_end;
+	int		p_height;
+	float	p_plane;
+	int		d_start;
+	int		d_end;
 
-	correct_dist = dist * cosf(deg_to_rad(cub->player->p_angle - angle));
-	p_plane = (WINDOW_WIDTH  / 2) / tanf(deg_to_rad(FOV / 2));
-	p_height = (MAP_SCALE / correct_dist) * p_plane;
+	(void)angle;
+	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
+	p_height = (MAP_SCALE / dist) * p_plane;
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
-	if(d_start < 0)
+	if (d_start < 0)
 		d_start = 0;
-	if(d_end >= WINDOW_HEIGHT)
+	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
-	while(d_start < d_end)
+	while (d_start < d_end)
 	{
 		set_pixel_color(cub->frame_buffer, i, d_start, color);
 		d_start++;
 	}
 }
 
-float get_min(float a, float b)
+float	get_min(float a, float b)
 {
 	if (a < b)
 		return (a);
@@ -178,6 +177,8 @@ void	raycasting(t_cub *cub, float angle, int i)
 	draw_walls(cub, get_min(v_dist, h_dist), angle, i, color);
 }
 
+
+
 void	draw_floor(t_cub *cub)
 {
 	int	i;
@@ -189,7 +190,7 @@ void	draw_floor(t_cub *cub)
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
-			set_pixel_color(cub->frame_buffer, j, i, 0x0000ff);
+			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->floor_color));
 			j++;
 		}
 		i++;
@@ -207,7 +208,7 @@ void draw_ceiling(t_cub *cub)
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
-			set_pixel_color(cub->frame_buffer, j, i, 0x00ff00);
+			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->ceiling_color));
 			j++;
 		}
 		i++;
@@ -219,19 +220,19 @@ void	raycast_in_fov(t_cub *cub)
 	float	angle;
 	float	fov;
 	float	step;
-	int i;
+	int		i;
 
 	draw_floor(cub);
 	draw_ceiling(cub);
-	i = 0;
+	i = WINDOW_WIDTH;
 	fov = deg_to_rad(FOV);
 	step = fov / WINDOW_WIDTH;
 	angle = cub->player->p_angle - (fov / 2);
-	while (i < WINDOW_WIDTH)
+	while (i > 0)
 	{
 		raycasting(cub, angle, i);
 		angle += step;
-		i++;
+		i--;
 	}
 	display_map(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);

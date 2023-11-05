@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/03 17:05:49 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/05 23:33:43 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define ROTATION_SPEED 0.05f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
-# define FOV 90
+# define FOV 60
 # define MAP_SCALE 15
 
 enum	e_direction
@@ -111,6 +111,7 @@ int			check_valid(t_cub *cub);
 int			close_window_event(t_cub *cub);
 int			key_hook(int keycode, t_cub *cub);
 int			render_frame(t_cub *cub);
+int			rgb_to_int(t_rgb *rgb);
 void		register_hooks(t_cub *cub);
 void		mlx_setup(t_cub *cub);
 void		read_map(t_cub *cub, char *file);
