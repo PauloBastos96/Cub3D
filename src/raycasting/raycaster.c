@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/03 17:32:25 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:52:01 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 			hit = true;
 		else
 		{
+			*y += y_offset;
 			if (sinf(angle) > 0)
 				*x += x_offset;
 			else
 				*x -= x_offset;
-			*y += y_offset;
 		}
 	}
 }

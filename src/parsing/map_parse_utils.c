@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 14:57:06 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/05 23:25:35 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,24 @@ int	line_lenght(char *line)
 	return (i);
 }
 
+char *to_hex(int n)
+{
+	char *hex;
+	char *hex_chars;
+	int i;
+
+	hex_chars = "0123456789ABCDEF";
+	hex = ft_calloc(1, sizeof(char));
+	i = 0;
+	while (n > 0)
+	{
+		hex[i] = hex_chars[n % 16];
+		n /= 16;
+		i++;
+	}
+	return (hex);
+}
+
 /// Set colors from the map file
 /// @param line The color line
 /// @return The color in a t_rgb struct
@@ -112,6 +130,7 @@ t_rgb	*get_color(char *line)
 	color->r = ft_atoi(rgb[0]);
 	color->g = ft_atoi(rgb[1]);
 	color->b = ft_atoi(rgb[2]);
+	color->hex = rgb_to_hex(color->r, color->g, color->b);
 	free_split(rgb);
 	return (color);
 }
