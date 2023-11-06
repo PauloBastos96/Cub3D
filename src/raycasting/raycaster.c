@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/05 23:34:09 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:02:31 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 
 float	get_distance(float x1, float y1, float x2, float y2)
 {
-	return (sqrtf(powf(x2 - x1, 2) + powf(y2 - y1, 2)));
+	return (sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2)));
 }
 
 float	clamp(float n, float min, float max)
@@ -108,11 +108,12 @@ void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 	dist = get_distance(ray_x, ray_y, x, y);
 	while (dist > 0)
 	{
-		set_pixel_color(cub->minimap, ray_x, ray_y, 0x00ff00);
+		set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0x00ff00);
 		ray_x += cosf(angle);
 		ray_y -= sinf(angle);
 		dist--;
 	}
+	set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0xff0000);
 }
 
 void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
@@ -167,14 +168,14 @@ void	raycasting(t_cub *cub, float angle, int i)
 	if (h_dist < v_dist)
 	{
 		color = 0xff0000;
-		draw_ray_from_player(cub, h_x, h_y, angle);
+		//draw_ray_from_player(cub, h_x, h_y, angle);
 	}
 	else
 	{
 		color = 0xA30000;
-		draw_ray_from_player(cub, v_x, v_y, angle);
+		//draw_ray_from_player(cub, v_x, v_y, angle);
 	}
-	draw_walls(cub, get_min(v_dist, h_dist), angle, i, color);
+	draw_walls(cub, get_min(h_dist, v_dist), angle, i, color);
 }
 
 
@@ -228,12 +229,12 @@ void	raycast_in_fov(t_cub *cub)
 	fov = deg_to_rad(FOV);
 	step = fov / WINDOW_WIDTH;
 	angle = cub->player->p_angle - (fov / 2);
+	//display_map(cub);
 	while (i > 0)
 	{
 		raycasting(cub, angle, i);
 		angle += step;
 		i--;
 	}
-	display_map(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 }
