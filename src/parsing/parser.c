@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/05 23:14:15 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:59:09 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void	store_info(t_cub *cub, char *acc)
 			cub->ceiling_color = get_color(cub->file[i]);
 		i++;
 	}
-	printf("%ld\n", cub->floor_color->hex);
-	printf("%ld\n", cub->ceiling_color->hex);
 	if (!cub->floor_color || !cub->ceiling_color)
 		throw_err("Invalid color", cub);
 	check_textures(cub);
