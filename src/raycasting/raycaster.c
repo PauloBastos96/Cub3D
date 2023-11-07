@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 13:39:20 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:25:48 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 		ray_y -= sinf(angle);
 		dist--;
 	}
+	set_pixel_color(cub->minimap, ray_x, ray_y, 0xff0000);
 }
 
 void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
@@ -126,9 +127,8 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
 	int		d_start;
 	int		d_end;
 
-	(void)angle;
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
-	p_height = (MAP_SCALE / dist) * p_plane;
+	p_height = (MAP_SCALE / (dist * cosf(cub->player->p_angle - angle))) * p_plane;
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
 	if (d_start < 0)

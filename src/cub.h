@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 13:37:28 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:17:14 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ typedef struct s_player
 	float	p_angle;
 }			t_player;
 
-typedef struct s_ray
+typedef struct s_vector
 {
 	float	x;
 	float	y;
-}			t_ray;
+}			t_vector;
 
 typedef struct s_image
 {
@@ -80,6 +80,7 @@ typedef struct s_image
 	int		endian;
 	int		line_len;
 }			t_image;
+
 
 typedef struct s_cub
 {
@@ -141,6 +142,6 @@ float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 float		deg_to_rad(float deg);
 float		clamp(float n, float min, float max);
-bool		is_wall(t_cub *cub, enum e_direction direction);
+bool		is_wall(t_cub *cub, int x, int y);
 
 #endif
