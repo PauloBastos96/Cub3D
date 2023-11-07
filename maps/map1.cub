@@ -3,8 +3,8 @@ SO ./src/textures/qwe
 WE ./src/textures/qwe
 EA ./src/textures/qwe
 
-F 220,100,0
-C 225,30,0
+F 64,64,64
+C 39,41,82
 
   111111111
 111000000011111111111111111111111111111

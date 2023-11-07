@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/02 15:57:29 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/03 16:26:14 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	render_frame(t_cub *cub)
 	last_update += delta_time();
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
-	display_map(cub);
 	raycast_in_fov(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)

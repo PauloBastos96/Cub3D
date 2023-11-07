@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 15:51:37 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:31:21 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,21 @@ t_image	*create_new_image(void *mlx, int width, int height)
 float	deg_to_rad(float deg)
 {
 	return (deg * (PI / 180));
+}
+
+/// Convert rgb color struct to a color number
+/// @param rgb The rgb color struct
+/// @return The color number
+int	rgb_to_int(t_rgb *rgb)
+{
+	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
+}
+
+float	clamp(float n, float min, float max)
+{
+	if (n < min)
+		return (min);
+	if (n > max)
+		return (max);
+	return (n);
 }

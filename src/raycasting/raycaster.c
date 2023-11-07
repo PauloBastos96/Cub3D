@@ -6,11 +6,24 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/03 13:42:54 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:38:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+bool	check_colision(t_cub *cub, float x, float y, float angle)
+{
+	if (x > (int)x && cosf(angle) < 0)
+		x += 1;
+	if (y > (int)y && sinf(angle) > 0)
+		y += 1;
+	x = clamp(x, 0, cub->width * MAP_SCALE - 1);
+	y = clamp(y, 0, cub->height * MAP_SCALE - 1);
+	if (cub->map[(int)(y / MAP_SCALE)][(int)(x / MAP_SCALE)] == '1')
+		return (true);
+	return (false);
+}
 
 void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 {
@@ -34,7 +47,7 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -69,7 +82,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -84,18 +97,8 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 
 float	get_distance(float x1, float y1, float x2, float y2)
 {
-	return (sqrtf(powf(x2 - x1, 2) + powf(y2 - y1, 2)));
+	return (sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2)));
 }
-
-float	clamp(float n, float min, float max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
-}
-
 
 void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 {
@@ -113,9 +116,40 @@ void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 		ray_y -= sinf(angle);
 		dist--;
 	}
+	set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0xff0000);
 }
 
-void	raycasting(t_cub *cub, float angle)
+void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
+{
+	int		p_height;
+	float	p_plane;
+	int		d_start;
+	int		d_end;
+
+	(void)angle;
+	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
+	p_height = (MAP_SCALE / dist) * p_plane;
+	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
+	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
+	if (d_start < 0)
+		d_start = 0;
+	if (d_end >= WINDOW_HEIGHT)
+		d_end = WINDOW_HEIGHT - 1;
+	while (d_start < d_end)
+	{
+		set_pixel_color(cub->frame_buffer, i, d_start, color);
+		d_start++;
+	}
+}
+
+float	get_min(float a, float b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+void	raycasting(t_cub *cub, float angle, int i)
 {
 	float	v_dist;
 	float	h_dist;
@@ -123,15 +157,10 @@ void	raycasting(t_cub *cub, float angle)
 	float	v_y;
 	float	h_x;
 	float	h_y;
-
-	printf("dir_x: %f\n", cub->player->dir_x);
-	printf("dir_y: %f\n", cub->player->dir_y);
-	printf("pos_x: %f\n", cub->player->pos_x);
-	printf("pos_y: %f\n", cub->player->pos_y);
+	int		color;
 
 	vertical_hits(cub, &v_x, &v_y, angle);
 	horizontal_hits(cub, &h_x, &h_y, angle);
-
 	v_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, v_x, v_y);
 	h_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, h_x, h_y);
 
@@ -139,27 +168,55 @@ void	raycasting(t_cub *cub, float angle)
 	v_y = clamp(v_y, 0, cub->height * MAP_SCALE - 1);
 	h_x = clamp(h_x, 0, cub->width * MAP_SCALE - 1);
 	h_y = clamp(h_y, 0, cub->height * MAP_SCALE - 1);
-
-	printf("h_dist: %f\n", v_dist);
-	printf("v_dist: %f\n", h_dist);
-	printf("Angle : %f rads (%fº)\n", cub->player->p_angle,
-		cub->player->p_angle * (180 / PI));
 	if (h_dist < v_dist)
 	{
-		if (cub->map[(int)h_y / MAP_SCALE][(int)h_x / MAP_SCALE] == '1')
-			printf("wall at x:%f, y:%f\n", h_x, h_y);
-		draw_ray_from_player(cub, h_x, h_y, angle);
+		color = 0xff0000;
+		//draw_ray_from_player(cub, h_x, h_y, angle);
 	}
 	else
 	{
-		if (cub->map[(int)v_y / MAP_SCALE][(int)v_x / MAP_SCALE] == '1')
-			printf("wall at x:%f, y:%f\n", v_x, v_y);
-		draw_ray_from_player(cub, v_x, v_y, angle);
+		color = 0xA30000;
+		//draw_ray_from_player(cub, v_x, v_y, angle);
 	}
-	printf("hx: %f, hy: %f\n", h_x, h_y);
-	printf("vx: %f, vy: %f\n", v_x, v_y);
-	printf("h_dist: %f\n", h_dist);
-	printf("v_dist: %f\n", v_dist);
+	draw_walls(cub, get_min(h_dist, v_dist), angle, i, color);
+}
+
+
+
+void	draw_floor(t_cub *cub)
+{
+	int	i;
+	int	j;
+
+	i = WINDOW_HEIGHT / 2;
+	while (i < WINDOW_HEIGHT)
+	{
+		j = 0;
+		while (j < WINDOW_WIDTH)
+		{
+			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->floor_color));
+			j++;
+		}
+		i++;
+	}
+}
+
+void draw_ceiling(t_cub *cub)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WINDOW_HEIGHT / 2)
+	{
+		j = 0;
+		while (j < WINDOW_WIDTH)
+		{
+			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->ceiling_color));
+			j++;
+		}
+		i++;
+	}
 }
 
 void	raycast_in_fov(t_cub *cub)
@@ -167,14 +224,20 @@ void	raycast_in_fov(t_cub *cub)
 	float	angle;
 	float	fov;
 	float	step;
+	int		i;
 
+	draw_floor(cub);
+	draw_ceiling(cub);
+	i = WINDOW_WIDTH;
 	fov = deg_to_rad(FOV);
-	step = fov / 100;
+	step = fov / WINDOW_WIDTH;
 	angle = cub->player->p_angle - (fov / 2);
-	while (angle < cub->player->p_angle + (fov / 2))
+	//display_map(cub);
+	while (i > 0)
 	{
-		raycasting(cub, angle);
+		raycasting(cub, angle, i);
 		angle += step;
+		i--;
 	}
-	// raycasting(cub, cub->player->p_angle);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 }

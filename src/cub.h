@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/02 15:56:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:31:18 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
-# define MAP_SCALE 20
+# define MAP_SCALE 32
 
 enum	e_direction
 {
@@ -111,6 +111,7 @@ int			check_valid(t_cub *cub);
 int			close_window_event(t_cub *cub);
 int			key_hook(int keycode, t_cub *cub);
 int			render_frame(t_cub *cub);
+int			rgb_to_int(t_rgb *rgb);
 void		register_hooks(t_cub *cub);
 void		mlx_setup(t_cub *cub);
 void		read_map(t_cub *cub, char *file);
@@ -137,6 +138,7 @@ uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 float		deg_to_rad(float deg);
+float		clamp(float n, float min, float max);
 bool		is_wall(t_cub *cub, enum e_direction direction);
 
 #endif
