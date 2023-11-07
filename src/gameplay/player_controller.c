@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/31 15:17:12 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:35:51 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	movement_handler(int keycode, t_cub *cub)
 		rotation_handler(-1, cub);
 	if (keycode == XK_Right)
 		rotation_handler(1, cub);
-	//raycasting(cub);
 }
 
 /// Handle player rotation

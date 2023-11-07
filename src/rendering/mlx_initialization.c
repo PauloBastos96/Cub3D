@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/27 18:14:09 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:37:55 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	key_hook(int keycode, t_cub *cub)
 		exit_game(cub);
 	if (keycode == XK_F3)
 		cub->show_fps = !cub->show_fps;
+	if (keycode == XK_F2)
+		cub->show_minimap = !cub->show_minimap;
 	movement_handler(keycode, cub);
 	return (0);
 }

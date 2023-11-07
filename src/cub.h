@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 12:31:18 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:37:28 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
-# define MAP_SCALE 32
+# define MAP_SCALE 64
+# define MINIMAP_SCALE 10
 
 enum	e_direction
 {
@@ -95,6 +96,7 @@ typedef struct s_cub
 	void		*mlx;
 	void		*win;
 	bool		show_fps;
+	bool		show_minimap;
 	t_rgb		*floor_color;
 	t_rgb		*ceiling_color;
 	t_player	*player;
