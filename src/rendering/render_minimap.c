@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/06 14:06:24 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:54:46 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	display_prop(t_image *minimap, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while (i < MAP_SCALE)
+	while (i < MINIMAP_SCALE)
 	{
 		j = 0;
-		while (j < MAP_SCALE)
+		while (j < MINIMAP_SCALE)
 		{
-			set_pixel_color(minimap, MAP_SCALE * x + j,
-				MAP_SCALE * y + i, color);
+			set_pixel_color(minimap, MINIMAP_SCALE * x + j,
+				MINIMAP_SCALE * y + i, color);
 			j++;
 		}
 		i++;
@@ -47,14 +47,14 @@ void	display_player(t_cub *cub, int color)
 	float	i;
 	float	j;
 
-	i = -0.5 * MAP_SCALE;
-	while (i < MAP_SCALE / 2)
+	i = -0.5 * MINIMAP_SCALE;
+	while (i < MINIMAP_SCALE / 2)
 	{
-		j = -0.5 * MAP_SCALE;
-		while (j < MAP_SCALE / 2)
+		j = -0.5 * MINIMAP_SCALE;
+		while (j < MINIMAP_SCALE / 2)
 		{
-			set_pixel_color(cub->minimap, MAP_SCALE * cub->player->pos_x + j,
-				MAP_SCALE * cub->player->pos_y + i, color);
+			set_pixel_color(cub->minimap, MINIMAP_SCALE * cub->player->pos_x + j,
+				MINIMAP_SCALE * cub->player->pos_y + i, color);
 			j++;
 		}
 		i++;
@@ -84,5 +84,4 @@ void	display_map(t_cub *cub)
 		y++;
 	}
 	display_player(cub, 0xffff00);
-	cpy_img_to_frame_buffer(cub->frame_buffer, *cub->minimap, 0, 0);
 }

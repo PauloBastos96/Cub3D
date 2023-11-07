@@ -6,11 +6,25 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 11:58:12 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:16:42 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../cub.h"
+
+bool	check_colision(t_cub *cub, float x, float y, float angle)
+{
+	if (x > (int)x && cosf(angle) < 0)
+		x += 1;
+	if (y > (int)y && sinf(angle) > 0)
+		y += 1;
+	x = clamp(x, 0, cub->width * MAP_SCALE - 1);
+	y = clamp(y, 0, cub->height * MAP_SCALE - 1);
+	if (cub->map[(int)(y / MAP_SCALE)][(int)(x / MAP_SCALE)] == '1')
+		return (true);
+	return (false);
+}
 
 void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 {
@@ -34,7 +48,7 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -69,7 +83,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -87,33 +101,23 @@ float	get_distance(float x1, float y1, float x2, float y2)
 	return (sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2)));
 }
 
-float	clamp(float n, float min, float max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
-}
-
-
 void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 {
 	float	ray_x;
 	float	ray_y;
 	float	dist;
 
-	ray_x = cub->player->pos_x * MAP_SCALE;
-	ray_y = cub->player->pos_y * MAP_SCALE;
-	dist = get_distance(ray_x, ray_y, x, y);
+	ray_x = cub->player->pos_x * MINIMAP_SCALE;
+	ray_y = cub->player->pos_y * MINIMAP_SCALE;
+	dist = get_distance(ray_x, ray_y, x / MAP_SCALE * MINIMAP_SCALE, 
+			y / MAP_SCALE * MINIMAP_SCALE);
 	while (dist > 0)
 	{
-		set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0x00ff00);
+		set_pixel_color(cub->minimap, ray_x, ray_y, 0x00ff00);
 		ray_x += cosf(angle);
 		ray_y -= sinf(angle);
 		dist--;
 	}
-	set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0xff0000);
 }
 
 void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
@@ -168,12 +172,12 @@ void	raycasting(t_cub *cub, float angle, int i)
 	if (h_dist < v_dist)
 	{
 		color = 0xff0000;
-		//draw_ray_from_player(cub, h_x, h_y, angle);
+		draw_ray_from_player(cub, h_x, h_y, angle);
 	}
 	else
 	{
 		color = 0xA30000;
-		//draw_ray_from_player(cub, v_x, v_y, angle);
+		draw_ray_from_player(cub, v_x, v_y, angle);
 	}
 	draw_walls(cub, get_min(h_dist, v_dist), angle, i, color);
 }
@@ -229,12 +233,14 @@ void	raycast_in_fov(t_cub *cub)
 	fov = deg_to_rad(FOV);
 	step = fov / WINDOW_WIDTH;
 	angle = cub->player->p_angle - (fov / 2);
-	//display_map(cub);
+	if (cub->show_minimap)
+		display_map(cub);
 	while (i > 0)
 	{
 		raycasting(cub, angle, i);
 		angle += step;
 		i--;
 	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
+	if (cub->show_minimap)
+		cpy_img_to_frame_buffer(cub->frame_buffer, *cub->minimap, 0, 0);
 }

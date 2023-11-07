@@ -6,9 +6,10 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 11:57:47 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:16:12 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB_H
 # define CUB_H
@@ -31,7 +32,8 @@
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
-# define MAP_SCALE 32
+# define MAP_SCALE 64
+# define MINIMAP_SCALE 10
 
 enum				e_direction
 {
@@ -83,25 +85,26 @@ typedef struct s_image
 
 typedef struct s_cub
 {
-	char			**file;
-	char			**map;
-	char			*north_texture;
-	char			*south_texture;
-	char			*west_texture;
-	char			*east_texture;
-	char			*sprite;
-	int				height;
-	int				width;
-	int				turning;
-	void			*mlx;
-	void			*win;
-	bool			show_fps;
-	t_rgb			*floor_color;
-	t_rgb			*ceiling_color;
-	t_player		*player;
-	t_image			*frame_buffer;
-	t_image			*minimap;
-}					t_cub;
+	char		**file;
+	char		**map;
+	char		*north_texture;
+	char		*south_texture;
+	char		*west_texture;
+	char		*east_texture;
+	char		*sprite;
+	int			height;
+	int			width;
+	int			turning;
+	void		*mlx;
+	void		*win;
+	bool		show_fps;
+	bool		show_minimap;
+	t_rgb		*floor_color;
+	t_rgb		*ceiling_color;
+	t_player	*player;
+	t_image		*frame_buffer;
+	t_image		*minimap;
+}			t_cub;
 
 int			check_file_ext(char *file);
 int			save_map(char **acc, char *line);
@@ -139,6 +142,7 @@ uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 float		deg_to_rad(float deg);
+float		clamp(float n, float min, float max);
 bool		is_wall(t_cub *cub, enum e_direction direction);
 
 #endif
