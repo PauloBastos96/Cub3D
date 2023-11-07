@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/05 23:16:51 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/07 11:57:57 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,12 @@ unsigned long int	rgb_to_hex(int r, int g, int b)
 float	deg_to_rad(float deg)
 {
 	return (deg * (PI / 180));
+}
+
+/// Convert rgb color struct to a color number
+/// @param rgb The rgb color struct
+/// @return The color number
+int	rgb_to_int(t_rgb *rgb)
+{
+	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
 }
