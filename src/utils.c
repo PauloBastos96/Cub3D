@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/05 23:33:31 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:31:21 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,13 @@ float	deg_to_rad(float deg)
 int	rgb_to_int(t_rgb *rgb)
 {
 	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
+}
+
+float	clamp(float n, float min, float max)
+{
+	if (n < min)
+		return (min);
+	if (n > max)
+		return (max);
+	return (n);
 }

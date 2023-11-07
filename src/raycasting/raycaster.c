@@ -6,11 +6,24 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/06 16:02:31 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/07 12:38:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+bool	check_colision(t_cub *cub, float x, float y, float angle)
+{
+	if (x > (int)x && cosf(angle) < 0)
+		x += 1;
+	if (y > (int)y && sinf(angle) > 0)
+		y += 1;
+	x = clamp(x, 0, cub->width * MAP_SCALE - 1);
+	y = clamp(y, 0, cub->height * MAP_SCALE - 1);
+	if (cub->map[(int)(y / MAP_SCALE)][(int)(x / MAP_SCALE)] == '1')
+		return (true);
+	return (false);
+}
 
 void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 {
@@ -34,7 +47,7 @@ void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -69,7 +82,7 @@ void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
 	hit = false;
 	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
 	{
-		if (cub->map[(int)(*y / MAP_SCALE)][(int)(*x / MAP_SCALE)] == '1')
+		if (check_colision(cub, *x, *y, angle))
 			hit = true;
 		else
 		{
@@ -86,16 +99,6 @@ float	get_distance(float x1, float y1, float x2, float y2)
 {
 	return (sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2)));
 }
-
-float	clamp(float n, float min, float max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
-}
-
 
 void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 {
