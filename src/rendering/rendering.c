@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/07 12:52:53 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:44:36 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void	display_fps(t_cub *cub, uint64_t delta)
 	mlx_string_put(cub->mlx, cub->win, WINDOW_WIDTH - 20, 20, 0xffffff, fps_s);
 }
 
+///Display a vertical debug pixel line on screen
+void	display_debug_line(t_cub *cub)
+{
+	int	i;
+
+	i = 0;
+	while (i < WINDOW_HEIGHT)
+	{
+		set_pixel_color(cub->frame_buffer, cub->debug_line, i, 0xffffff);
+		i++;
+	}
+}
+
 ///Render a frame to the screen
 /// @param cub The cub struct
 int	render_frame(t_cub *cub)
@@ -41,6 +54,7 @@ int	render_frame(t_cub *cub)
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
 	raycast_in_fov(cub);
+	display_debug_line(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)
 		display_fps(cub, last_update);

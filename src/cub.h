@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 14:17:14 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:35:38 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_cub
 	int			height;
 	int			width;
 	int			turning;
+	int			debug_line;
 	void		*mlx;
 	void		*win;
 	bool		show_fps;
@@ -141,6 +142,7 @@ uint64_t	delta_time(void);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 float		deg_to_rad(float deg);
+float		rad_to_deg(float rad);
 float		clamp(float n, float min, float max);
 bool		is_wall(t_cub *cub, int x, int y);
 
