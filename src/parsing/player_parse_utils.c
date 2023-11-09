@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_parse_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:54:42 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/30 17:05:55 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:37:16 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,27 @@ void	set_player_direction(t_player *player, char dir)
 {
 	if (dir == 'N')
 	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-		player->p_angle = PI / 2;
+		player->direction.x = 0;
+		player->direction.y = 1;
+		player->angle = PI / 2;
 	}
 	else if (dir == 'S')
 	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-		player->p_angle = 3 * PI / 2;
+		player->direction.x = 0;
+		player->direction.y = -1;
+		player->angle = 3 * PI / 2;
 	}
 	else if (dir == 'W')
 	{
-		player->dir_x = -1;
-		player->dir_y = 0;
-		player->p_angle = PI;
+		player->direction.x = -1;
+		player->direction.y = 0;
+		player->angle = PI;
 	}
 	else if (dir == 'E')
 	{
-		player->dir_x = 1;
-		player->dir_y = 0;
-		player->p_angle = 0;
+		player->direction.x = 1;
+		player->direction.y = 0;
+		player->angle = 0;
 	}
 }
 
@@ -57,4 +57,15 @@ void	check_player(char *line, int *counter)
 			(*counter)++;
 		i++;
 	}
+}
+
+/// Set the player position and direction
+/// @param cub The cub struct
+/// @param i The map line
+/// @param j The map column
+void	set_player_pos_and_dir(t_cub *cub, int i, int j)
+{
+	cub->player->position.x = j;
+	cub->player->position.y = i;
+	set_player_direction(cub->player, cub->map[i][j]);
 }

@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 13:38:53 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:41:51 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	game_init(t_cub *cub)
 {
 	cub->show_fps = false;
 	cub->show_minimap = false;
+	cub->debug_line = 0;
 	cub->player = ft_calloc(sizeof(t_player), 1);
 	cub->minimap = ft_calloc(sizeof(t_image), 1);
 	if (!cub->player)

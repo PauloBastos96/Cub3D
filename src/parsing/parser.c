@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 11:59:09 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/09 17:01:36 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,7 @@ int	check_valid(t_cub *cub)
 				if (i == 0 || i == cub->height - 1)
 					check_valid_line(map, i, j, cub);
 				if (ft_strchr("NSWE", map[i][j]))
-				{
-					cub->player->pos_x = j;
-					cub->player->pos_y = i;
-					set_player_direction(cub->player, map[i][j]);
-				}
+					set_player_pos_and_dir(cub, i, j);
 				else if (check_map_walls(map, i, j, cub))
 					return (free_split(map), 1);
 			}
