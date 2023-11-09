@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 11:16:19 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:36:35 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,7 @@ int	check_valid(t_cub *cub)
 				if (i == 0 || i == cub->height - 1)
 					check_valid_line(map, i, j, cub);
 				if (ft_strchr("NSWE", map[i][j]))
-				{
-					cub->player->pos_x = j;
-					cub->player->pos_y = i;
-					set_player_direction(cub->player, map[i][j]);
-				}
+					set_player_pos_and_dir(cub, i, j);
 				else if (check_map_walls(map, i, j, cub))
 					return (free_split(map), 1);
 			}

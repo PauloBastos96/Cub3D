@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/08 15:35:39 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:10:27 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,4 @@ t_image	*create_new_image(void *mlx, int width, int height)
 	new_image->w = width;
 	new_image->h = height;
 	return (new_image);
-}
-
-/// Convert degrees to radians
-/// @param deg Angle in degrees
-/// @return Angle in radians
-float	deg_to_rad(float deg)
-{
-	return (deg * (PI / 180));
-}
-
-/// Convert radians to degrees
-/// @param rad Angle in radians
-/// @return Angle in degrees
-float	rad_to_deg(float rad)
-{
-	return (rad * (180 / PI));
-}
-
-/// Convert rgb color struct to a color number
-/// @param rgb The rgb color struct
-/// @return The color number
-int	rgb_to_int(t_rgb *rgb)
-{
-	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
-}
-
-float	clamp(float n, float min, float max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
 }

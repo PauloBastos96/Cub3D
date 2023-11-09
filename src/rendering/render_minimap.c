@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 12:54:46 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:29:54 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,39 @@ void	display_player(t_cub *cub, int color)
 		j = -0.5 * MINIMAP_SCALE;
 		while (j < MINIMAP_SCALE / 2)
 		{
-			set_pixel_color(cub->minimap, MINIMAP_SCALE * cub->player->pos_x + j,
-				MINIMAP_SCALE * cub->player->pos_y + i, color);
+			set_pixel_color(cub->minimap,
+				MINIMAP_SCALE * cub->player->position.x + j,
+				MINIMAP_SCALE * cub->player->position.y + i, color);
 			j++;
 		}
 		i++;
 	}
+}
+
+/// Draw a ray from the player to the wall
+/// @param cub The cub struct
+/// @param x The x position of the wall
+/// @param y The y position of the wall
+/// @param angle The angle of the ray
+void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
+{
+	t_vector	wall;
+	t_vector	ray;
+	float		dist;
+
+	wall.x = x / MAP_SCALE * MINIMAP_SCALE;
+	wall.y = y / MAP_SCALE * MINIMAP_SCALE;
+	ray.x = cub->player->position.x * MINIMAP_SCALE;
+	ray.y = cub->player->position.y * MINIMAP_SCALE;
+	dist = get_distance(ray, wall);
+	while (dist > 0)
+	{
+		set_pixel_color(cub->minimap, ray.x, ray.y, 0x00ff00);
+		ray.x += cosf(angle);
+		ray.y -= sinf(angle);
+		dist--;
+	}
+	set_pixel_color(cub->minimap, ray.x, ray.y, 0xff0000);
 }
 
 /// Display the minimap on the screen

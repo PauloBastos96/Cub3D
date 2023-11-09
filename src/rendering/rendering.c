@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/08 12:44:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/09 15:26:18 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,69 @@ void	display_debug_line(t_cub *cub)
 	}
 }
 
+/// Render the ceiling or the floor
+/// @param cub The cub struct
+/// @param is_ceiling Render the ceiling if true, the floor if false
+/// @param color The color to render
+void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
+{
+	int	i;
+	int	j;
+	int	limit;
+
+	if (is_ceiling)
+	{
+		i = 0;
+		limit = WINDOW_HEIGHT / 2;
+	}
+	else
+	{
+		i = WINDOW_HEIGHT / 2;
+		limit = WINDOW_HEIGHT;
+	}
+	while (i < limit)
+	{
+		j = 0;
+		while (j < WINDOW_WIDTH)
+		{
+			set_pixel_color(cub->frame_buffer, 
+				j, i, rgb_to_int(color));
+			j++;
+		}
+		i++;
+	}
+}
+
+/// Render the walls
+/// @param cub The cub struct
+/// @param dist The distance from the player to the wall
+/// @param angle The angle of the ray
+/// @param i The pixel column
+/// @param color [FOR TESTING ONLY] The color to render
+void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
+{
+	float	p_plane;
+	float	fixed_dist;
+	int		p_height;
+	int		d_start;
+	int		d_end;
+
+	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
+	fixed_dist = dist * cosf(cub->player->angle - angle);
+	p_height = (MAP_SCALE / fixed_dist) * p_plane;
+	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
+	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
+	if (d_start < 0)
+		d_start = 0;
+	if (d_end >= WINDOW_HEIGHT)
+		d_end = WINDOW_HEIGHT - 1;
+	while (d_start < d_end)
+	{
+		set_pixel_color(cub->frame_buffer, i, d_start, color);
+		d_start++;
+	}
+}
+
 ///Render a frame to the screen
 /// @param cub The cub struct
 int	render_frame(t_cub *cub)
@@ -53,6 +116,8 @@ int	render_frame(t_cub *cub)
 	last_update += delta_time();
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
+	render_half_screen(cub, true, cub->ceiling_color);
+	render_half_screen(cub, false, cub->floor_color);
 	raycast_in_fov(cub);
 	display_debug_line(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
