@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 17:09:45 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/10 18:22:36 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
 			hit = true;
 		else
 		{
-			*y += y_offset;
 			if (sinf(angle) > 0)
 				vector->x += x_offset;
 			else
@@ -130,6 +129,7 @@ void	raycasting(t_cub *cub, float angle, int i)
 	vertical.y = clamp(vertical.y, 0, cub->height * MAP_SCALE - 1);
 	horizontal.x = clamp(horizontal.x, 0, cub->width * MAP_SCALE - 1);
 	horizontal.y = clamp(horizontal.y, 0, cub->height * MAP_SCALE - 1);
+
 	if (h_dist < v_dist)
 	{
 		x = (int)horizontal.x % MAP_SCALE;

@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 17:09:28 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/10 18:20:46 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define ROTATION_SPEED 0.05f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
-# define FOV 60
+# define FOV 90
 # define MAP_SCALE 128
 # define MINIMAP_SCALE 10
 
@@ -103,6 +103,7 @@ typedef struct s_cub
 	int			width;
 	int			turning;
 	int			debug_line;
+	int			def_height;
 	void		*mlx;
 	void		*win;
 	bool		show_fps;

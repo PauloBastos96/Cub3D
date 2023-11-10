@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/10 16:23:33 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 18:22:48 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
 	int		d_end;
 	int		color;
 	int		y;
+	int		test;
+	int tex_y = 0;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
 	fixed_dist = dist * cosf(cub->player->angle - angle);
@@ -99,17 +101,19 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
 	if (d_start < 0)
+	{
+		test = d_start;
 		d_start = 0;
+	}
 	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
-	int tmp = 0;
 	while (d_start < d_end)
 	{
-		y = (tmp * MAP_SCALE) / p_height;
+		y = (tex_y * MAP_SCALE) / p_height;
 		color = get_pixel_color(*cub->textures->north, x, y);
 		set_pixel_color(cub->frame_buffer, i, d_start, color);
 		d_start++;
-		tmp++;
+		tex_y++;
 	}
 }
 
