@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 18:11:53 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 14:59:31 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:27:50 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ float	get_next_player_x_pos(t_cub *cub, enum e_direction direction)
 {
 	float	pos_x;
 
-	pos_x = cub->player->position.x;
+	pos_x = cub->player->position->x;
 	if (direction == UP)
-		pos_x -= cub->player->direction.x * PLAYER_SPEED + 0.2f;
+		pos_x -= cub->player->direction->x * PLAYER_SPEED + 0.2f;
 	if (direction == DOWN)
-		pos_x += cub->player->direction.x * PLAYER_SPEED + 0.2f;
+		pos_x += cub->player->direction->x * PLAYER_SPEED + 0.2f;
 	if (direction == RIGHT)
-		pos_x += cub->player->direction.x * PLAYER_SPEED + 0.2f;
+		pos_x += cub->player->direction->x * PLAYER_SPEED + 0.2f;
 	if (direction == LEFT)
-		pos_x -= cub->player->direction.x * PLAYER_SPEED + 0.2f;
+		pos_x -= cub->player->direction->x * PLAYER_SPEED + 0.2f;
 	return (pos_x);
 }
 
@@ -40,15 +40,15 @@ float	get_next_player_y_pos(t_cub *cub, enum e_direction direction)
 {
 	float	pos_y;
 
-	pos_y = cub->player->position.y;
+	pos_y = cub->player->position->y;
 	if (direction == UP)
-		pos_y -= cub->player->direction.y * PLAYER_SPEED + 0.2f;
+		pos_y -= cub->player->direction->y * PLAYER_SPEED + 0.2f;
 	if (direction == DOWN)
-		pos_y += cub->player->direction.y * PLAYER_SPEED + 0.2f;
+		pos_y += cub->player->direction->y * PLAYER_SPEED + 0.2f;
 	if (direction == RIGHT)
-		pos_y -= cub->player->direction.y * PLAYER_SPEED + 0.2f;
+		pos_y -= cub->player->direction->y * PLAYER_SPEED + 0.2f;
 	if (direction == LEFT)
-		pos_y += cub->player->direction.y * PLAYER_SPEED + 0.2f;
+		pos_y += cub->player->direction->y * PLAYER_SPEED + 0.2f;
 	return (pos_y);
 }
 

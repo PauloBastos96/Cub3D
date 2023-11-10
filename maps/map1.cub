@@ -1,7 +1,7 @@
-NO ./src/textures/qwe
-SO ./src/textures/qwe
-WE ./src/textures/qwe
-EA ./src/textures/qwe
+NO ./src/textures/Tile_Wall_Side_Left.xpm
+SO ./src/textures/Tile_Wall_Side_Left.xpm
+WE ./src/textures/Tile_Wall_Side_Left.xpm
+EA ./src/textures/Tile_Wall_Side_Left.xpm
 
 F 64,64,64
 C 39,41,82

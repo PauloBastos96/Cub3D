@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/09 15:29:54 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:27:24 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	display_player(t_cub *cub, int color)
 		while (j < MINIMAP_SCALE / 2)
 		{
 			set_pixel_color(cub->minimap,
-				MINIMAP_SCALE * cub->player->position.x + j,
-				MINIMAP_SCALE * cub->player->position.y + i, color);
+				MINIMAP_SCALE * cub->player->position->x + j,
+				MINIMAP_SCALE * cub->player->position->y + i, color);
 			j++;
 		}
 		i++;
@@ -75,8 +75,8 @@ void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
 
 	wall.x = x / MAP_SCALE * MINIMAP_SCALE;
 	wall.y = y / MAP_SCALE * MINIMAP_SCALE;
-	ray.x = cub->player->position.x * MINIMAP_SCALE;
-	ray.y = cub->player->position.y * MINIMAP_SCALE;
+	ray.x = cub->player->position->x * MINIMAP_SCALE;
+	ray.y = cub->player->position->y * MINIMAP_SCALE;
 	dist = get_distance(ray, wall);
 	while (dist > 0)
 	{

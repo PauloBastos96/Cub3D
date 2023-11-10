@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/09 15:36:35 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:13:16 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 /// @param cub The cub struct
 void	check_textures(t_cub *cub)
 {
-	if (!cub->north_texture || !cub->south_texture || !cub->west_texture
-		|| !cub->east_texture || !cub->floor_color
-		|| !cub->ceiling_color)
+	if (!cub->textures->north_path || !cub->textures->south_path
+		|| !cub->textures->west_path || !cub->textures->east_path
+		|| !cub->floor_color || !cub->ceiling_color)
 		throw_err("Invalid file", cub);
-	if (open(cub->north_texture, O_RDONLY) == -1
-		|| open(cub->south_texture, O_RDONLY) == -1
-		|| open(cub->west_texture, O_RDONLY) == -1
-		|| open(cub->east_texture, O_RDONLY) == -1)
+	if (open(cub->textures->north_path, O_RDONLY) == -1
+		|| open(cub->textures->south_path, O_RDONLY) == -1
+		|| open(cub->textures->east_path, O_RDONLY) == -1
+		|| open(cub->textures->west_path, O_RDONLY) == -1)
 		throw_err("Invalid texture", cub);
 }
 
@@ -40,13 +40,13 @@ void	store_info(t_cub *cub, char *acc)
 	while (cub->file[i])
 	{
 		if (ft_strncmp(cub->file[i], "NO", 2) == 0)
-			cub->north_texture = ft_strchr(cub->file[i], '.');
+			cub->textures->north_path = ft_strchr(cub->file[i], '.');
 		if (ft_strncmp(cub->file[i], "SO", 2) == 0)
-			cub->south_texture = ft_strchr(cub->file[i], '.');
+			cub->textures->south_path = ft_strchr(cub->file[i], '.');
 		if (ft_strncmp(cub->file[i], "WE", 2) == 0)
-			cub->west_texture = ft_strchr(cub->file[i], '.');
+			cub->textures->west_path = ft_strchr(cub->file[i], '.');
 		if (ft_strncmp(cub->file[i], "EA", 2) == 0)
-			cub->east_texture = ft_strchr(cub->file[i], '.');
+			cub->textures->east_path = ft_strchr(cub->file[i], '.');
 		if (ft_strncmp(cub->file[i], "F ", 2) == 0)
 			cub->floor_color = get_color(cub->file[i]);
 		if (ft_strncmp(cub->file[i], "C ", 2) == 0)
