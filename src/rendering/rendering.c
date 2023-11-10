@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 15:26:18 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 16:23:33 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,15 @@ void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
 /// @param angle The angle of the ray
 /// @param i The pixel column
 /// @param color [FOR TESTING ONLY] The color to render
-void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
+void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
 {
 	float	p_plane;
 	float	fixed_dist;
 	int		p_height;
 	int		d_start;
 	int		d_end;
+	int		color;
+	int		y;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
 	fixed_dist = dist * cosf(cub->player->angle - angle);
@@ -100,10 +102,14 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
 		d_start = 0;
 	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
+	int tmp = 0;
 	while (d_start < d_end)
 	{
+		y = (tmp * MAP_SCALE) / p_height;
+		color = get_pixel_color(*cub->textures->north, x, y);
 		set_pixel_color(cub->frame_buffer, i, d_start, color);
 		d_start++;
+		tmp++;
 	}
 }
 

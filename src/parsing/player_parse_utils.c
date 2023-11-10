@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:54:42 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 15:37:16 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:26:32 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ void	set_player_direction(t_player *player, char dir)
 {
 	if (dir == 'N')
 	{
-		player->direction.x = 0;
-		player->direction.y = 1;
+		player->direction->x = 0;
+		player->direction->y = 1;
 		player->angle = PI / 2;
 	}
 	else if (dir == 'S')
 	{
-		player->direction.x = 0;
-		player->direction.y = -1;
+		player->direction->x = 0;
+		player->direction->y = -1;
 		player->angle = 3 * PI / 2;
 	}
 	else if (dir == 'W')
 	{
-		player->direction.x = -1;
-		player->direction.y = 0;
+		player->direction->x = -1;
+		player->direction->y = 0;
 		player->angle = PI;
 	}
 	else if (dir == 'E')
 	{
-		player->direction.x = 1;
-		player->direction.y = 0;
+		player->direction->x = 1;
+		player->direction->y = 0;
 		player->angle = 0;
 	}
 }
@@ -65,7 +65,7 @@ void	check_player(char *line, int *counter)
 /// @param j The map column
 void	set_player_pos_and_dir(t_cub *cub, int i, int j)
 {
-	cub->player->position.x = j;
-	cub->player->position.y = i;
+	cub->player->position->x = j;
+	cub->player->position->y = i;
 	set_player_direction(cub->player, cub->map[i][j]);
 }

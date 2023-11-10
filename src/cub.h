@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/09 17:00:54 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/10 17:09:28 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
 # define FOV 60
-# define MAP_SCALE 64
+# define MAP_SCALE 128
 # define MINIMAP_SCALE 10
 
 enum				e_direction
@@ -65,30 +65,39 @@ typedef struct s_vector
 
 typedef struct s_player
 {
-	t_vector	position;
-	t_vector	direction;
+	t_vector	*position;
+	t_vector	*direction;
 	float		angle;
 }			t_player;
 
 typedef struct s_image
 {
-	void			*img;
-	char			*addr;
-	int				w;
-	int				h;
-	int				bpp;
-	int				endian;
-	int				line_len;
-}					t_image;
+	void	*img;
+	char	*addr;
+	int		w;
+	int		h;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}			t_image;
+
+typedef struct s_textures
+{
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
+	t_image	*north;
+	t_image	*south;
+	t_image	*west;
+	t_image	*east;
+}			t_textures;
 
 typedef struct s_cub
 {
 	char		**file;
 	char		**map;
-	char		*north_texture;
-	char		*south_texture;
-	char		*west_texture;
-	char		*east_texture;
+	t_textures	*textures;
 	char		*sprite;
 	int			height;
 	int			width;
@@ -141,6 +150,7 @@ t_rgb		*get_color(char *line);
 t_image		*create_new_image(void *mlx, int width, int height);
 uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);
+uint32_t	get_pixel_color(t_image img, int x, int y);
 float		get_next_player_x_pos(t_cub *cub, enum e_direction direction);
 float		get_next_player_y_pos(t_cub *cub, enum e_direction direction);
 float		deg_to_rad(float deg);
