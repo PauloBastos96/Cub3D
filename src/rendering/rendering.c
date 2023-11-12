@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/10 16:23:33 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/12 19:33:51 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,27 @@ void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
-			set_pixel_color(cub->frame_buffer, 
+			set_pixel_color(cub->frame_buffer,
 				j, i, rgb_to_int(color));
 			j++;
 		}
 		i++;
 	}
+}
+
+t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
+{
+	float	angle;
+
+	angle = rad_to_deg(_angle);
+	if (angle >= 0 && angle < 180 && !is_vert)
+		return (cub->textures->north);
+	else if (angle >= 90 && angle < 270 && is_vert)
+		return (cub->textures->west);
+	else if (angle >= 180 && angle < 360 && !is_vert)
+		return (cub->textures->south);
+	else
+		return (cub->textures->east);
 }
 
 /// Render the walls
@@ -83,7 +98,7 @@ void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
 /// @param angle The angle of the ray
 /// @param i The pixel column
 /// @param color [FOR TESTING ONLY] The color to render
-void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
+void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 {
 	float	p_plane;
 	float	fixed_dist;
@@ -92,6 +107,7 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
 	int		d_end;
 	int		color;
 	int		y;
+	int 	tmp = 0;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
 	fixed_dist = dist * cosf(cub->player->angle - angle);
@@ -102,11 +118,10 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x)
 		d_start = 0;
 	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
-	int tmp = 0;
 	while (d_start < d_end)
 	{
 		y = (tmp * MAP_SCALE) / p_height;
-		color = get_pixel_color(*cub->textures->north, x, y);
+		color = get_pixel_color(*select_image(cub, angle, is_vert), x, y);
 		set_pixel_color(cub->frame_buffer, i, d_start, color);
 		d_start++;
 		tmp++;

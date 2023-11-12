@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 15:09:27 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/12 19:30:25 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	raycasting(t_cub *cub, float angle, int i)
 	t_vector	horizontal;
 	t_vector	player_pos;
 	int			x;
+	bool		is_vert;
 
 	player_pos.x = cub->player->position->x * MAP_SCALE;
 	player_pos.y = cub->player->position->y * MAP_SCALE;
@@ -130,11 +131,13 @@ void	raycasting(t_cub *cub, float angle, int i)
 	if (h_dist < v_dist)
 	{
 		x = (int)horizontal.x % MAP_SCALE;
+		is_vert = false;
 		draw_ray_from_player(cub, horizontal.x, horizontal.y, angle);
 	}
 	else
 	{
 		x = (int)vertical.y % MAP_SCALE;
+		is_vert = true;
 		draw_ray_from_player(cub, vertical.x, vertical.y, angle);
 	}
 	if (cub->debug_line == i)
@@ -143,7 +146,7 @@ void	raycasting(t_cub *cub, float angle, int i)
 			i, h_dist, v_dist, horizontal.x / MAP_SCALE,
 			horizontal.y / MAP_SCALE, vertical.x / MAP_SCALE,
 			vertical.y / MAP_SCALE);
-	draw_walls(cub, get_min(h_dist, v_dist), angle, i, x);
+	draw_walls(cub, get_min(h_dist, v_dist), angle, i, x, is_vert);
 }
 
 void	raycast_in_fov(t_cub *cub)
