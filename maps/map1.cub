@@ -1,7 +1,7 @@
-NO ./src/textures/Tile_Wall_Side_Left.xpm
-SO ./src/textures/Tile_Wall_Side_Left.xpm
-WE ./src/textures/Tile_Wall_Side_Left.xpm
-EA ./src/textures/Tile_Wall_Side_Left.xpm
+NO ./src/textures/North_Wall.xpm
+SO ./src/textures/South_Wall.xpm
+WE ./src/textures/West_Wall.xpm
+EA ./src/textures/East_Wall.xpm
 
 F 64,64,64
 C 39,41,82

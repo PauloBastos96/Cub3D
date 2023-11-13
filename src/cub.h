@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 18:20:46 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:46:16 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void		cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y);
 void		set_pixel_color(t_image *img, int x, int y, int color);
 void		display_map(t_cub *cub);
 void		raycast_in_fov(t_cub *cub);
-void		draw_walls(t_cub *cub, float dist, float angle, int i, int color);
+void		draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert);
 void		draw_ray_from_player(t_cub *cub, float x, float y, float angle);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
