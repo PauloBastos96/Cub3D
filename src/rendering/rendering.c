@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/13 13:46:46 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:47:04 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,7 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
 	if (d_start < 0)
-	{
-		test = d_start;
 		d_start = 0;
-	}
 	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
 	while (d_start < d_end)
@@ -127,7 +124,7 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 		color = get_pixel_color(*select_image(cub, angle, is_vert), x, y);
 		set_pixel_color(cub->frame_buffer, i, d_start, color);
 		d_start++;
-		tex_y++;
+		tmp++;
 	}
 }
 
