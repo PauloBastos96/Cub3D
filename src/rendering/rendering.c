@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/12 19:33:51 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/13 16:32:15 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,14 @@ t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
 		return (cub->textures->east);
 }
 
+/*
+	y = (0 + (tmp - d_start) * (127 - 0) / (d_end - d_start)))
+*/
+int	get_y_coord(int iter, int d_start, int d_end)
+{
+	return (((iter - d_start) * 127) / (d_end - d_start));
+}
+
 /// Render the walls
 /// @param cub The cub struct
 /// @param dist The distance from the player to the wall
@@ -107,6 +115,7 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 	int		d_end;
 	int		color;
 	int		y;
+	int		iter;
 	int 	tmp = 0;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
@@ -118,12 +127,15 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 		d_start = 0;
 	if (d_end >= WINDOW_HEIGHT)
 		d_end = WINDOW_HEIGHT - 1;
-	while (d_start < d_end)
+	iter = d_start;
+	while (iter <= d_end)
 	{
-		y = (tmp * MAP_SCALE) / p_height;
+		y = get_y_coord(iter, d_start, d_end);
+		if (cub->debug_line == i)
+			printf("iter: %d	d_end: %d	y: %d		p_height: %d\n", iter, d_end, y, p_height);
 		color = get_pixel_color(*select_image(cub, angle, is_vert), x, y);
-		set_pixel_color(cub->frame_buffer, i, d_start, color);
-		d_start++;
+		set_pixel_color(cub->frame_buffer, i, iter, color);
+		iter++;
 		tmp++;
 	}
 }

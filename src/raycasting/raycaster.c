@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/12 19:30:25 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/13 12:39:34 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 bool	check_colision(t_cub *cub, t_vector vector, float angle, int i, bool vert)
 {
-	if (cub->debug_line == i)
-		printf("x: %f(%f), y: %f(%f), angle: %f			", vector.x / MAP_SCALE, vector.x, vector.y / MAP_SCALE, vector.y, rad_to_deg(angle));
+	(void)i;
+	(void)vert;
+	// if (cub->debug_line == i)
+	// 	printf("x: %f(%f), y: %f(%f), angle: %f			", vector.x / MAP_SCALE, vector.x, vector.y / MAP_SCALE, vector.y, rad_to_deg(angle));
 	if (rad_to_deg(angle) < 180)
 		vector.y = ceil(vector.y);
 	else
@@ -28,12 +30,12 @@ bool	check_colision(t_cub *cub, t_vector vector, float angle, int i, bool vert)
 	vector.y = clamp(vector.y, 0, cub->height * MAP_SCALE - 1);
 	if (cub->map[(int)(vector.y / MAP_SCALE)][(int)(vector.x / MAP_SCALE)] == '1')
 	{
-		if (cub->debug_line == i)
-			printf("wall (%f, %f) (%f, %f) | %s\n", vector.x / MAP_SCALE, vector.y / MAP_SCALE, vector.x, vector.y, vert ? "vertical" : "horizontal");
+		// if (cub->debug_line == i)
+		// 	printf("wall (%f, %f) (%f, %f) | %s\n", vector.x / MAP_SCALE, vector.y / MAP_SCALE, vector.x, vector.y, vert ? "vertical" : "horizontal");
 		return (true);
 	}
-	if (cub->debug_line == i)
-		printf("not wall (%f, %f) (%f, %f) | %s\n", vector.x / MAP_SCALE, vector.y / MAP_SCALE, vector.x, vector.y, vert ? "vertical" : "horizontal");
+	// if (cub->debug_line == i)
+	// 	printf("not wall (%f, %f) (%f, %f) | %s\n", vector.x / MAP_SCALE, vector.y / MAP_SCALE, vector.x, vector.y, vert ? "vertical" : "horizontal");
 	return (false);
 }
 
@@ -140,12 +142,12 @@ void	raycasting(t_cub *cub, float angle, int i)
 		is_vert = true;
 		draw_ray_from_player(cub, vertical.x, vertical.y, angle);
 	}
-	if (cub->debug_line == i)
-		printf("p_line: %d, h_dist: %f, v_dist: %f, \
-			h_x: %f, h_y: %f, v_x: %f, v_y: %f\n",
-			i, h_dist, v_dist, horizontal.x / MAP_SCALE,
-			horizontal.y / MAP_SCALE, vertical.x / MAP_SCALE,
-			vertical.y / MAP_SCALE);
+	// if (cub->debug_line == i)
+	// 	printf("p_line: %d, h_dist: %f, v_dist: %f, \
+	// 		h_x: %f, h_y: %f, v_x: %f, v_y: %f\n",
+	// 		i, h_dist, v_dist, horizontal.x / MAP_SCALE,
+	// 		horizontal.y / MAP_SCALE, vertical.x / MAP_SCALE,
+	// 		vertical.y / MAP_SCALE);
 	draw_walls(cub, get_min(h_dist, v_dist), angle, i, x, is_vert);
 }
 
