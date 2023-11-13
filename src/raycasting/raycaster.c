@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/13 12:39:34 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:57:54 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	raycasting(t_cub *cub, float angle, int i)
 		draw_ray_from_player(cub, vertical.x, vertical.y, angle);
 	}
 	// if (cub->debug_line == i)
-	// 	printf("p_line: %d, h_dist: %f, v_dist: %f, \
+	// 	printf("p_line: %d, h_dist: %f, v_dist: %f,
 	// 		h_x: %f, h_y: %f, v_x: %f, v_y: %f\n",
 	// 		i, h_dist, v_dist, horizontal.x / MAP_SCALE,
 	// 		horizontal.y / MAP_SCALE, vertical.x / MAP_SCALE,

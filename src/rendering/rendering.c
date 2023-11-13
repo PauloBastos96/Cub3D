@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/13 16:32:15 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/13 18:57:06 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,24 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 	int		color;
 	int		y;
 	int		iter;
-	int 	tmp = 0;
+	int		max;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
 	fixed_dist = dist * cosf(cub->player->angle - angle);
 	p_height = (MAP_SCALE / fixed_dist) * p_plane;
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
-	if (d_start < 0)
-		d_start = 0;
-	if (d_end >= WINDOW_HEIGHT)
-		d_end = WINDOW_HEIGHT - 1;
+	// if (d_start < 0)
+	// 	d_start = 0;
+	// if (d_end >= WINDOW_HEIGHT)
+	// 	d_end = WINDOW_HEIGHT - 1;
 	iter = d_start;
-	while (iter <= d_end)
+	if (iter < 0)
+		iter = 0;
+	max = d_end;
+	if (max >= WINDOW_HEIGHT)
+		max = WINDOW_HEIGHT - 1;
+	while (iter <= max)
 	{
 		y = get_y_coord(iter, d_start, d_end);
 		if (cub->debug_line == i)
@@ -136,7 +141,6 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 		color = get_pixel_color(*select_image(cub, angle, is_vert), x, y);
 		set_pixel_color(cub->frame_buffer, i, iter, color);
 		iter++;
-		tmp++;
 	}
 }
 
