@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/13 13:46:16 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:34:18 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@
 # define KEY_ESC 65307
 # define MAX_FPS 60
 # define PLAYER_SPEED 0.1f
-# define ROTATION_SPEED 0.05f
+# define ROTATION_SPEED 0.1f
 # define WALL_DISTANCE 0.1f
 # define PI 3.14159265359
-# define FOV 90
-# define MAP_SCALE 128
+# define FOV 60
+# define MAP_SCALE 32
+# define MAP_SCALE_F 32.0f
 # define MINIMAP_SCALE 10
 
 enum				e_direction
@@ -87,10 +88,16 @@ typedef struct s_textures
 	char	*south_path;
 	char	*west_path;
 	char	*east_path;
+	char	*barrel_path;
+	char	*door_path;
+	char 	*anim_wall_path;
 	t_image	*north;
 	t_image	*south;
 	t_image	*west;
 	t_image	*east;
+	t_image *barrel_prop;
+	t_image *door;
+	t_image animated_wall[4];
 }			t_textures;
 
 typedef struct s_cub
@@ -99,11 +106,12 @@ typedef struct s_cub
 	char		**map;
 	t_textures	*textures;
 	char		*sprite;
+	int			prop_y;
+	int			prop_x;
 	int			height;
 	int			width;
 	int			turning;
 	int			debug_line;
-	int			def_height;
 	void		*mlx;
 	void		*win;
 	bool		show_fps;
@@ -148,6 +156,7 @@ void		draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert
 void		draw_ray_from_player(t_cub *cub, float x, float y, float angle);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
+t_rgb		int_to_rgb(int color);
 t_image		*create_new_image(void *mlx, int width, int height);
 uint64_t	gettimeofday_ms(void);
 uint64_t	delta_time(void);

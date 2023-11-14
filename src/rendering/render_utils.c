@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:39:11 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 15:32:49 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:04:15 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,16 @@ void	cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y)
 		}
 		i++;
 	}
+}
+
+t_rgb int_to_rgb(int color)
+{
+	t_rgb conv;
+
+	conv.b = color & 255;
+	conv.g = (color >> 8) & 255;
+	conv.r = (color >> 16) & 255;
+	return(conv);
 }
 
 /// Convert rgb color struct to a color number

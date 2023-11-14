@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 13:44:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:15:53 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	creates_textures(t_cub *cub)
 	cub->textures->south = create_xpm_images(cub, cub->textures->south_path);
 	cub->textures->west = create_xpm_images(cub, cub->textures->west_path);
 	cub->textures->east = create_xpm_images(cub, cub->textures->east_path);
+	cub->textures->door = create_xpm_images(cub, cub->textures->door_path);
+	cub->textures->animated_wall[0] = *create_xpm_images(cub, cub->textures->anim_wall_path);
+
 }
 
 int	main(int ac, char **av)

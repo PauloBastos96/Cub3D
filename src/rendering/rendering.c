@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/13 18:44:34 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:05:33 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,11 @@ t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
 	float	angle;
 
 	angle = rad_to_deg(_angle);
-	if (angle >= 0 && angle < 180 && !is_vert)
+	if(cub->map[cub->prop_y][cub->prop_x] == 'D')
+		return(cub->textures->door);
+	else if(cub->map[cub->prop_y][cub->prop_x] == '2')
+		return(&cub->textures->animated_wall[0]);
+	else if (angle >= 0 && angle < 180 && !is_vert)
 		return (cub->textures->north);
 	else if (angle >= 90 && angle < 270 && is_vert)
 		return (cub->textures->west);
@@ -97,7 +101,7 @@ t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
 */
 int	get_y_coord(int iter, int d_start, int d_end)
 {
-	return (((iter - d_start) * 127) / (d_end - d_start));
+	return (((iter - d_start) * 31) / (d_end - d_start));
 }
 
 /// Render the walls
@@ -108,6 +112,7 @@ int	get_y_coord(int iter, int d_start, int d_end)
 /// @param color [FOR TESTING ONLY] The color to render
 void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 {
+	t_rgb	conv_color;
 	float	p_plane;
 	float	fixed_dist;
 	int		p_height;
@@ -117,28 +122,33 @@ void	draw_walls(t_cub *cub, float dist, float angle, int i, int x, bool is_vert)
 	int		y;
 	int		iter;
 	int		max;
+	float	fog_multi;
 
 	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
 	fixed_dist = dist * cosf(cub->player->angle - angle);
 	p_height = (MAP_SCALE / fixed_dist) * p_plane;
 	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
 	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
-	// if (d_start < 0)
-	// 	d_start = 0;
-	// if (d_end >= WINDOW_HEIGHT)
-	// 	d_end = WINDOW_HEIGHT - 1;
 	iter = d_start;
 	if (iter < 0)
 		iter = 0;
 	max = d_end;
+	fog_multi = 1;
 	if (max >= WINDOW_HEIGHT)
 		max = WINDOW_HEIGHT - 1;
 	while (iter <= max)
 	{
 		y = get_y_coord(iter, d_start, d_end);
-		if (cub->debug_line == i)
-			printf("iter: %d	d_end: %d	y: %d		p_height: %d\n", iter, d_end, y, p_height);
 		color = get_pixel_color(*select_image(cub, angle, is_vert), x, y);
+		if(dist > 250)
+			fog_multi = 3;
+		if(dist > 800)
+			fog_multi = 4;
+		conv_color = int_to_rgb(color);
+		conv_color.r = clamp((conv_color.r - fog_multi * (fixed_dist / MAP_SCALE)), 0, 255);
+		conv_color.g = clamp((conv_color.g - fog_multi * (fixed_dist / MAP_SCALE)), 0, 255);
+		conv_color.b = clamp((conv_color.b - fog_multi * (fixed_dist / MAP_SCALE)), 0, 255);
+		color = rgb_to_int(&conv_color);
 		set_pixel_color(cub->frame_buffer, i, iter, color);
 		iter++;
 	}
