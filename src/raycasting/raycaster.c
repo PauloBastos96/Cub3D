@@ -6,54 +6,61 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/15 14:37:44 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:03:46 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-bool	check_colision(t_cub *cub, t_vector vector, float angle, int i)
+bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert)
 {
+	(void)vert;
 	if (rad_to_deg(angle) < 180)
 		vector.y = ceil(vector.y);
 	else
 		vector.y = floor(vector.y);
-	if (rad_to_deg(angle) > 90 && rad_to_deg(angle) < 270)
+	if (rad_to_deg(angle) >= 90 && rad_to_deg(angle) <= 270)
 		vector.x = ceil(vector.x);
 	else
 		vector.x = floor(vector.x);
 	vector.x = clamp(vector.x, 0, cub->width * MAP_SCALE - 1);
 	vector.y = clamp(vector.y, 0, cub->height * MAP_SCALE - 1);
-	if (ft_strchr("1BD2", cub->map[(int)(vector.y / MAP_SCALE)]
+	if (ft_strchr("12D", cub->map[(int)(vector.y / MAP_SCALE)]
 		[(int)(vector.x / MAP_SCALE)]))
 		return (true);
 	return (false);
 }
 
-void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
+void	init_horizontal_values(t_cub *cub, t_vector *vector, 
+	float *y_offset, float angle)
 {
-	float	x_offset;
-	float	y_offset;
-	bool	hit;
-
-	y_offset = 0;
 	if (sinf(angle) > 0)
 	{
 		vector->y = (int)cub->player->position->y * MAP_SCALE - 1;
-		y_offset = -MAP_SCALE;
+		*y_offset = -MAP_SCALE;
 	}
 	else
 	{
 		vector->y = (int)cub->player->position->y * MAP_SCALE + MAP_SCALE;
-		y_offset = MAP_SCALE;
+		*y_offset = MAP_SCALE;
 	}
-	vector->x = cub->player->position->x * MAP_SCALE + ((cub->player->position->y * MAP_SCALE - vector->y) / tanf(angle));
+}
+
+void	horizontal_hits(t_cub *cub, t_vector *vector, float angle)
+{
+	float	x_offset;
+	float	y_offset;
+
+	y_offset = 0;
+	init_horizontal_values(cub, vector, &y_offset, angle);
+	vector->x = cub->player->position->x * MAP_SCALE + 
+		((cub->player->position->y * MAP_SCALE - vector->y) / tanf(angle));
 	x_offset = MAP_SCALE / tanf(angle);
-	hit = false;
-	while (!hit && vector->x >= 0 && vector->x < cub->width * MAP_SCALE && vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE && 
+		vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, i))
-			hit = true;
+		if (check_colision(cub, *vector, angle, false))
+			break ;
 		else
 		{
 			if (sinf(angle) > 0)
@@ -65,30 +72,36 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
 	}
 }
 
-void	vertical_hits(t_cub *cub, t_vector *vector, float angle, int i)
+void	init_vertical_values(t_cub *cub, t_vector *vector, 
+	float *x_offset, float angle)
 {
-	float	x_offset;
-	float	y_offset;
-	bool	hit;
-
-	x_offset = 0;
 	if (cosf(angle) > 0)
 	{
 		vector->x = (int)cub->player->position->x * MAP_SCALE + MAP_SCALE;
-		x_offset = MAP_SCALE;
+		*x_offset = MAP_SCALE;
 	}
 	else
 	{
 		vector->x = (int)cub->player->position->x * MAP_SCALE - 1;
-		x_offset = -MAP_SCALE;
+		*x_offset = -MAP_SCALE;
 	}
-	vector->y = cub->player->position->y * MAP_SCALE + ((cub->player->position->x * MAP_SCALE - vector->x) * tanf(angle));
+}
+
+void	vertical_hits(t_cub *cub, t_vector *vector, float angle)
+{
+	float	x_offset;
+	float	y_offset;
+
+	x_offset = 0;
+	init_vertical_values(cub, vector, &x_offset, angle);
+	vector->y = cub->player->position->y * MAP_SCALE + 
+		((cub->player->position->x * MAP_SCALE - vector->x) * tanf(angle));
 	y_offset = MAP_SCALE * tanf(angle);
-	hit = false;
-	while (!hit && vector->x >= 0 && vector->x < cub->width * MAP_SCALE && vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE && 
+		vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, i))
-			hit = true;
+		if (check_colision(cub, *vector, angle, true))
+			break ;
 		else
 		{
 			vector->x += x_offset;
@@ -131,8 +144,8 @@ void	raycasting(t_cub *cub, t_ray *ray, int i)
 
 	player_pos.x = cub->player->position->x * MAP_SCALE;
 	player_pos.y = cub->player->position->y * MAP_SCALE;
-	vertical_hits(cub, &vertical, ray->angle, i);
-	horizontal_hits(cub, &horizontal, ray->angle, i);
+	vertical_hits(cub, &vertical, ray->angle);
+	horizontal_hits(cub, &horizontal, ray->angle);
 	v_dist = get_distance(player_pos, vertical);
 	h_dist = get_distance(player_pos, horizontal);
 
