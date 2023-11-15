@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 18:11:53 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/10 13:27:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:44:05 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ bool	is_wall(t_cub *cub, int pos_x, int pos_y)
 {
 	if (pos_x < 0 || pos_x >= cub->width || pos_y < 0 || pos_y >= cub->height)
 		return (true);
-	if (cub->map[pos_y][pos_x] == '1')
+	if (cub->map[pos_y][pos_x] == '1' || cub->map[pos_y][pos_x] == 'D')
 		return (true);
 	return (false);
 }

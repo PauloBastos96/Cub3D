@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/10 13:27:24 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:21:21 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	display_map(t_cub *cub)
 		{
 			if (cub->map[y][x] == '1')
 				display_prop(cub->minimap, x, y, 0xffffff);
+			else if (cub->map[y][x] == 'D')
+				display_prop(cub->minimap, x, y, 0xff0000);
 			else
 				display_prop(cub->minimap, x, y, 0x000000);
 			x++;

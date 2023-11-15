@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/08 16:10:53 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/15 13:38:53 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	key_hook(int keycode, t_cub *cub)
 int	mouse_hook(int x, int y, t_cub *cub)
 {
 	if (x < WINDOW_WIDTH / 2)
-		rotation_handler(-1, cub);
+		rotation_handler(-1, cub, MOUSE_ROTATION_SPEED);
 	else if (x > WINDOW_WIDTH / 2)
-		rotation_handler(1, cub);
+		rotation_handler(1, cub, MOUSE_ROTATION_SPEED);
 	mlx_mouse_move(cub->mlx, cub->win, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	(void)y;
 	return (0);

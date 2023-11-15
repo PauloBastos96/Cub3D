@@ -6,7 +6,7 @@
 /*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 11:15:11 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/14 15:34:04 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ int	check_file_ext(char *file)
 ///@return 0 if the map is valid, 1 otherwise
 int	ft_isvalid(char **map, int y, int x)
 {
-	if (ft_strchr("NWES01", map[y][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y + 1][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y + 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y - 1][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y - 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y][x + 1]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x + 1]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y][x - 1]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x - 1]) == NULL)
 		return (1);
 	return (0);
 }
