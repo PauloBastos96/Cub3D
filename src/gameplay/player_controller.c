@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_controller.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/15 13:37:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:08:24 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ void	movement_handler(int keycode, t_cub *cub)
 		new_pos.y = get_next_player_y_pos(cub, UP);
 		new_pos.x = get_next_player_x_pos(cub, UP);
 		if (cub->map[(int)new_pos.y][(int)new_pos.x] == 'D')
-		{
 			cub->map[(int)new_pos.y][(int)new_pos.x] = '0';
-		}
 	}
 	if (keycode == XK_Left)
 		rotation_handler(-1, cub, ROTATION_SPEED);

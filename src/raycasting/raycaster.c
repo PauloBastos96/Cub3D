@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/15 17:03:46 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/15 18:55:04 by ffilipe-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert)
 {
+	int	y;
+	int	x;
 	(void)vert;
 	if (rad_to_deg(angle) < 180)
 		vector.y = ceil(vector.y);
 	else
 		vector.y = floor(vector.y);
-	if (rad_to_deg(angle) >= 90 && rad_to_deg(angle) <= 270)
+	if (rad_to_deg(angle) > 90 && rad_to_deg(angle) < 270)
 		vector.x = ceil(vector.x);
 	else
 		vector.x = floor(vector.x);
-	vector.x = clamp(vector.x, 0, cub->width * MAP_SCALE - 1);
-	vector.y = clamp(vector.y, 0, cub->height * MAP_SCALE - 1);
-	if (ft_strchr("12D", cub->map[(int)(vector.y / MAP_SCALE)]
-		[(int)(vector.x / MAP_SCALE)]))
+	vector.x = clamp(vector.x, 0, cub->width * MAP_SCALE);
+	vector.y = clamp(vector.y, 0, cub->height * MAP_SCALE);
+	y = vector.y / MAP_SCALE;
+	x = vector.x / MAP_SCALE;
+	if (ft_strchr("12D", cub->map[y][x]))
 		return (true);
 	return (false);
 }
