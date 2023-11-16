@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:17 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:17:15 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	mlx_setup(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D");
 	cub->frame_buffer = ft_calloc(sizeof(t_image), 1);
+	if (!cub->frame_buffer)
+		throw_err("Couldn't allocate memory", cub);
 	cub->frame_buffer->img = mlx_new_image(cub->mlx,
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	cub->frame_buffer->addr = mlx_get_data_addr(cub->frame_buffer->img,

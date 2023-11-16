@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 21:56:34 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:12:20 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,39 @@ void	game_init(t_cub *cub)
 	cub->prop_x = 0;
 	cub->prop_y = 0;
 	cub->textures = ft_calloc(sizeof(t_textures), 1);
+	cub->player = ft_calloc(sizeof(t_player), 1);
+	if (!cub->player || !cub->textures)
+		throw_err("Couldn't allocate memory", cub);
 	cub->textures->anim_wall_paths = ft_split(ANIM_WALLS, ' ');
 	cub->textures->door_path = DOOR_TEXTURE;
-	cub->player = ft_calloc(sizeof(t_player), 1);
 	cub->player->position = ft_calloc(sizeof(t_vector), 1);
 	cub->player->direction = ft_calloc(sizeof(t_vector), 1);
-	if (!cub->player)
-		throw_err("Couldn't create player struct", cub);
+	if (!cub->player->position || !cub->player->direction
+		|| !cub->textures->anim_wall_paths)
+		throw_err("Couldn't allocate memory", cub);
 	mlx_setup(cub);
 	register_hooks(cub);
 }
 
+/// Create a new t_image from a xpm file
+/// @param cub The cub struct
+/// @param path The path to the xpm file
+/// @return A new t_image
 t_image	*create_xpm_images(t_cub *cub, char *path)
 {
 	t_image	*image;
 
 	image = ft_calloc(sizeof(t_image), 1);
+	if (!image)
+		throw_err("Couldn't allocate memory", cub);
 	image->img = mlx_xpm_file_to_image(cub->mlx, path, &image->w, &image->h);
 	image->addr = mlx_get_data_addr(image->img, &image->bpp,
 			&image->line_len, &image->endian);
 	return (image);
 }
 
+/// Creates the game textures
+/// @param cub The cub struct
 void	creates_textures(t_cub *cub)
 {
 	int	i;
@@ -64,6 +75,13 @@ void	creates_textures(t_cub *cub)
 				cub->textures->anim_wall_paths[i]);
 		i++;
 	}
+	if (!cub->minimap || !cub->textures->north || !cub->textures->south
+		|| !cub->textures->west || !cub->textures->east
+		|| !cub->textures->door || !cub->textures->animated_walls[0]
+		|| !cub->textures->animated_walls[1]
+		|| !cub->textures->animated_walls[2]
+		|| !cub->textures->animated_walls[3])
+		throw_err("Couldn't create textures", cub);
 }
 
 int	main(int ac, char **av)

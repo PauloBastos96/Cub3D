@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:17:00 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	store_map(t_cub *cub)
 		i++;
 	cub->height = i;
 	cub->map = ft_calloc(cub->height + 1, sizeof(char *));
+	if (!cub->map)
+		throw_err("Couldn't allocate memory", cub);
 	i = 0;
 	j = 5;
 	while (cub->file[++j])
