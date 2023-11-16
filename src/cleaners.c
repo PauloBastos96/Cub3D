@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 12:27:19 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 13:12:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:48:51 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,34 @@ void	free_colors(t_cub *cub)
 	free(cub->ceiling_color);
 }
 
+/// Free a texture
+/// @param cub The cub struct
+/// @param texture The texture to free
+void	free_texture(t_cub *cub, t_image *texture)
+{
+	if (!texture)
+		return ;
+	mlx_destroy_image(cub->mlx, texture->img);
+	free(texture);
+}
+
+/// Free all game textures
+/// @param cub The cub struct
 void	free_textures(t_cub *cub)
 {
-	mlx_destroy_image(cub->mlx, cub->textures->north->img);
-	mlx_destroy_image(cub->mlx, cub->textures->south->img);
-	mlx_destroy_image(cub->mlx, cub->textures->west->img);
-	mlx_destroy_image(cub->mlx, cub->textures->east->img);
-	mlx_destroy_image(cub->mlx, cub->textures->door->img);
-	mlx_destroy_image(cub->mlx, cub->textures->animated_wall[0]->img);
-	mlx_destroy_image(cub->mlx, cub->minimap->img);
-	mlx_destroy_image(cub->mlx, cub->frame_buffer->img);
-	free(cub->textures->north);
-	free(cub->textures->south);
-	free(cub->textures->west);
-	free(cub->textures->east);
-	free(cub->textures->door);
-	free(cub->textures->animated_wall[0]);
+	int	i;
+
+	i = 0;
+	while (i < 4)
+		free_texture(cub, cub->textures->animated_walls[i++]);
+	free_texture(cub, cub->textures->north);
+	free_texture(cub, cub->textures->south);
+	free_texture(cub, cub->textures->west);
+	free_texture(cub, cub->textures->east);
+	free_texture(cub, cub->textures->door);
+	free_texture(cub, cub->minimap);
+	free_texture(cub, cub->frame_buffer);
 	free(cub->textures);
-	free(cub->minimap);
-	free(cub->frame_buffer);
 }
 
 /// Clean the game and exit
@@ -65,6 +74,7 @@ void	exit_game(t_cub *cub)
 	free(cub->player->position);
 	free(cub->player->direction);
 	free(cub->player);
+	free_split(cub->textures->anim_wall_paths);
 	free_colors(cub);
 	free_textures(cub);
 	mlx_destroy_window(cub->mlx, cub->win);

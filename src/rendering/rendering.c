@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 13:01:09 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:09:18 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ void	render_half_screen(t_cub *cub, bool is_ceiling, int color)
 	}
 }
 
+/// Set animation frame index
+/// @param cub The cub struct
+/// @param delta Time since last update
+void	animation_timer(t_cub *cub, uint64_t delta)
+{
+	static uint64_t	animation = 0;
+
+	animation += delta;
+	if (animation > 1000)
+	{
+		cub->textures->anim_frame++;
+		animation = 0;
+	}
+	if (cub->textures->anim_frame > 3)
+		cub->textures->anim_frame = 0;
+}
+
 ///Render a frame to the screen
 /// @param cub The cub struct
 int	render_frame(t_cub *cub)
@@ -83,6 +100,7 @@ int	render_frame(t_cub *cub)
 	static uint64_t	last_update = 0;
 
 	last_update += delta_time();
+	animation_timer(cub, last_update);
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
 	render_half_screen(cub, true, rgb_to_int(cub->ceiling_color));

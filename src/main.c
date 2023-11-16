@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 13:12:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:50:58 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	game_init(t_cub *cub)
 	cub->prop_x = 0;
 	cub->prop_y = 0;
 	cub->textures = ft_calloc(sizeof(t_textures), 1);
+	cub->textures->anim_wall_paths = ft_split(ANIM_WALLS, ' ');
 	cub->player = ft_calloc(sizeof(t_player), 1);
 	cub->player->position = ft_calloc(sizeof(t_vector), 1);
 	cub->player->direction = ft_calloc(sizeof(t_vector), 1);
@@ -45,6 +46,9 @@ t_image	*create_xpm_images(t_cub *cub, char *path)
 
 void	creates_textures(t_cub *cub)
 {
+	int	i;
+
+	i = 0;
 	cub->minimap = create_new_image(cub->mlx, cub->width * MINIMAP_SCALE, 
 			cub->height * MINIMAP_SCALE);
 	cub->textures->north = create_xpm_images(cub, cub->textures->north_path);
@@ -52,7 +56,12 @@ void	creates_textures(t_cub *cub)
 	cub->textures->west = create_xpm_images(cub, cub->textures->west_path);
 	cub->textures->east = create_xpm_images(cub, cub->textures->east_path);
 	cub->textures->door = create_xpm_images(cub, cub->textures->door_path);
-	cub->textures->animated_wall[0] = create_xpm_images(cub, cub->textures->anim_wall_path);
+	while (i < 4)
+	{
+		cub->textures->animated_walls[i] = create_xpm_images(cub, 
+				cub->textures->anim_wall_paths[i]);
+		i++;
+	}
 }
 
 int	main(int ac, char **av)

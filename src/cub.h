@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 13:11:56 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:54:06 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@
 # define MAP_SCALE 32
 # define MAP_SCALE_F 32.0f
 # define MINIMAP_SCALE 10
+# define DOOR_TEXTURE "./src/textures/door.xpm"
+# define ANIM_WALLS "./src/textures/TECHWALLB_1.xpm \
+./src/textures/TECHWALLB_2.xpm ./src/textures/TECHWALLB_3.xpm \
+./src/textures/TECHWALLB_4.xpm"
 
 enum				e_direction
 {
@@ -86,20 +90,21 @@ typedef struct s_image
 
 typedef struct s_textures
 {
+	int		anim_frame;
 	char	*north_path;
 	char	*south_path;
 	char	*west_path;
 	char	*east_path;
 	char	*barrel_path;
 	char	*door_path;
-	char	*anim_wall_path;
+	char	**anim_wall_paths;
 	t_image	*north;
 	t_image	*south;
 	t_image	*west;
 	t_image	*east;
 	t_image	*barrel_prop;
 	t_image	*door;
-	t_image	*animated_wall[4];
+	t_image	*animated_walls[4];
 }			t_textures;
 
 typedef struct s_cub
