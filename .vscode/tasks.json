@@ -17,6 +17,7 @@
                 "${fileDirname}/parsing/parsing_utils.c",
                 "${fileDirname}/parsing/player_parse_utils.c",
                 "${fileDirname}/raycasting/raycaster.c",
+                "${fileDirname}/raycasting/raycasting_utils.c",
                 "${fileDirname}/rendering/mlx_initialization.c",
                 "${fileDirname}/rendering/render_minimap.c",
                 "${fileDirname}/rendering/render_utils.c",

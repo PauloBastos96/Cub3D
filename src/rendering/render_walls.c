@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:05:35 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/15 14:12:47 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:12:47 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
 	if (cub->map[cub->prop_y][cub->prop_x] == 'D')
 		return (cub->textures->door);
 	else if (cub->map[cub->prop_y][cub->prop_x] == '2')
-		return (&cub->textures->animated_wall[0]);
+		return (cub->textures->animated_wall[0]);
 	else if (angle >= 0 && angle < 180 && !is_vert)
 		return (cub->textures->north);
 	else if (angle >= 90 && angle < 270 && is_vert)

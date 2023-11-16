@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:44:12 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/15 14:12:34 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:11:56 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_textures
 	t_image	*east;
 	t_image	*barrel_prop;
 	t_image	*door;
-	t_image	animated_wall[4];
+	t_image	*animated_wall[4];
 }			t_textures;
 
 typedef struct s_cub
@@ -158,6 +158,11 @@ void		display_debug_line(t_cub *cub);
 void		raycast_in_fov(t_cub *cub);
 void		draw_walls(t_cub *cub, t_ray ray, int i);
 void		draw_ray_from_player(t_cub *cub, float x, float y, float angle);
+void		init_horizontal_values(t_cub *cub, t_vector *vector, 
+				float *y_offset, float angle);
+void		init_vertical_values(t_cub *cub, t_vector *vector, 
+				float *x_offset, float angle);
+void		distance_checks(t_cub *cub, t_ray *ray, t_vector coords, bool vert);
 char		**set_map_even(t_cub *cub);
 t_rgb		*get_color(char *line);
 t_rgb		int_to_rgb(int color);

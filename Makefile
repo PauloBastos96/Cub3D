@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/11/15 13:07:46 by paulorod         ###   ########.fr        #
+#    Updated: 2023/11/16 12:41:07 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCS =	src/main.c \
 		src/rendering/time_utils.c \
 		src/rendering/render_minimap.c \
 		src/raycasting/raycaster.c \
+		src/raycasting/raycasting_utils.c \
 		src/math_utils.c \
 		src/utils.c
 

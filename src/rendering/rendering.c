@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/15 13:34:58 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:01:09 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	display_debug_line(t_cub *cub)
 /// @param cub The cub struct
 /// @param is_ceiling Render the ceiling if true, the floor if false
 /// @param color The color to render
-void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
+void	render_half_screen(t_cub *cub, bool is_ceiling, int color)
 {
 	int	i;
 	int	j;
@@ -69,8 +69,7 @@ void	render_half_screen(t_cub *cub, bool is_ceiling, t_rgb *color)
 		j = 0;
 		while (j < WINDOW_WIDTH)
 		{
-			set_pixel_color(cub->frame_buffer,
-				j, i, rgb_to_int(color));
+			set_pixel_color(cub->frame_buffer, j, i, color);
 			j++;
 		}
 		i++;
@@ -86,12 +85,12 @@ int	render_frame(t_cub *cub)
 	last_update += delta_time();
 	if (last_update < 1000 / MAX_FPS)
 		return (0);
-	render_half_screen(cub, true, cub->ceiling_color);
-	render_half_screen(cub, false, cub->floor_color);
+	render_half_screen(cub, true, rgb_to_int(cub->ceiling_color));
+	render_half_screen(cub, false, rgb_to_int(cub->floor_color));
 	if (cub->show_minimap)
 		display_map(cub);
 	raycast_in_fov(cub);
-	display_debug_line(cub);
+	display_debug_line(cub);//!DONT FORGET TO REMOVE
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)
 		display_fps(cub, last_update);
