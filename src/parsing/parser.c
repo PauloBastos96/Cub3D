@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 14:50:56 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 /// Set textures from the map file
 /// @param cub The cub struct
@@ -125,13 +125,11 @@ int	check_valid(t_cub *cub)
 	map = set_map_even(cub);
 	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (ft_strchr("0NSWED2", map[i][j]))
 			{
-				if (map[i][j] == 'D')
-					cub->textures->door_path = DOOR_TEXTURE;
 				if (i == 0 || i == cub->height - 1)
 					check_valid_line(map, i, j, cub);
 				if (ft_strchr("NSWE", map[i][j]))
@@ -139,10 +137,8 @@ int	check_valid(t_cub *cub)
 				else if (check_map_walls(map, i, j, cub))
 					return (free_split(map), 1);
 			}
-			j++;
 		}
 	}
 	free_split(cub->map);
-	cub->map = map;
-	return (0);
+	return (cub->map = map, 0);
 }

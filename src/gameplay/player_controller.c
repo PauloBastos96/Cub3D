@@ -6,12 +6,49 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/15 13:37:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
+/// Test for collision slightly to the left and right of the player
+/// @param keycode The key pressed
+/// @param cub The cub struct
+/// @param new_pos The new position of the player
+/// @param angle The angle of the collision test
+/// @return true if there is a collision, false otherwise
+bool	test_direction(int keycode, t_cub *cub, 
+	t_vector new_pos, float angle)
+{
+	if (keycode == XK_w)
+	{
+		new_pos.x += cos(cub->player->angle + angle) * PLAYER_SPEED;
+		new_pos.y -= sin(cub->player->angle + angle) * PLAYER_SPEED;
+	}
+	if (keycode == XK_d)
+	{
+		new_pos.x += sin(cub->player->angle) * PLAYER_SPEED;
+		new_pos.y += cos(cub->player->angle) * PLAYER_SPEED;
+	}
+	if (keycode == XK_s)
+	{
+		new_pos.x -= cos(cub->player->angle + angle) * PLAYER_SPEED;
+		new_pos.y += sin(cub->player->angle + angle) * PLAYER_SPEED;
+	}
+	if (keycode == XK_a)
+	{
+		new_pos.x -= sin(cub->player->angle) * PLAYER_SPEED;
+		new_pos.y -= cos(cub->player->angle) * PLAYER_SPEED;
+	}
+	return (is_wall(cub, new_pos.x, new_pos.y));
+}
+
+/// Test for collision in front of the player
+/// @param keycode The key pressed
+/// @param cub The cub struct
+/// @param new_pos The new position of the player
+/// @return true if there is a collision, false otherwise
 bool	test_front(int keycode, t_cub *cub, t_vector *new_pos)
 {
 	if (keycode == XK_w)
@@ -37,56 +74,6 @@ bool	test_front(int keycode, t_cub *cub, t_vector *new_pos)
 	return (is_wall(cub, new_pos->x, new_pos->y));
 }
 
-bool	test_left(int keycode, t_cub *cub, t_vector new_pos)
-{
-	if (keycode == XK_w)
-	{
-		new_pos.x += cos(cub->player->angle - 45) * PLAYER_SPEED;
-		new_pos.y -= sin(cub->player->angle - 45) * PLAYER_SPEED;
-	}
-	if (keycode == XK_d)
-	{
-		new_pos.x += sin(cub->player->angle) * PLAYER_SPEED;
-		new_pos.y += cos(cub->player->angle) * PLAYER_SPEED;
-	}
-	if (keycode == XK_s)
-	{
-		new_pos.x -= cos(cub->player->angle - 45) * PLAYER_SPEED;
-		new_pos.y += sin(cub->player->angle - 45) * PLAYER_SPEED;
-	}
-	if (keycode == XK_a)
-	{
-		new_pos.x -= cub->player->direction->y * PLAYER_SPEED;
-		new_pos.y -= cub->player->direction->x * PLAYER_SPEED;
-	}
-	return (is_wall(cub, new_pos.x, new_pos.y));
-}
-
-bool	test_right(int keycode, t_cub *cub, t_vector new_pos)
-{
-	if (keycode == XK_w)
-	{
-		new_pos.x += cos(cub->player->angle + 45) * PLAYER_SPEED;
-		new_pos.y -= sin(cub->player->angle + 45) * PLAYER_SPEED;
-	}
-	if (keycode == XK_d)
-	{
-		new_pos.x += sin(cub->player->angle) * PLAYER_SPEED;
-		new_pos.y += cos(cub->player->angle) * PLAYER_SPEED;
-	}
-	if (keycode == XK_s)
-	{
-		new_pos.x -= cos(cub->player->angle + 45) * PLAYER_SPEED;
-		new_pos.y += sin(cub->player->angle + 45) * PLAYER_SPEED;
-	}
-	if (keycode == XK_a)
-	{
-		new_pos.x -= sin(cub->player->angle) * PLAYER_SPEED;
-		new_pos.y -= cos(cub->player->angle) * PLAYER_SPEED;
-	}
-	return (is_wall(cub, new_pos.x, new_pos.y));
-}
-
 /// Handle player movement
 /// @param keycode The key pressed
 /// @param cub The cub struct
@@ -96,8 +83,8 @@ void	movement_handler(int keycode, t_cub *cub)
 
 	new_pos.x = cub->player->position->x;
 	new_pos.y = cub->player->position->y;
-	if (!test_right(keycode, cub, new_pos) 
-		&& !test_left(keycode, cub, new_pos) 
+	if (!test_direction(keycode, cub, new_pos, deg_to_rad(45))
+		&& !test_direction(keycode, cub, new_pos, deg_to_rad(-45))
 		&& !test_front(keycode, cub, &new_pos))
 	{
 		cub->player->position->x = new_pos.x;

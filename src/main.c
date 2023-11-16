@@ -6,24 +6,26 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 14:50:58 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:44:00 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../inc/cub.h"
 
 /// Initialize the game
 /// @param cub The cub struct
 void	game_init(t_cub *cub)
 {
-	cub->show_fps = false;
+	cub->show_debug_line = false;
 	cub->show_minimap = false;
+	cub->show_fps = false;
 	cub->show_fog = false;
 	cub->debug_line = 0;
 	cub->prop_x = 0;
 	cub->prop_y = 0;
 	cub->textures = ft_calloc(sizeof(t_textures), 1);
 	cub->textures->anim_wall_paths = ft_split(ANIM_WALLS, ' ');
+	cub->textures->door_path = DOOR_TEXTURE;
 	cub->player = ft_calloc(sizeof(t_player), 1);
 	cub->player->position = ft_calloc(sizeof(t_vector), 1);
 	cub->player->direction = ft_calloc(sizeof(t_vector), 1);

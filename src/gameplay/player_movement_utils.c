@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 18:11:53 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/14 13:44:05 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 /// Get the next player x position
 /// @param cub The cub struct

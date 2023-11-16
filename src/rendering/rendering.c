@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:40:14 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:09:18 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 ///Display FPS on screen
 /// @details The fps string is limited to double digits to avoid constant
@@ -108,7 +108,8 @@ int	render_frame(t_cub *cub)
 	if (cub->show_minimap)
 		display_map(cub);
 	raycast_in_fov(cub);
-	display_debug_line(cub);//!DONT FORGET TO REMOVE
+	if (cub->show_debug_line)
+		display_debug_line(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
 	if (cub->show_fps)
 		display_fps(cub, last_update);
