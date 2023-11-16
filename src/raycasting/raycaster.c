@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:58:27 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle)
 
 	y_offset = 0;
 	init_horizontal_values(cub, vector, &y_offset, angle);
-	vector->x = cub->player->position->x * MAP_SCALE + 
-		((cub->player->position->y * MAP_SCALE - vector->y) / tanf(angle));
+	vector->x = cub->player->position->x * MAP_SCALE
+		+ ((cub->player->position->y * MAP_SCALE - vector->y) / tanf(angle));
 	x_offset = MAP_SCALE / tanf(angle);
-	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE && 
-		vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
+		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
 		if (check_colision(cub, *vector, angle, false))
 			break ;
@@ -76,11 +76,11 @@ void	vertical_hits(t_cub *cub, t_vector *vector, float angle)
 
 	x_offset = 0;
 	init_vertical_values(cub, vector, &x_offset, angle);
-	vector->y = cub->player->position->y * MAP_SCALE + 
-		((cub->player->position->x * MAP_SCALE - vector->x) * tanf(angle));
+	vector->y = cub->player->position->y * MAP_SCALE
+		+ ((cub->player->position->x * MAP_SCALE - vector->x) * tanf(angle));
 	y_offset = MAP_SCALE * tanf(angle);
-	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE && 
-		vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
+		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
 		if (check_colision(cub, *vector, angle, true))
 			break ;

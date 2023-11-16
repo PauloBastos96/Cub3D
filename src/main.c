@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 15:44:00 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:56:34 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	creates_textures(t_cub *cub)
 	int	i;
 
 	i = 0;
-	cub->minimap = create_new_image(cub->mlx, cub->width * MINIMAP_SCALE, 
+	cub->minimap = create_new_image(cub->mlx, cub->width * MINIMAP_SCALE,
 			cub->height * MINIMAP_SCALE);
 	cub->textures->north = create_xpm_images(cub, cub->textures->north_path);
 	cub->textures->south = create_xpm_images(cub, cub->textures->south_path);
@@ -60,7 +60,7 @@ void	creates_textures(t_cub *cub)
 	cub->textures->door = create_xpm_images(cub, cub->textures->door_path);
 	while (i < 4)
 	{
-		cub->textures->animated_walls[i] = create_xpm_images(cub, 
+		cub->textures->animated_walls[i] = create_xpm_images(cub,
 				cub->textures->anim_wall_paths[i]);
 		i++;
 	}

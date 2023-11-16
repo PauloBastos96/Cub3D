@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:30:07 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:56:22 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /// @param new_pos The new position of the player
 /// @param angle The angle of the collision test
 /// @return true if there is a collision, false otherwise
-bool	test_direction(int keycode, t_cub *cub, 
+bool	test_direction(int keycode, t_cub *cub,
 	t_vector new_pos, float angle)
 {
 	if (keycode == XK_w)

@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:05:35 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:57:55 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static int	set_color(t_cub *cub, t_ray ray, int y)
 		if (ray.distance > 800)
 			fog_multi = 4;
 		fog_color = int_to_rgb(color);
-		fog_color.r = clamp((fog_color.r - fog_multi * (ray.distance / 
-						MAP_SCALE)), 0, 255);
-		fog_color.g = clamp((fog_color.g - fog_multi * (ray.distance / 
-						MAP_SCALE)), 0, 255);
-		fog_color.b = clamp((fog_color.b - fog_multi * (ray.distance / 
-						MAP_SCALE)), 0, 255);
+		fog_color.r = clamp((fog_color.r - fog_multi * (ray.distance
+						/ MAP_SCALE)), 0, 255);
+		fog_color.g = clamp((fog_color.g - fog_multi * (ray.distance
+						/ MAP_SCALE)), 0, 255);
+		fog_color.b = clamp((fog_color.b - fog_multi * (ray.distance
+						/ MAP_SCALE)), 0, 255);
 		color = rgb_to_int(&fog_color);
 	}
 	return (color);
@@ -116,7 +116,7 @@ void	draw_walls(t_cub *cub, t_ray ray, int i)
 	while (iter <= max)
 	{
 		y = get_y_coord(iter, d_start, d_end);
-		set_pixel_color(cub->frame_buffer, i, iter, 
+		set_pixel_color(cub->frame_buffer, i, iter,
 			set_color(cub, ray, y));
 		iter++;
 	}

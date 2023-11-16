@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:26:54 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:58:36 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 /// @param vector The vector that stores the hit position
 /// @param y_offset How much to increment y in each iteration
 /// @param angle The angle of the ray
-void	init_horizontal_values(t_cub *cub, t_vector *vector, 
+void	init_horizontal_values(t_cub *cub, t_vector *vector,
 	float *y_offset, float angle)
 {
 	if (sinf(angle) > 0)
@@ -37,7 +37,7 @@ void	init_horizontal_values(t_cub *cub, t_vector *vector,
 /// @param vector The vector that stores the hit position
 /// @param x_offset How much to increment x in each iteration
 /// @param angle The angle of the ray
-void	init_vertical_values(t_cub *cub, t_vector *vector, 
+void	init_vertical_values(t_cub *cub, t_vector *vector,
 	float *x_offset, float angle)
 {
 	if (cosf(angle) > 0)
