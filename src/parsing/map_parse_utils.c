@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 22:16:43 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:20:23 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**set_map_even(t_cub *cub)
 	int		counter;
 	char	**map;
 
-	i = 0;
+	i = -1;
 	j = 5;
 	counter = 0;
 	map = ft_calloc(cub->height + 1, sizeof(char *));
@@ -72,15 +72,13 @@ char	**set_map_even(t_cub *cub)
 	while (cub->file[++j])
 	{
 		check_player(cub->file[j], &counter);
-		map[i] = ft_calloc(cub->width + 1, sizeof(char *));
+		map[++i] = ft_calloc(cub->width + 1, sizeof(char *));
 		if (!map[i])
 			throw_err("Couldn't allocate memory", cub);
 		ft_memset(map[i], ' ', cub->width);
 		ft_memcpy(map[i], cub->file[j], ft_strlen(cub->file[j]));
-		i++;
 	}
-	if (counter != 1)
-		throw_err("Invalid amount of players", cub);
+	check_player_count(counter, map, cub);
 	return (map);
 }
 
@@ -118,5 +116,8 @@ t_rgb	*get_color(char *line)
 	color->g = ft_atoi(rgb[1]);
 	color->b = ft_atoi(rgb[2]);
 	free_split(rgb);
+	if (color->r < 0 || color->r > 255 || color->g < 0 || color->g > 255
+		|| color->b < 0 || color->b > 255)
+		return (free(color), NULL);
 	return (color);
 }
