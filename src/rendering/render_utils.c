@@ -6,37 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:39:11 by paulorod          #+#    #+#             */
-/*   Updated: 2023/10/26 14:03:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
-
-///Get time of day in miliseconds
-/// @return Time of day in miliseconds
-uint64_t	gettimeofday_ms(void)
-{
-	static struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * (uint64_t)1000) + (tv.tv_usec / 1000));
-}
-
-///Get time since last update
-/// @return Time since last update
-uint64_t	delta_time(void)
-{
-	static uint64_t	last_update = 0;
-	uint64_t		current_time;
-	uint64_t		delta;
-
-	current_time = gettimeofday_ms();
-	if (last_update == 0)
-		last_update = current_time - 1;
-	delta = current_time - last_update;
-	last_update = current_time;
-	return (delta);
-}
+#include "../../inc/cub.h"
 
 ///Get the color of the pixel in position 'x,y'
 /// @param img The image to get the pixel color from
@@ -90,4 +64,25 @@ void	cpy_img_to_frame_buffer(t_image *dst, t_image src, int x, int y)
 		}
 		i++;
 	}
+}
+
+/// Convert a color number to a rgb color struct
+/// @param color The color number
+/// @return The rgb color struct
+t_rgb	int_to_rgb(int color)
+{
+	t_rgb	conv;
+
+	conv.b = color & 255;
+	conv.g = (color >> 8) & 255;
+	conv.r = (color >> 16) & 255;
+	return (conv);
+}
+
+/// Convert rgb color struct to a color number
+/// @param rgb The rgb color struct
+/// @return The color number
+int	rgb_to_int(t_rgb *rgb)
+{
+	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
 }

@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:32:03 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/06 14:06:24 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 /// Fill a square on the minimap
 /// @param minimap The minimap image
@@ -24,13 +24,13 @@ void	display_prop(t_image *minimap, int x, int y, int color)
 
 	i = 0;
 	j = 0;
-	while (i < MAP_SCALE)
+	while (i < MINIMAP_SCALE)
 	{
 		j = 0;
-		while (j < MAP_SCALE)
+		while (j < MINIMAP_SCALE)
 		{
-			set_pixel_color(minimap, MAP_SCALE * x + j,
-				MAP_SCALE * y + i, color);
+			set_pixel_color(minimap, MINIMAP_SCALE * x + j,
+				MINIMAP_SCALE * y + i, color);
 			j++;
 		}
 		i++;
@@ -47,18 +47,45 @@ void	display_player(t_cub *cub, int color)
 	float	i;
 	float	j;
 
-	i = -0.5 * MAP_SCALE;
-	while (i < MAP_SCALE / 2)
+	i = -0.5 * MINIMAP_SCALE;
+	while (i < MINIMAP_SCALE / 2)
 	{
-		j = -0.5 * MAP_SCALE;
-		while (j < MAP_SCALE / 2)
+		j = -0.5 * MINIMAP_SCALE;
+		while (j < MINIMAP_SCALE / 2)
 		{
-			set_pixel_color(cub->minimap, MAP_SCALE * cub->player->pos_x + j,
-				MAP_SCALE * cub->player->pos_y + i, color);
+			set_pixel_color(cub->minimap,
+				MINIMAP_SCALE * cub->player->position->x + j,
+				MINIMAP_SCALE * cub->player->position->y + i, color);
 			j++;
 		}
 		i++;
 	}
+}
+
+/// Draw a ray from the player to the wall
+/// @param cub The cub struct
+/// @param x The x position of the wall
+/// @param y The y position of the wall
+/// @param angle The angle of the ray
+void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
+{
+	t_vector	wall;
+	t_vector	ray;
+	float		dist;
+
+	wall.x = x / MAP_SCALE * MINIMAP_SCALE;
+	wall.y = y / MAP_SCALE * MINIMAP_SCALE;
+	ray.x = cub->player->position->x * MINIMAP_SCALE;
+	ray.y = cub->player->position->y * MINIMAP_SCALE;
+	dist = get_distance(ray, wall);
+	while (dist > 0)
+	{
+		set_pixel_color(cub->minimap, ray.x, ray.y, 0x00ff00);
+		ray.x += cosf(angle);
+		ray.y -= sinf(angle);
+		dist--;
+	}
+	set_pixel_color(cub->minimap, ray.x, ray.y, 0xff0000);
 }
 
 /// Display the minimap on the screen
@@ -77,6 +104,8 @@ void	display_map(t_cub *cub)
 		{
 			if (cub->map[y][x] == '1')
 				display_prop(cub->minimap, x, y, 0xffffff);
+			else if (cub->map[y][x] == 'D')
+				display_prop(cub->minimap, x, y, 0xff0000);
 			else
 				display_prop(cub->minimap, x, y, 0x000000);
 			x++;
@@ -84,5 +113,4 @@ void	display_map(t_cub *cub)
 		y++;
 	}
 	display_player(cub, 0xffff00);
-	cpy_img_to_frame_buffer(cub->frame_buffer, *cub->minimap, 0, 0);
 }

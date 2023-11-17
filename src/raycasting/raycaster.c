@@ -6,238 +6,148 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 12:38:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:58:27 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
-bool	check_colision(t_cub *cub, float x, float y, float angle)
+///Test hit for wall colision
+/// @param cub The cub struct
+/// @param vector The vector that stores the hit position
+/// @param angle The angle of the ray
+/// @return true if the ray hit a wall, false otherwise
+bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert)
 {
-	if (x > (int)x && cosf(angle) < 0)
-		x += 1;
-	if (y > (int)y && sinf(angle) > 0)
-		y += 1;
-	x = clamp(x, 0, cub->width * MAP_SCALE - 1);
-	y = clamp(y, 0, cub->height * MAP_SCALE - 1);
-	if (cub->map[(int)(y / MAP_SCALE)][(int)(x / MAP_SCALE)] == '1')
+	(void)vert;
+	if (rad_to_deg(angle) < 180)
+		vector.y = ceil(vector.y) / MAP_SCALE;
+	else
+		vector.y = floor(vector.y) / MAP_SCALE;
+	if (rad_to_deg(angle) >= 90 && rad_to_deg(angle) <= 270)
+		vector.x = ceil(vector.x) / MAP_SCALE;
+	else
+		vector.x = floor(vector.x) / MAP_SCALE;
+	vector.x = clamp(vector.x, 0, cub->width - 1);
+	vector.y = clamp(vector.y, 0, cub->height - 1);
+	if (ft_strchr("12D", cub->map[(int)vector.y][(int)vector.x]))
 		return (true);
 	return (false);
 }
 
-void	horizontal_hits(t_cub *cub, float *x, float *y, float angle)
+///Test for horizontal hits
+/// @param cub The cub struct
+/// @param vector The vector that stores the hit position
+/// @param angle The angle of the ray
+void	horizontal_hits(t_cub *cub, t_vector *vector, float angle)
 {
 	float	x_offset;
 	float	y_offset;
-	bool	hit;
 
 	y_offset = 0;
-	if (sinf(angle) > 0)
-	{
-		*y = (int)cub->player->pos_y * MAP_SCALE - 1;
-		y_offset = -MAP_SCALE;
-	}
-	if (sinf(angle) < 0)
-	{
-		*y = (int)cub->player->pos_y * MAP_SCALE + MAP_SCALE;
-		y_offset = MAP_SCALE;
-	}
-	*x = cub->player->pos_x * MAP_SCALE + ((cub->player->pos_y * MAP_SCALE - *y) / tanf(angle));
+	init_horizontal_values(cub, vector, &y_offset, angle);
+	vector->x = cub->player->position->x * MAP_SCALE
+		+ ((cub->player->position->y * MAP_SCALE - vector->y) / tanf(angle));
 	x_offset = MAP_SCALE / tanf(angle);
-	hit = false;
-	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
+		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *x, *y, angle))
-			hit = true;
+		if (check_colision(cub, *vector, angle, false))
+			break ;
 		else
 		{
 			if (sinf(angle) > 0)
-				*x += x_offset;
+				vector->x += x_offset;
 			else
-				*x -= x_offset;
-			*y += y_offset;
+				vector->x -= x_offset;
+			vector->y += y_offset;
 		}
 	}
 }
 
-void	vertical_hits(t_cub *cub, float *x, float *y, float angle)
+///Test for vertical hits
+/// @param cub The cub struct
+/// @param vector The vector that stores the hit position
+/// @param angle The angle of the ray
+void	vertical_hits(t_cub *cub, t_vector *vector, float angle)
 {
 	float	x_offset;
 	float	y_offset;
-	bool	hit;
 
 	x_offset = 0;
-	if (cosf(angle) > 0)
-	{
-		*x = (int)cub->player->pos_x * MAP_SCALE + MAP_SCALE;
-		x_offset = MAP_SCALE;
-	}
-	if (cosf(angle) < 0)
-	{
-		*x = (int)cub->player->pos_x * MAP_SCALE - 1;
-		x_offset = -MAP_SCALE;
-	}
-	*y = cub->player->pos_y * MAP_SCALE + ((cub->player->pos_x * MAP_SCALE - *x) * tanf(angle));
+	init_vertical_values(cub, vector, &x_offset, angle);
+	vector->y = cub->player->position->y * MAP_SCALE
+		+ ((cub->player->position->x * MAP_SCALE - vector->x) * tanf(angle));
 	y_offset = MAP_SCALE * tanf(angle);
-	hit = false;
-	while (!hit && *x >= 0 && *x < cub->width * MAP_SCALE && *y >= 0 && *y < cub->height * MAP_SCALE)
+	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
+		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *x, *y, angle))
-			hit = true;
+		if (check_colision(cub, *vector, angle, true))
+			break ;
 		else
 		{
-			*x += x_offset;
+			vector->x += x_offset;
 			if (cosf(angle) > 0)
-				*y -= y_offset;
+				vector->y -= y_offset;
 			else
-				*y += y_offset;
+				vector->y += y_offset;
 		}
 	}
 }
 
-float	get_distance(float x1, float y1, float x2, float y2)
+/// Raycasting
+/// @param cub The cub struct 
+/// @param ray The ray struct
+/// @param i The pixel column index
+void	raycasting(t_cub *cub, t_ray *ray, int i)
 {
-	return (sqrtf(powf(x1 - x2, 2) + powf(y1 - y2, 2)));
-}
+	float		v_dist;
+	float		h_dist;
+	t_vector	vertical;
+	t_vector	horizontal;
+	t_vector	player_pos;
 
-void	draw_ray_from_player(t_cub *cub, float x, float y, float angle)
-{
-	float	ray_x;
-	float	ray_y;
-	float	dist;
-
-	ray_x = cub->player->pos_x * MAP_SCALE;
-	ray_y = cub->player->pos_y * MAP_SCALE;
-	dist = get_distance(ray_x, ray_y, x, y);
-	while (dist > 0)
-	{
-		set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0x00ff00);
-		ray_x += cosf(angle);
-		ray_y -= sinf(angle);
-		dist--;
-	}
-	set_pixel_color(cub->frame_buffer, ray_x, ray_y, 0xff0000);
-}
-
-void	draw_walls(t_cub *cub, float dist, float angle, int i, int color)
-{
-	int		p_height;
-	float	p_plane;
-	int		d_start;
-	int		d_end;
-
-	(void)angle;
-	p_plane = (WINDOW_WIDTH / 2) / tanf(deg_to_rad(FOV / 2));
-	p_height = (MAP_SCALE / dist) * p_plane;
-	d_start = (-p_height / 2) + (WINDOW_HEIGHT / 2);
-	d_end = (p_height / 2) + (WINDOW_HEIGHT / 2);
-	if (d_start < 0)
-		d_start = 0;
-	if (d_end >= WINDOW_HEIGHT)
-		d_end = WINDOW_HEIGHT - 1;
-	while (d_start < d_end)
-	{
-		set_pixel_color(cub->frame_buffer, i, d_start, color);
-		d_start++;
-	}
-}
-
-float	get_min(float a, float b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
-void	raycasting(t_cub *cub, float angle, int i)
-{
-	float	v_dist;
-	float	h_dist;
-	float	v_x;
-	float	v_y;
-	float	h_x;
-	float	h_y;
-	int		color;
-
-	vertical_hits(cub, &v_x, &v_y, angle);
-	horizontal_hits(cub, &h_x, &h_y, angle);
-	v_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, v_x, v_y);
-	h_dist = get_distance(cub->player->pos_x * MAP_SCALE, cub->player->pos_y * MAP_SCALE, h_x, h_y);
-
-	v_x = clamp(v_x, 0, cub->width * MAP_SCALE - 1);
-	v_y = clamp(v_y, 0, cub->height * MAP_SCALE - 1);
-	h_x = clamp(h_x, 0, cub->width * MAP_SCALE - 1);
-	h_y = clamp(h_y, 0, cub->height * MAP_SCALE - 1);
+	player_pos.x = cub->player->position->x * MAP_SCALE;
+	player_pos.y = cub->player->position->y * MAP_SCALE;
+	vertical_hits(cub, &vertical, ray->angle);
+	horizontal_hits(cub, &horizontal, ray->angle);
+	v_dist = get_distance(player_pos, vertical);
+	h_dist = get_distance(player_pos, horizontal);
+	vertical.x = clamp(vertical.x, 0, cub->width * MAP_SCALE - 1);
+	vertical.y = clamp(vertical.y, 0, cub->height * MAP_SCALE - 1);
+	horizontal.x = clamp(horizontal.x, 0, cub->width * MAP_SCALE - 1);
+	horizontal.y = clamp(horizontal.y, 0, cub->height * MAP_SCALE - 1);
 	if (h_dist < v_dist)
-	{
-		color = 0xff0000;
-		//draw_ray_from_player(cub, h_x, h_y, angle);
-	}
+		distance_checks(cub, ray, horizontal, false);
 	else
-	{
-		color = 0xA30000;
-		//draw_ray_from_player(cub, v_x, v_y, angle);
-	}
-	draw_walls(cub, get_min(h_dist, v_dist), angle, i, color);
+		distance_checks(cub, ray, vertical, true);
+	ray->distance = get_min(h_dist, v_dist);
+	draw_walls(cub, *ray, i);
 }
 
-
-
-void	draw_floor(t_cub *cub)
-{
-	int	i;
-	int	j;
-
-	i = WINDOW_HEIGHT / 2;
-	while (i < WINDOW_HEIGHT)
-	{
-		j = 0;
-		while (j < WINDOW_WIDTH)
-		{
-			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->floor_color));
-			j++;
-		}
-		i++;
-	}
-}
-
-void draw_ceiling(t_cub *cub)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < WINDOW_HEIGHT / 2)
-	{
-		j = 0;
-		while (j < WINDOW_WIDTH)
-		{
-			set_pixel_color(cub->frame_buffer, j, i, rgb_to_int(cub->ceiling_color));
-			j++;
-		}
-		i++;
-	}
-}
-
+/// Raycast in the field of view
+/// @param cub The cub struct
 void	raycast_in_fov(t_cub *cub)
 {
-	float	angle;
 	float	fov;
 	float	step;
 	int		i;
+	t_ray	ray;
 
-	draw_floor(cub);
-	draw_ceiling(cub);
 	i = WINDOW_WIDTH;
 	fov = deg_to_rad(FOV);
 	step = fov / WINDOW_WIDTH;
-	angle = cub->player->p_angle - (fov / 2);
-	//display_map(cub);
+	ray.angle = cub->player->angle - (fov / 2);
+	if (ray.angle < 0)
+		ray.angle += 2 * PI;
 	while (i > 0)
 	{
-		raycasting(cub, angle, i);
-		angle += step;
+		raycasting(cub, &ray, i);
+		ray.angle += step;
+		if (ray.angle > 2 * PI)
+			ray.angle -= 2 * PI;
 		i--;
 	}
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->frame_buffer->img, 0, 0);
+	if (cub->show_minimap)
+		cpy_img_to_frame_buffer(cub->frame_buffer, *cub->minimap, 0, 0);
 }

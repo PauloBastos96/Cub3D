@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:13:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/25 14:57:06 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:16:43 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 /// Get map line size to set map width
 /// @param cub The cub struct
@@ -65,13 +65,16 @@ char	**set_map_even(t_cub *cub)
 	i = 0;
 	j = 5;
 	counter = 0;
-	cub->width = 0;
 	map = ft_calloc(cub->height + 1, sizeof(char *));
+	if (!map)
+		throw_err("Couldn't allocate memory", cub);
 	define_line_limiter(cub);
 	while (cub->file[++j])
 	{
 		check_player(cub->file[j], &counter);
 		map[i] = ft_calloc(cub->width + 1, sizeof(char *));
+		if (!map[i])
+			throw_err("Couldn't allocate memory", cub);
 		ft_memset(map[i], ' ', cub->width);
 		ft_memcpy(map[i], cub->file[j], ft_strlen(cub->file[j]));
 		i++;
@@ -105,6 +108,8 @@ t_rgb	*get_color(char *line)
 	char	**rgb;
 
 	color = ft_calloc(1, sizeof(t_rgb));
+	if (!color)
+		return (NULL);
 	line = ft_strchr(line, ' ');
 	rgb = ft_split(line, ',');
 	if (!rgb[0] || !rgb[1] || !rgb[2])

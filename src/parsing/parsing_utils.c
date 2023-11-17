@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ffilipe- <ffilipe-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/10/30 11:15:11 by ffilipe-         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 ///Save the map file content in a string
 ///@param acc The string to store the map file content
@@ -51,15 +51,15 @@ int	check_file_ext(char *file)
 ///@return 0 if the map is valid, 1 otherwise
 int	ft_isvalid(char **map, int y, int x)
 {
-	if (ft_strchr("NWES01", map[y][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y + 1][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y + 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y - 1][x]) == NULL)
+	if (ft_strchr("NWES01D2", map[y - 1][x]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y][x + 1]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x + 1]) == NULL)
 		return (1);
-	if (ft_strchr("NWES01", map[y][x - 1]) == NULL)
+	if (ft_strchr("NWES01D2", map[y][x - 1]) == NULL)
 		return (1);
 	return (0);
 }

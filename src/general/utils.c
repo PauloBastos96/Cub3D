@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 13:26:32 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/07 12:31:21 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:10:34 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 ///Print error message and exit game
 ///@param err The error message
@@ -32,6 +32,8 @@ t_image	*create_new_image(void *mlx, int width, int height)
 	t_image	*new_image;
 
 	new_image = ft_calloc(1, sizeof(t_image));
+	if (!new_image)
+		return (NULL);
 	new_image->img = mlx_new_image(mlx, width, height);
 	new_image->addr = mlx_get_data_addr(new_image->img,
 			&(new_image->bpp),
@@ -40,29 +42,4 @@ t_image	*create_new_image(void *mlx, int width, int height)
 	new_image->w = width;
 	new_image->h = height;
 	return (new_image);
-}
-
-/// Convert degrees to radians
-/// @param deg Angle in degrees
-/// @return Angle in radians
-float	deg_to_rad(float deg)
-{
-	return (deg * (PI / 180));
-}
-
-/// Convert rgb color struct to a color number
-/// @param rgb The rgb color struct
-/// @return The color number
-int	rgb_to_int(t_rgb *rgb)
-{
-	return (rgb->r << 16 | rgb->g << 8 | rgb->b);
-}
-
-float	clamp(float n, float min, float max)
-{
-	if (n < min)
-		return (min);
-	if (n > max)
-		return (max);
-	return (n);
 }
