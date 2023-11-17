@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/15 13:16:50 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:17:00 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 /// Set textures from the map file
 /// @param cub The cub struct
@@ -74,6 +74,8 @@ int	store_map(t_cub *cub)
 		i++;
 	cub->height = i;
 	cub->map = ft_calloc(cub->height + 1, sizeof(char *));
+	if (!cub->map)
+		throw_err("Couldn't allocate memory", cub);
 	i = 0;
 	j = 5;
 	while (cub->file[++j])
@@ -125,15 +127,11 @@ int	check_valid(t_cub *cub)
 	map = set_map_even(cub);
 	while (map[++i])
 	{
-		j = 0;
-		while (map[i][j])
+		j = -1;
+		while (map[i][++j])
 		{
 			if (ft_strchr("0NSWED2", map[i][j]))
 			{
-				if (map[i][j] == 'D')
-					cub->textures->door_path = "./src/textures/door.xpm";		//?Add this to the map instead of hadrcoding it?
-				if (map[i][j] == '2')
-					cub->textures->anim_wall_path = "./src/textures/TECHWALLB_1.xpm";
 				if (i == 0 || i == cub->height - 1)
 					check_valid_line(map, i, j, cub);
 				if (ft_strchr("NSWE", map[i][j]))
@@ -141,8 +139,8 @@ int	check_valid(t_cub *cub)
 				else if (check_map_walls(map, i, j, cub))
 					return (free_split(map), 1);
 			}
-			j++;
 		}
 	}
-	return (free_split(map), 0);
+	free_split(cub->map);
+	return (cub->map = map, 0);
 }

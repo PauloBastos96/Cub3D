@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 16:14:02 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/15 13:38:53 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:17:15 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 ///Process window close event
 /// @param cub The cub struct
@@ -31,12 +31,17 @@ int	key_hook(int keycode, t_cub *cub)
 		cub->show_fps = !cub->show_fps;
 	if (keycode == XK_F2)
 		cub->show_minimap = !cub->show_minimap;
-	if (keycode == XK_Up)
-		cub->debug_line++;
-	if (keycode == XK_Down)
-		cub->debug_line--;
-	if (keycode == XK_Tab)
-		cub->debug_line += 10;
+	if (keycode == XK_F1)
+		cub->show_debug_line = !cub->show_debug_line;
+	if (cub->show_debug_line)
+	{
+		if (keycode == XK_Up)
+			cub->debug_line++;
+		if (keycode == XK_Down)
+			cub->debug_line--;
+		if (keycode == XK_Tab)
+			cub->debug_line += 10;
+	}
 	movement_handler(keycode, cub);
 	return (0);
 }
@@ -75,6 +80,8 @@ void	mlx_setup(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D");
 	cub->frame_buffer = ft_calloc(sizeof(t_image), 1);
+	if (!cub->frame_buffer)
+		throw_err("Couldn't allocate memory", cub);
 	cub->frame_buffer->img = mlx_new_image(cub->mlx,
 			WINDOW_WIDTH, WINDOW_HEIGHT);
 	cub->frame_buffer->addr = mlx_get_data_addr(cub->frame_buffer->img,

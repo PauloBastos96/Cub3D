@@ -6,7 +6,7 @@
 #    By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/23 20:49:53 by paulorod          #+#    #+#              #
-#    Updated: 2023/11/15 13:07:46 by paulorod         ###   ########.fr        #
+#    Updated: 2023/11/16 15:39:59 by paulorod         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 SRCS =	src/main.c \
-		src/cleaners.c \
 		src/gameplay/player_controller.c \
 		src/gameplay/player_movement_utils.c \
 		src/parsing/parser.c \
@@ -28,8 +27,10 @@ SRCS =	src/main.c \
 		src/rendering/time_utils.c \
 		src/rendering/render_minimap.c \
 		src/raycasting/raycaster.c \
-		src/math_utils.c \
-		src/utils.c
+		src/raycasting/raycasting_utils.c \
+		src/general/cleaners.c \
+		src/general/math_utils.c \
+		src/general/utils.c
 
 MLX_PATH = ./minilibx-linux
 MLX = $(MLX_PATH)/libmlx_Linux.a

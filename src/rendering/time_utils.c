@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:31:11 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 15:31:48 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "../../inc/cub.h"
 
 ///Get time of day in miliseconds
 /// @return Time of day in miliseconds
@@ -23,7 +23,7 @@ uint64_t	gettimeofday_ms(void)
 }
 
 ///Get time since last update
-/// @return Time since last update
+/// @return Time since last update in miliseconds
 uint64_t	delta_time(void)
 {
 	static uint64_t	last_update = 0;

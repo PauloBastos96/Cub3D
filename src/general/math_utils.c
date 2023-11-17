@@ -6,11 +6,11 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 15:08:25 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/09 15:33:31 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "../../inc/cub.h"
 
 /// Get the minimum value between two numbers
 /// @param a First number
