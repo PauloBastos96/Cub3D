@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:20 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 22:17:00 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:45:48 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ void	read_map(t_cub *cub, char *file)
 	int		fd;
 	char	*acc;
 	char	*line;
+	bool	map_start;
 
 	acc = NULL;
+	map_start = false;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		throw_err("Invalid file", cub);
@@ -108,6 +110,11 @@ void	read_map(t_cub *cub, char *file)
 			break ;
 	}
 	close(fd);
+	if (!verify_map(acc))
+	{
+		free(acc);
+		throw_err("Invalid map", cub);
+	}
 	store_info(cub, acc);
 	if (store_map(cub))
 		throw_err("Invalid map", cub);

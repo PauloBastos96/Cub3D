@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 15:50:33 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/17 15:20:20 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:44:26 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ void	set_player_pos_and_dir(t_cub *cub, int i, int j);
 void	check_player_count(int counter, char **map, t_cub *cub);
 char	**set_map_even(t_cub *cub);
 t_rgb	*get_color(char *line);
+bool	verify_map(char *map);
 
 #endif
