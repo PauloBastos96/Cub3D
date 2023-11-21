@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 21:58:27 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:08:42 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@
 /// @param vector The vector that stores the hit position
 /// @param angle The angle of the ray
 /// @return true if the ray hit a wall, false otherwise
-bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert)
+bool	check_colision(t_cub *cub, t_vector vector)
 {
-	(void)vert;
-	if (rad_to_deg(angle) < 180)
-		vector.y = ceil(vector.y) / MAP_SCALE;
-	else
-		vector.y = floor(vector.y) / MAP_SCALE;
-	if (rad_to_deg(angle) >= 90 && rad_to_deg(angle) <= 270)
-		vector.x = ceil(vector.x) / MAP_SCALE;
-	else
-		vector.x = floor(vector.x) / MAP_SCALE;
+	vector.y /= MAP_SCALE;
+	vector.x /= MAP_SCALE;
 	vector.x = clamp(vector.x, 0, cub->width - 1);
 	vector.y = clamp(vector.y, 0, cub->height - 1);
 	if (ft_strchr("12D", cub->map[(int)vector.y][(int)vector.x]))
@@ -52,7 +45,7 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle)
 	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
 		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, false))
+		if (check_colision(cub, *vector))
 			break ;
 		else
 		{
@@ -82,7 +75,7 @@ void	vertical_hits(t_cub *cub, t_vector *vector, float angle)
 	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
 		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, true))
+		if (check_colision(cub, *vector))
 			break ;
 		else
 		{
@@ -118,9 +111,9 @@ void	raycasting(t_cub *cub, t_ray *ray, int i)
 	horizontal.x = clamp(horizontal.x, 0, cub->width * MAP_SCALE - 1);
 	horizontal.y = clamp(horizontal.y, 0, cub->height * MAP_SCALE - 1);
 	if (h_dist < v_dist)
-		distance_checks(cub, ray, horizontal, false);
+		distance_checks(cub, ray, &horizontal, false);
 	else
-		distance_checks(cub, ray, vertical, true);
+		distance_checks(cub, ray, &vertical, true);
 	ray->distance = get_min(h_dist, v_dist);
 	draw_walls(cub, *ray, i);
 }

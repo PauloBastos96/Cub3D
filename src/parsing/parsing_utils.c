@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 13:43:01 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/20 12:44:14 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,29 @@ int	check_map_walls(char **map, int y, int x, t_cub *cub)
 		|| map[y][x + 1] == ' ' || ft_isvalid(map, y, x) == 1)
 		return (1);
 	return (0);
+}
+
+/// Check if map is continuous
+/// @param map The map file content
+/// @return true if the map is continuous, false otherwise
+bool	verify_map(char *map)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = ft_strnstr(map, "C ", ft_strlen(map));
+	if (!tmp)
+		return (false);
+	while (tmp[i] && tmp[i] != '\n')
+		i++;
+	while (tmp[i] && tmp[i] == '\n')
+		i++;
+	while (tmp[i])
+	{
+		if (tmp[i] == '\n' && tmp[i + 1] == '\n')
+			return (false);
+		i++;
+	}
+	return (true);
 }

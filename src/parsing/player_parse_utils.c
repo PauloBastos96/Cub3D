@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:54:42 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 15:43:41 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:20:08 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ void	set_player_pos_and_dir(t_cub *cub, int i, int j)
 	cub->player->position->x = j;
 	cub->player->position->y = i;
 	set_player_direction(cub->player, cub->map[i][j]);
+}
+
+/// Check if the map has only one player
+/// @param counter Number of players
+/// @param map The map in a double array
+/// @param cub The cub struct
+void	check_player_count(int counter, char **map, t_cub *cub)
+{
+	if (counter != 1)
+	{
+		free_split(map);
+		throw_err("Invalid amount of players", cub);
+	}
 }
