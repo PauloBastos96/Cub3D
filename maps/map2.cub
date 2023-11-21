@@ -1,0 +1,14 @@
+NO ./src/textures/GRAYWALL.xpm
+SO ./src/textures/DENTWALL.xpm
+WE ./src/textures/STORAGE.xpm
+EA ./src/textures/BASEWALL.xpm
+
+F 64,64,64
+C 39,41,82
+
+11111111111
+10000000001
+10000000001
+10000000001
+1000N000001
+11111111111
