@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:05:35 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 21:57:55 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/21 14:10:44 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static t_image	*select_image(t_cub *cub, float _angle, bool is_vert)
 /// Get the y coordinate of the pixel to render
 static int	get_y_coord(int iter, int d_start, int d_end)
 {
+	if (d_start == d_end)
+		d_start++;
 	return (((iter - d_start) * (MAP_SCALE - 1)) / (d_end - d_start));
 }
 
@@ -96,8 +98,6 @@ static void	calculate_limits(t_cub *cub, int *d_start, int *d_end, t_ray ray)
 /// @param cub The cub struct
 /// @param ray A struct containing the distance and angle of the ray
 /// @param i The pixel column
-/// @param x 
-/// @param is_vert Is the ray checking for vertical walls
 void	draw_walls(t_cub *cub, t_ray ray, int i)
 {
 	int			d_start;

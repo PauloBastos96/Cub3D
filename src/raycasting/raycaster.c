@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 14:19:23 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/20 14:41:54 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:08:42 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,10 @@
 /// @param vector The vector that stores the hit position
 /// @param angle The angle of the ray
 /// @return true if the ray hit a wall, false otherwise
-bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert, int i)
+bool	check_colision(t_cub *cub, t_vector vector)
 {
-	(void)vert;
-	(void)angle;
-	if (!vert && sinf(angle) > 0)
-		vector.y = ceil(vector.y / MAP_SCALE);
-	else
-		vector.y /= MAP_SCALE;
+	vector.y /= MAP_SCALE;
 	vector.x /= MAP_SCALE;
-	if (cub->show_debug_line && cub->debug_line == i)
-		printf("vert: %d, x: %f, y: %f, angle: %f\n", vert,  vector.x, vector.y, rad_to_deg(angle));
 	vector.x = clamp(vector.x, 0, cub->width - 1);
 	vector.y = clamp(vector.y, 0, cub->height - 1);
 	if (ft_strchr("12D", cub->map[(int)vector.y][(int)vector.x]))
@@ -39,7 +32,7 @@ bool	check_colision(t_cub *cub, t_vector vector, float angle, bool vert, int i)
 /// @param cub The cub struct
 /// @param vector The vector that stores the hit position
 /// @param angle The angle of the ray
-void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
+void	horizontal_hits(t_cub *cub, t_vector *vector, float angle)
 {
 	float	x_offset;
 	float	y_offset;
@@ -52,7 +45,7 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
 	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
 		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, false, i))
+		if (check_colision(cub, *vector))
 			break ;
 		else
 		{
@@ -69,7 +62,7 @@ void	horizontal_hits(t_cub *cub, t_vector *vector, float angle, int i)
 /// @param cub The cub struct
 /// @param vector The vector that stores the hit position
 /// @param angle The angle of the ray
-void	vertical_hits(t_cub *cub, t_vector *vector, float angle, int i)
+void	vertical_hits(t_cub *cub, t_vector *vector, float angle)
 {
 	float	x_offset;
 	float	y_offset;
@@ -82,7 +75,7 @@ void	vertical_hits(t_cub *cub, t_vector *vector, float angle, int i)
 	while (vector->x >= 0 && vector->x < cub->width * MAP_SCALE
 		&& vector->y >= 0 && vector->y < cub->height * MAP_SCALE)
 	{
-		if (check_colision(cub, *vector, angle, true, i))
+		if (check_colision(cub, *vector))
 			break ;
 		else
 		{
@@ -109,8 +102,8 @@ void	raycasting(t_cub *cub, t_ray *ray, int i)
 
 	player_pos.x = cub->player->position->x * MAP_SCALE;
 	player_pos.y = cub->player->position->y * MAP_SCALE;
-	vertical_hits(cub, &vertical, ray->angle, i);
-	horizontal_hits(cub, &horizontal, ray->angle, i);
+	vertical_hits(cub, &vertical, ray->angle);
+	horizontal_hits(cub, &horizontal, ray->angle);
 	v_dist = get_distance(player_pos, vertical);
 	h_dist = get_distance(player_pos, horizontal);
 	vertical.x = clamp(vertical.x, 0, cub->width * MAP_SCALE - 1);
@@ -118,9 +111,9 @@ void	raycasting(t_cub *cub, t_ray *ray, int i)
 	horizontal.x = clamp(horizontal.x, 0, cub->width * MAP_SCALE - 1);
 	horizontal.y = clamp(horizontal.y, 0, cub->height * MAP_SCALE - 1);
 	if (h_dist < v_dist)
-		distance_checks(cub, ray, horizontal, false);
+		distance_checks(cub, ray, &horizontal, false);
 	else
-		distance_checks(cub, ray, vertical, true);
+		distance_checks(cub, ray, &vertical, true);
 	ray->distance = get_min(h_dist, v_dist);
 	draw_walls(cub, *ray, i);
 }

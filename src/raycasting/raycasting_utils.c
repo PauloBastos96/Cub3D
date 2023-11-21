@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 12:26:54 by paulorod          #+#    #+#             */
-/*   Updated: 2023/11/16 21:58:36 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:07:58 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_horizontal_values(t_cub *cub, t_vector *vector,
 {
 	if (sinf(angle) > 0)
 	{
-		vector->y = (int)cub->player->position->y * MAP_SCALE - 1;
+		vector->y = (int)cub->player->position->y * MAP_SCALE - 0.0001;
 		*y_offset = -MAP_SCALE;
 	}
 	else
@@ -47,7 +47,7 @@ void	init_vertical_values(t_cub *cub, t_vector *vector,
 	}
 	else
 	{
-		vector->x = (int)cub->player->position->x * MAP_SCALE - 1;
+		vector->x = (int)cub->player->position->x * MAP_SCALE - 0.0001;
 		*x_offset = -MAP_SCALE;
 	}
 }
@@ -57,14 +57,14 @@ void	init_vertical_values(t_cub *cub, t_vector *vector,
 /// @param ray The ray struct
 /// @param coords The coordinates of the hit
 /// @param vert If the ray is vertical
-void	distance_checks(t_cub *cub, t_ray *ray, t_vector coords, bool vert)
+void	distance_checks(t_cub *cub, t_ray *ray, t_vector *coords, bool vert)
 {
-	cub->prop_y = coords.y / MAP_SCALE;
-	cub->prop_x = coords.x / MAP_SCALE;
+	cub->prop_y = coords->y / MAP_SCALE;
+	cub->prop_x = coords->x / MAP_SCALE;
 	if (!vert)
-		ray->x_pos = (int)coords.x % MAP_SCALE;
+		ray->x_pos = (int)coords->x % MAP_SCALE;
 	else
-		ray->x_pos = (int)coords.y % MAP_SCALE;
+		ray->x_pos = (int)coords->y % MAP_SCALE;
 	ray->is_vert = vert;
-	draw_ray_from_player(cub, coords.x, coords.y, ray->angle);
+	draw_ray_from_player(cub, coords->x, coords->y, ray->angle);
 }
