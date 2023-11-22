@@ -6,7 +6,7 @@
 /*   By: paulorod <paulorod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:40:26 by ffilipe-          #+#    #+#             */
-/*   Updated: 2023/11/16 22:12:20 by paulorod         ###   ########.fr       */
+/*   Updated: 2023/11/22 11:36:05 by paulorod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ t_image	*create_xpm_images(t_cub *cub, char *path)
 	if (!image)
 		throw_err("Couldn't allocate memory", cub);
 	image->img = mlx_xpm_file_to_image(cub->mlx, path, &image->w, &image->h);
+	if (!image->img)
+	{
+		free(image);
+		throw_err("Couldn't create image", cub);
+	}
 	image->addr = mlx_get_data_addr(image->img, &image->bpp,
 			&image->line_len, &image->endian);
 	return (image);
